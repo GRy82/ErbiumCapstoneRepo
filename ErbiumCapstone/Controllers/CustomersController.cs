@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ErbiumCapstone.Controllers
@@ -44,7 +45,7 @@ namespace ErbiumCapstone.Controllers
         {
             try
             {
-                _repo.Customer.Add(customer);
+                _repo.Customer.CreateCustomer(customer);
                 _repo.Save();
                 return RedirectToAction(nameof(Index));
             }
@@ -57,7 +58,7 @@ namespace ErbiumCapstone.Controllers
         // GET: CustomersController/Edit/5
         public ActionResult Edit(int id)
         {
-            var customerToEdit = _repo.Customer.Edit(id);
+            var customerToEdit = _repo.Customer.Update(id);
             return View(customerToEdit);
         }
 
@@ -81,6 +82,7 @@ namespace ErbiumCapstone.Controllers
         // GET: CustomersController/Delete/5
         public ActionResult Delete(int id)
         {
+
             return View();
         }
 
