@@ -36,6 +36,7 @@ namespace ErbiumCapstone
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
+
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
         }
 
