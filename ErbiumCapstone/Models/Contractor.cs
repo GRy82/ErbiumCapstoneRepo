@@ -12,6 +12,7 @@ namespace ErbiumCapstone.Models
     {
         [Key]
         public int ContractorId { get; set; }
+
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string StreetAddress { get; set; }
