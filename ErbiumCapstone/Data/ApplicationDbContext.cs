@@ -15,13 +15,13 @@ namespace ErbiumCapstone.Data
         {
         }
 
-     
 
-        public DbSet<Customer> Customers { get; set; }
         public DbSet<Contractor> Contractors { get; set; }
-        public DbSet<Skill> Skills { get; set; }
-        public DbSet<ContractorSkill> ContractorSkills {get; set;}
+        public DbSet<ContractorSkill> ContractorSkills { get; set; }
+        public DbSet<Customer> Customers { get; set; }
         public DbSet<Job> Jobs { get; set; }
+        public DbSet<JobTask> JobTasks { get; set; }
+        public DbSet<Skill> Skills { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -147,6 +147,8 @@ namespace ErbiumCapstone.Data
                     ContractorId = 3,
                 }
                 );
+
+                
         }
     }
 }
