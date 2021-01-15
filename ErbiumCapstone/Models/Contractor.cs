@@ -2,7 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+<<<<<<< HEAD
 using System.ComponentModel.DataAnnotations.Schema;
+=======
+>>>>>>> 9e4eecac766dc33465c1f757cff0a5e38461b9e2
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,6 +15,7 @@ namespace ErbiumCapstone.Models
     {
         [Key]
         public int ContractorId { get; set; }
+<<<<<<< HEAD
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string StreetAddress { get; set; }
@@ -25,5 +29,7 @@ namespace ErbiumCapstone.Models
         [ForeignKey("IdentityUser")]
         public string IdentityUserId { get; set; }
         public IdentityUser IdentityUser { get; set; }
+=======
+>>>>>>> 9e4eecac766dc33465c1f757cff0a5e38461b9e2
     }
 }
