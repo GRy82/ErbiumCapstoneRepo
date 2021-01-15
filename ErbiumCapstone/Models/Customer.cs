@@ -11,5 +11,7 @@ namespace ErbiumCapstone.Models
         [Key]
         public int CustomerId { get; set; }
 
+       
+
     }
 }
