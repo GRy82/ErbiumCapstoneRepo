@@ -8,5 +8,9 @@ namespace ErbiumCapstone.Contracts
 {
     public interface IContractorRepository : IRepositoryBase<Contractor> //Class interface will contain methods unique to the model
     {
+        void CreateContractor(Contractor contractor);
+        Contractor GetContractor(int contractorId);
+        Contractor Edit(int contractorId);
+        void Delete(int contractorId);
     }
 }

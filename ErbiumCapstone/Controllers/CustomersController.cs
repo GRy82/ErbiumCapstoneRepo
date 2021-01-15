@@ -1,5 +1,6 @@
 ﻿
 using ErbiumCapstone.Contracts;
+using ErbiumCapstone.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -39,10 +40,12 @@ namespace ErbiumCapstone.Controllers
         // POST: CustomersController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Customer customer)
         {
             try
             {
+                _repo.Customer.Add(customer);
+                _repo.Save();
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -54,16 +57,19 @@ namespace ErbiumCapstone.Controllers
         // GET: CustomersController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var customerToEdit = _repo.Customer.Edit(id);
+            return View(customerToEdit);
         }
 
         // POST: CustomersController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Customer updatedCustomer)
         {
             try
             {
+                _repo.Customer.Update(updatedCustomer);
+                _repo.Save();
                 return RedirectToAction(nameof(Index));
             }
             catch
