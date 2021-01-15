@@ -19,7 +19,6 @@ namespace ErbiumCapstone.Data
         public DbSet<Contractor> Contractors { get; set; }
         public DbSet<ContractorSkill> ContractorSkills { get; set; }
         public DbSet<Customer> Customers { get; set; }
-        public DbSet<ErrorViewModel> ErrorViewModels { get; set; }
         public DbSet<Job> Jobs { get; set; }
         public DbSet<JobTask> JobTasks { get; set; }
         public DbSet<Skill> Skills { get; set; }
