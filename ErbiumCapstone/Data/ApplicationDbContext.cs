@@ -15,30 +15,31 @@ namespace ErbiumCapstone.Data
         {
         }
 
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
-
-            builder.Entity<IdentityRole>()
-                .HasData(
-                new IdentityRole
-                {
-                    Name = "Admin",
-                    NormalizedName = "ADMIN"
-                }
-             );
-        }
+     
 
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Contractor> Contractors { get; set; }
         public DbSet<Skill> Skills { get; set; }
-
         public DbSet<ContractorSkill> ContractorSkills {get; set;}
         public DbSet<Job> Jobs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<IdentityRole>()
+             .HasData(
+             new IdentityRole
+             {
+                 Name = "Customer",
+                 NormalizedName = "CUSTOMER"
+             }, 
+             new IdentityRole
+             {
+                 Name = "Contractor",
+                 NormalizedName = "CONTRACTOR"
+
+             });
 
             modelBuilder.Entity<Contractor>()
                 .HasData(
@@ -50,8 +51,7 @@ namespace ErbiumCapstone.Data
                     StreetAddress = "550 N Harbor Dr",
                     City = "Milwaukee",
                     State = "WI",
-                    ZipCode = "53202",
-                    SkillType = "Plumber"
+                    ZipCode = "53202",              
 
                 },
                 new Contractor
@@ -63,7 +63,7 @@ namespace ErbiumCapstone.Data
                     City = "Milwaukee",
                     State = "WI",
                     ZipCode = "53202",
-                    SkillType = "Electrical"
+                   
                 },
                 new Contractor
                 {
@@ -74,7 +74,7 @@ namespace ErbiumCapstone.Data
                     City = "Milwaukee",
                     State = "WI",
                     ZipCode = "53211",
-                    SkillType = "Electrical"
+                 
                 });
 
             modelBuilder.Entity<Customer>()
@@ -87,7 +87,7 @@ namespace ErbiumCapstone.Data
                     StreetAddress = "346 N Broadway",
                     City = "Milwaukee",
                     State = "WI",
-                    ZipCode = "53202",
+                    ZipCode = "53202"
 
                 },
                 new Customer
@@ -98,7 +98,7 @@ namespace ErbiumCapstone.Data
                     StreetAddress = "728 E Brady St",
                     City = "Milwaukee",
                     State = "WI",
-                    ZipCode = "53202",
+                    ZipCode = "53202"
 
                 }, 
                 new Customer
@@ -109,7 +109,7 @@ namespace ErbiumCapstone.Data
                     StreetAddress = "833 N Jefferson St,",
                     City = "Milwaukee",
                     State = "WI",
-                    ZipCode = "53202",
+                    ZipCode = "53202"
 
                 });
 
@@ -123,7 +123,7 @@ namespace ErbiumCapstone.Data
                 new Skill
                 {
                     SkillId = 2,
-                    SkillyType = "Electrical"
+                    SkillType = "Electrical"
                 });
 
             modelBuilder.Entity<ContractorSkill>()
@@ -132,13 +132,13 @@ namespace ErbiumCapstone.Data
                 {
                     ContractorSkillId = 1,
                     SkillId = 1,
-                    contractorId = 1,
+                    ContractorId = 1,
                 },
                 new ContractorSkill
                 {
                     ContractorSkillId = 2,
                     SkillId = 2,
-                    contractorId = 2,
+                    ContractorId = 2,
                 },
                 new ContractorSkill
                 {
