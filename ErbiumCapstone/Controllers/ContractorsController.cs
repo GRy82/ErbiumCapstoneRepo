@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ErbiumCapstone.Contracts;
+using ErbiumCapstone.Data;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -7,8 +9,14 @@ using System.Threading.Tasks;
 
 namespace ErbiumCapstone.Controllers
 {
-    public class ContractorController : Controller
+    public class ContractorsController : Controller
     {
+        private IRepositoryWrapper _repo;
+        public ContractorsController(IRepositoryWrapper repo)
+        {
+            _repo = repo;
+        }
+
         // GET: ContractorController
         public ActionResult Index()
         {

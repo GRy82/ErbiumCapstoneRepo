@@ -14,5 +14,9 @@ namespace ErbiumCapstone.Repositories
         {
 
         }
+
+        public Contractor GetContractor(int contractorId) =>
+            FindByCondition(c => c.ContractorId.Equals(contractorId)).SingleOrDefault();
+        public void CreateContractor(Contractor contractor) => Create(contractor);
     }
 }

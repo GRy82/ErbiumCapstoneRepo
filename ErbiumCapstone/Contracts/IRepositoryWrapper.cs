@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ErbiumCapstone.Contracts
 {
-    interface IRepositoryWrapper
+    public interface IRepositoryWrapper
     {
         ICustomerRepository Customer { get; }
         IContractorRepository Contractor { get; }
