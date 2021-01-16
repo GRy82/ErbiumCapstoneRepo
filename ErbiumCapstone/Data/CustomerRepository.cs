@@ -10,14 +10,23 @@ namespace ErbiumCapstone.Repositories
 {
     public class CustomerRepository : RepositoryBase<Customer>, ICustomerRepository
     {
+        private object _repo;
+
         public CustomerRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
         {
 
         }
+        public void CreateCustomer(Customer customer) => Create(customer);
 
         public Customer GetCustomer(int customerId) =>
             FindByCondition(c => c.CustomerId.Equals(customerId)).SingleOrDefault();
 
-        public void CreateCustomer(Customer customer) => Create(customer);
+        public void EditCustomer(Customer customer) => Update(customer);
+
+        public void DeleteCustomer(int customerId) =>
+            FindByCondition(c => c.CustomerId.Equals(customerId)).SingleOrDefault();
+        
+
+
     }
 }

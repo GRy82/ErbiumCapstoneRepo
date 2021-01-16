@@ -1,40 +1,52 @@
 ﻿
+using ErbiumCapstone.Contracts;
+using ErbiumCapstone.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ErbiumCapstone.Controllers
 {
     public class CustomersController : Controller
     {
-        // GET: ClientsController
+        private IRepositoryWrapper _repo;
+        public CustomersController(IRepositoryWrapper repo)
+        {
+            _repo = repo;
+        }
+        // pass in repository in our constructor
+        // GET: CustomersController
         public ActionResult Index()
         {
             return View();
         }
 
-        // GET: ClientsController/Details/5
+        // GET: CustomersController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var customer = _repo.Customer.GetCustomer(id);
+            return View(customer);
         }
 
-        // GET: ClientsController/Create
+        // GET: CustomersController/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: ClientsController/Create
+        // POST: CustomersController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Customer customer)
         {
             try
             {
+                _repo.Customer.CreateCustomer(customer);
+                _repo.Save();
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -43,19 +55,22 @@ namespace ErbiumCapstone.Controllers
             }
         }
 
-        // GET: ClientsController/Edit/5
+        // GET: CustomersController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            Customer customer = _repo.Customer.GetCustomer(id);
+            return View(customer);
         }
 
-        // POST: ClientsController/Edit/5
+        // POST: CustomersController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Customer customer)
         {
             try
             {
+                _repo.Customer.EditCustomer(customer);
+                _repo.Save();
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -64,13 +79,14 @@ namespace ErbiumCapstone.Controllers
             }
         }
 
-        // GET: ClientsController/Delete/5
+        // GET: CustomersController/Delete/5
         public ActionResult Delete(int id)
         {
+
             return View();
         }
 
-        // POST: ClientsController/Delete/5
+        // POST: CustomersController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)

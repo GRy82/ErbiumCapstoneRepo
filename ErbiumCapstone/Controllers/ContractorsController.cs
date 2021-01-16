@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ErbiumCapstone.Contracts;
+using ErbiumCapstone.Data;
+using ErbiumCapstone.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -7,8 +10,14 @@ using System.Threading.Tasks;
 
 namespace ErbiumCapstone.Controllers
 {
-    public class ContractorController : Controller
+    public class ContractorsController : Controller
     {
+        private IRepositoryWrapper _repo;
+        public ContractorsController(IRepositoryWrapper repo)
+        {
+            _repo = repo;
+        }
+
         // GET: ContractorController
         public ActionResult Index()
         {
@@ -30,10 +39,12 @@ namespace ErbiumCapstone.Controllers
         // POST: ContractorController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Contractor contractor)
         {
             try
             {
+                _repo.Contractor.CreateContractor(contractor);
+                _repo.Save();
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -45,17 +56,20 @@ namespace ErbiumCapstone.Controllers
         // GET: ContractorController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            Contractor contractor = _repo.Contractor.GetContractor(id);
+            return View(contractor);
         }
 
         // POST: ContractorController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Contractor contractor)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                _repo.Contractor.EditContractor(contractor);
+                _repo.Save();
+                return View(contractor);
             }
             catch
             {
