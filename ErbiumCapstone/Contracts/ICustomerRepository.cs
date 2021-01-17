@@ -10,8 +10,8 @@ namespace ErbiumCapstone.Contracts
     {
         void CreateCustomer(Customer customer);
         Customer GetCustomer(int customerId);
-        void EditCustomer(int customerId); 
-        void DeleteCustomer(int customerId);
+        void EditCustomer(Customer customer); 
+        void DeleteCustomer(Customer customer);
 
     }
 }

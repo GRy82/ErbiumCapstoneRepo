@@ -10,7 +10,7 @@ namespace ErbiumCapstone.Contracts
     {
         void CreateJob(Job job);
         Job GetJob(int jobId);
-        void Update(int jobId);
-        void Delete(int jobId);
+        void EditJob(Job job);
+        void DeleteJob(Job job);
     }
 }

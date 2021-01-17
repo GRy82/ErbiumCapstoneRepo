@@ -21,10 +21,8 @@ namespace ErbiumCapstone.Repositories
         public Customer GetCustomer(int customerId) =>
             FindByCondition(c => c.CustomerId.Equals(customerId)).SingleOrDefault();
 
-        public void EditCustomer(int customerId) =>
-            FindByCondition(c => c.CustomerId.Equals(customerId)).SingleOrDefault();
-        public void DeleteCustomer(int customerId) =>
-            FindByCondition(c => c.CustomerId.Equals(customerId)).SingleOrDefault();
+        public void EditCustomer(Customer customer) => Update(customer);
+        public void DeleteCustomer(Customer customer) => Delete(customer);
         
 
 
