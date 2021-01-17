@@ -19,8 +19,8 @@ namespace ErbiumCapstone.Models
         public string Name { get; set; }
         public string  Description { get; set; }
         public bool IsCompleted { get; set; }
-        //This will change based on data type info found
-        public string CompletionImage { get; set; }
+        
+        public string CompletionImage { get; set; } //This will change based on data type info found
 
     }
 }
