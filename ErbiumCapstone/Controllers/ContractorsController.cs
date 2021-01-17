@@ -25,9 +25,10 @@ namespace ErbiumCapstone.Controllers
         }
 
         // GET: ContractorController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(int jobId)
         {
-            return View();
+            var jobDetails = _repo.Job.GetJob(jobId);
+            return View(jobDetails);
         }
 
         // GET: ContractorController/Create
@@ -39,11 +40,11 @@ namespace ErbiumCapstone.Controllers
         // POST: ContractorController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Contractor contractor)
+        public ActionResult Create(JobTask jobTask)
         {
             try
             {
-                _repo.Contractor.CreateContractor(contractor);
+                _repo.JobTask.Create(jobTask);
                 _repo.Save();
                 return RedirectToAction(nameof(Index));
             }
@@ -54,22 +55,22 @@ namespace ErbiumCapstone.Controllers
         }
 
         // GET: ContractorController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int jobTaskId)
         {
-            Contractor contractor = _repo.Contractor.GetContractor(id);
-            return View(contractor);
+            JobTask taskToEdit = _repo.JobTask.GetJobTask(jobTaskId);
+            return View(taskToEdit);
         }
 
         // POST: ContractorController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Contractor contractor)
+        public ActionResult Edit(JobTask jobTask)
         {
             try
             {
-                _repo.Contractor.EditContractor(contractor);
+                _repo.JobTask.Update(jobTask);
                 _repo.Save();
-                return View(contractor);
+                return RedirectToAction(nameof(Index));
             }
             catch
             {
@@ -78,18 +79,21 @@ namespace ErbiumCapstone.Controllers
         }
 
         // GET: ContractorController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int taskId)
         {
-            return View();
+            JobTask jobToDelete = _repo.JobTask.GetJobTask(taskId);
+            return View(jobToDelete);
         }
 
         // POST: ContractorController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, JobTask jobToDelete)
         {
             try
             {
+                _repo.JobTask.DeleteJobTask(jobToDelete);
+                _repo.Save();
                 return RedirectToAction(nameof(Index));
             }
             catch
