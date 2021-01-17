@@ -69,7 +69,7 @@ namespace ErbiumCapstone.Controllers
         {
             try
             {
-                _repo.Job.Update(job);
+                _repo.Job.EditJob(job);
                 _repo.Save();
                 return RedirectToAction(nameof(Index));
             }

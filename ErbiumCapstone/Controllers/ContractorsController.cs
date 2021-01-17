@@ -68,7 +68,7 @@ namespace ErbiumCapstone.Controllers
         {
             try
             {
-                _repo.JobTask.Update(jobTask);
+                _repo.JobTask.EditJobTask(jobTask);
                 _repo.Save();
                 return RedirectToAction(nameof(Index));
             }
@@ -92,7 +92,8 @@ namespace ErbiumCapstone.Controllers
         {
             try
             {
-                _repo.JobTask.DeleteJobTask(jobToDelete);
+                // JobTask jobToDelete = _repo.JobTask.GetJobTask(id);   --if id is provided from view.
+                _repo.JobTask.DeleteJobTask(jobToDelete); //if model object provided from view.
                 _repo.Save();
                 return RedirectToAction(nameof(Index));
             }
