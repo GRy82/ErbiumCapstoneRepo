@@ -56,20 +56,20 @@ namespace ErbiumCapstone.Controllers
         }
 
         // GET: CustomersController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int jobId)
         {
-            Customer customer = _repo.Customer.GetCustomer(id);
-            return View(customer);
+            var jobToEdit = _repo.Job.GetJob(jobId);
+            return View(jobToEdit);
         }
 
         // POST: CustomersController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Customer customer)
+        public ActionResult Edit(Job job)
         {
             try
             {
-                _repo.Customer.EditCustomer(customer);
+                _repo.Job.Update(job);
                 _repo.Save();
                 return RedirectToAction(nameof(Index));
             }

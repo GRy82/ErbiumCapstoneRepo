@@ -9,6 +9,7 @@ namespace ErbiumCapstone.Contracts
     {
         ICustomerRepository Customer { get; }
         IContractorRepository Contractor { get; }
+        IJobRepository Job { get; }
         void Save();
     }
 }

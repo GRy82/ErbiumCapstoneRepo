@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ErbiumCapstone.Contracts
 {
-    interface IJobRepository : IRepositoryBase<Job>
+    public interface IJobRepository : IRepositoryBase<Job>
     {
         void CreateJob(Job job);
         Job GetJob(int jobId);
