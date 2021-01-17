@@ -11,7 +11,7 @@ namespace ErbiumCapstone.Repositories
     {
         private ApplicationDbContext _context; 
         private IContractorRepository _contractor;
-        private ICustomerRepository _customer; 
+        private ICustomerRepository _customer;
         public IContractorRepository Contractor
         {
             get
