@@ -12,6 +12,19 @@ namespace ErbiumCapstone.Repositories
         private ApplicationDbContext _context; 
         private IContractorRepository _contractor;
         private ICustomerRepository _customer;
+        private IJobRepository _job;
+
+        public IJobRepository Job
+        {
+            get
+            {
+                if (_job == null)
+                {
+                    _job = new JobRepository(_context);
+                }
+                return _job;
+            }
+        }
         public IContractorRepository Contractor
         {
             get

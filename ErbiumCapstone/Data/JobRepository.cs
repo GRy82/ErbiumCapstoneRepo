@@ -21,7 +21,7 @@ namespace ErbiumCapstone.Data
         public Job GetJob(int jobId) =>
             FindByCondition(c => c.JobId.Equals(jobId)).SingleOrDefault();
 
-        public Job Update(int jobId) =>
+        public void Update(int jobId) =>
             FindByCondition(c => c.JobId.Equals(jobId)).SingleOrDefault();
         public void Delete(int jobId) =>
             FindByCondition(c => c.JobId.Equals(jobId)).SingleOrDefault();
