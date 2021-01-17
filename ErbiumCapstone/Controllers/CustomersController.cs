@@ -80,19 +80,21 @@ namespace ErbiumCapstone.Controllers
         }
 
         // GET: CustomersController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int jobId)
         {
-
-            return View();
+            var jobToDelete = _repo.Job.GetJob(jobId);
+            return View(jobToDelete);
         }
 
         // POST: CustomersController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, Job job)
         {
             try
             {
+                _repo.Job.Delete(job);
+                _repo.Save();
                 return RedirectToAction(nameof(Index));
             }
             catch
