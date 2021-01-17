@@ -16,15 +16,15 @@ namespace ErbiumCapstone.Data
         {
 
         }
-        public void CreateCustomer(Customer customer) => Create(customer);
+        public void CreateJob(Job job) => Create(job);
 
-        public Customer GetCustomer(int customerId) =>
-            FindByCondition(c => c.CustomerId.Equals(customerId)).SingleOrDefault();
+        public Job GetJob(int jobId) =>
+            FindByCondition(c => c.JobId.Equals(jobId)).SingleOrDefault();
 
-        public Customer Update(int customerId) =>
-            FindByCondition(c => c.CustomerId.Equals(customerId)).SingleOrDefault();
-        public void Delete(int customerId) =>
-            FindByCondition(c => c.CustomerId.Equals(customerId)).SingleOrDefault();
+        public Job Update(int jobId) =>
+            FindByCondition(c => c.JobId.Equals(jobId)).SingleOrDefault();
+        public void Delete(int jobId) =>
+            FindByCondition(c => c.JobId.Equals(jobId)).SingleOrDefault();
 
     }
 }

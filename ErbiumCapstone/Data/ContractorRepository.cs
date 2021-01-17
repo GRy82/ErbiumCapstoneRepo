@@ -14,14 +14,15 @@ namespace ErbiumCapstone.Repositories
         {
 
         }
+        public void CreateContractor(Contractor contractor) => Create(contractor);
 
         public Contractor GetContractor(int contractorId) =>
             FindByCondition(c => c.ContractorId.Equals(contractorId)).SingleOrDefault();
-        public void CreateContractor(Contractor contractor) => Create(contractor);
 
-        public void EditContractor(Contractor contractor) => Update(contractor);
+        public Contractor Update(int contractorId) =>
+            FindByCondition(c => c.ContractorId.Equals(contractorId)).SingleOrDefault();
 
-        public void DeleteContractor(int contractorId) =>
+        public void Delete(int contractorId) =>
             FindByCondition(c => c.ContractorId.Equals(contractorId)).SingleOrDefault();
     }
 }
