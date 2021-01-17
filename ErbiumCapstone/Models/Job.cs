@@ -18,10 +18,10 @@ namespace ErbiumCapstone.Models
         public Customer Customer { get; set; }
 
         [ForeignKey("Contractor")]
-        public int? ContractorId { get; set; }
+        public int ContractorId { get; set; }
         public Contractor Contractor { get; set; }
 
-        public string Discription { get; set; }
+        public string Description { get; set; }
         public double ProposedCost { get; set; }
         public double AgreedCost { get; set; }
         public DateTime? DeadLine { get; set; }
