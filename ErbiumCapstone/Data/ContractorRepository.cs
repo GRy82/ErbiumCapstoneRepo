@@ -19,7 +19,7 @@ namespace ErbiumCapstone.Repositories
         public Contractor GetContractor(int contractorId) =>
             FindByCondition(c => c.ContractorId.Equals(contractorId)).SingleOrDefault();
 
-        public Contractor EditContractor(Contractor contractor) => Update(contractor);
+        public void EditContractor(Contractor contractor) => Update(contractor);
 
         public void DeleteContractor(Contractor contractor) => Delete(contractor);
     }
