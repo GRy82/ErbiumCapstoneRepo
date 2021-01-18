@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ErbiumCapstone.ViewModels
 {
-    public class CustomerHomeViewModel
+    public class HomeViewModel
     {
         public Customer Customer { get; set; }
         public Contractor Contractor { get; set; }

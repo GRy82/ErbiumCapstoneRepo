@@ -28,13 +28,11 @@ namespace ErbiumCapstone.Controllers
         {
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             Customer customer = _repo.Customer.GetCustomer(Convert.ToInt32(userId));
-            var jobList = _repo.Job.GetAllJobs(Convert.ToInt32(userId));
-            var skills = _repo.Skill.GetAllSkills(Convert.ToInt32(userId));
-            CustomerHomeViewModel customerHomeViewModel = new CustomerHomeViewModel()
+            var jobList = _repo.Job.GetAllJobs(customer.CustomerId);
+            HomeViewModel homeViewModel = new HomeViewModel()
             {
                 Customer = customer,
                 Jobs = jobList,
-                Skills = skills,
             };
             return View();
         }
