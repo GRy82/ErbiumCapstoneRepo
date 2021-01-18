@@ -12,6 +12,10 @@ namespace ErbiumCapstone.Models
         [Key]
         public int JobId { get; set; }
 
+        public string JobName { get; set; }
+
+        public string JobType { get; set; }
+
 
         [ForeignKey("Customer")]
         public int? CustomerId { get; set; } //needs to remain nullible type so that it does no default to value of 0.

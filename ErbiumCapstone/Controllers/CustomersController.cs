@@ -77,6 +77,32 @@ namespace ErbiumCapstone.Controllers
             }
         }
 
+        //GET
+        public ActionResult CreateJob()
+        {
+            ViewData["jobTypes"] = new List<string> { "Electrical", "Plumbing" };
+            return View(new Job());
+        }
+
+        // POST: CustomersController/CreateJob/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateJob(Job job)
+        {
+            try
+            {
+                _repo.Job.CreateJob(job);
+                _repo.Save();
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+
+
         // GET: CustomersController/Edit/5
         public ActionResult EditJob(int jobId)
         {
