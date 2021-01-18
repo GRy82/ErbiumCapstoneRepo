@@ -14,7 +14,19 @@ namespace ErbiumCapstone.Repositories
         private ICustomerRepository _customer;
         private IJobRepository _job;
         private IJobTaskRepository _jobTask;
+        private ISkillRepository _skill;
 
+        public ISkillRepository Skill
+        {
+            get
+            {
+                if (_skill == null)
+                {
+                    _skill = new SkillRepository(_context);
+                }
+                return _skill;
+            }
+        }
         public IJobTaskRepository JobTask
         {
             get
