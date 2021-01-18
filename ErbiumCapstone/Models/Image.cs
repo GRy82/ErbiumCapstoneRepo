@@ -12,7 +12,9 @@ namespace ErbiumCapstone.Models
         [Key]
         public int ImageId { get; set; }
 
-        public string ImageTitle { get; set; }
+        public string Title { get; set; }
+
+        public string ImageName { get; set; }
 
         public IFormFile ImageFile { get; set; }
     }
