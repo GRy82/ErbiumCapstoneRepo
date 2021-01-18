@@ -81,7 +81,7 @@ namespace ErbiumCapstone
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
-                endpoints.MapHub<ChatHub>("chathub");
+                endpoints.MapHub<ChatHub>("/chathub");
             });
         }
     }

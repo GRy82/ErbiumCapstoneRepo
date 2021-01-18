@@ -19,20 +19,5 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script src="~/js/signalr/dist/browser/signalr.js"></script>
     <script src="~/js/Chat.js"></script>
-    <script>
-        let connection = new signalR.HubConnection("chathub", { transport: signalR.TransportType.LongPolling });
-
-        connection.on('send', data => {
-            var DisplayMessagesDiv = document.getElementById("DisplayMessages");
-            DisplayMessagesDiv.innerHTML += "
-            " + data;
-        });
-
-        connection.start().then(() => connection.invoke('send', 'Hello'));
-
-        function sendMessage() {
-            var msg = document.getElementById("txtMessage").value;
-            connection.invoke('send', msg);
-        }
-    </script>
+   
 }
