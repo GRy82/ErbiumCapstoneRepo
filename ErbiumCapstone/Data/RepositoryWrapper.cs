@@ -9,7 +9,7 @@ namespace ErbiumCapstone.Repositories
 {
     public class RepositoryWrapper : IRepositoryWrapper
     {
-        private ApplicationDbContext _context; 
+        private ApplicationDbContext _context;
         private IContractorRepository _contractor;
         private ICustomerRepository _customer;
         private IJobRepository _job;
