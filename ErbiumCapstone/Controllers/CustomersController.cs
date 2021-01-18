@@ -34,7 +34,7 @@ namespace ErbiumCapstone.Controllers
                 Customer = customer,
                 Jobs = jobList,
             };
-            return View();
+            return View(homeViewModel);
         }
 
         // GET: CustomersController/Details/5
