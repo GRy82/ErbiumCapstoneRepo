@@ -24,5 +24,7 @@ namespace ErbiumCapstone.Data
         public void EditJob(Job job) => Update(job);
         public void DeleteJob(Job job) => Delete(job);
 
+        public List<Job> GetAllJobs(int jobId) => 
+            FindByCondition(c => c.JobId.Equals(jobId)).ToList();
     }
 }
