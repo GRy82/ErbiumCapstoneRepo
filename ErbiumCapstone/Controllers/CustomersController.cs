@@ -26,9 +26,9 @@ namespace ErbiumCapstone.Controllers
         // GET: CustomersController
         public ActionResult Index()
         {
-                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            Customer customer = _repo.Customer.GetCustomer(Convert.ToInt32(userId));
-            var jobList = _repo.Job.GetAllJobs(customer.CustomerId);
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Customer customer = _repo.Customer.GetCustomer(userId);
+            List<Job> jobList = _repo.Job.GetAllJobs(customer.CustomerId);
             HomeViewModel homeViewModel = new HomeViewModel()
             {
                 Customer = customer,
@@ -78,7 +78,7 @@ namespace ErbiumCapstone.Controllers
         }
 
         //GET
-        public ActionResult CreateJob()
+        public async Task<ActionResult> CreateJob()
         {
             ViewData["jobTypes"] = new List<string> { "Electrical", "Plumbing" };
             return View(new Job());

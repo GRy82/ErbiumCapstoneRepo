@@ -18,6 +18,10 @@ namespace ErbiumCapstone.Repositories
         }
         public void CreateCustomer(Customer customer) => Create(customer);
 
+
+        public Customer GetCustomer(string userId) =>
+            FindByCondition(c => c.IdentityUserId.Equals(userId)).SingleOrDefault();
+
         public Customer GetCustomer(int customerId) =>
             FindByCondition(c => c.CustomerId.Equals(customerId)).SingleOrDefault();
 
