@@ -20,7 +20,7 @@
     <script src="~/js/signalr/dist/browser/signalr.js"></script>
     <script src="~/js/Chat.js"></script>
     <script>
-        let connection = new signalR.HubConnection("/chat", { transport: signalR.TransportType.LongPolling });
+        let connection = new signalR.HubConnection("chathub", { transport: signalR.TransportType.LongPolling });
 
         connection.on('send', data => {
             var DisplayMessagesDiv = document.getElementById("DisplayMessages");

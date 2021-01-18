@@ -27,11 +27,11 @@ namespace ErbiumCapstone.SignalR.Hubs
         
         public override async Task OnConnectedAsync()
         {
-            //await Groups.AddToGroupAsync(Context.ConnectionId, "SignalR Users");
-            //await base.OnConnectedAsync();
+            await Groups.AddToGroupAsync(Context.ConnectionId, "SignalR Users");
+            await base.OnConnectedAsync();
 
-            string userName = Context.User.Identity.Name;
-            string connectionId = Context.ConnectionId;
+            //string userName = Context.User.Identity.Name;
+            //string connectionId = Context.ConnectionId;
 
 
         }
