@@ -21,7 +21,7 @@ namespace ErbiumCapstone.Repositories
             {
                 if (_jobTask == null)
                 {
-                    _job = new JobTaskRepository(_context);
+                    _jobTask = new JobTaskRepository(_context);
                 }
                 return _jobTask;
             }
