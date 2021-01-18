@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Create Job";
     List<string> jobTypes = (List<string>)ViewData["jobTypes"];
+    bool provideUpdates = false;
 }
 
 <h1>Create New Job</h1>
@@ -22,6 +23,11 @@
                 <span asp-validation-for="JobType" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="ProposedCost"></label>
+                <input asp-for="ProposedCost" class="form-control" />
+                <span asp-validation-for="ProposedCost" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="JobStart"></label>
                 <input asp-for="JobStart" class="form-control" />
                 <span asp-validation-for="JobStart" class="text-danger"></span>
@@ -36,6 +42,29 @@
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="ProvideUpdates"></label>
+                <input id="radio-update" type="radio" asp-for="ProvideUpdates" class="form-control" />
+                <span asp-validation-for="ProvideUpdates" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProvidePix"></label>
+                <input id="radio-pic" type="radio" asp-for="ProvidePix" class="form-control" />
+                <span asp-validation-for="ProvidePix" class="text-danger"></span>
+            </div>
+            <script>
+                if (document.getElementById("radio-update").checked == true) {
+                    @provideUpdates = true;
+                }
+            </script>
+            @if (provideUpdates == true)
+            {
+                <div class="form-group">
+                    <label asp-for="NumberOfUpdates"></label>
+                    <input asp-for="NumberOfUpdates" class="form-control" />
+                    <span asp-validation-for="NumberOfUpdates" class="text-danger"></span>
+                </div>
+            }
 
             <div class="form-group">
                 <input type="submit" value="Create Job" class="btn btn-primary" />
