@@ -2,6 +2,7 @@ using ErbiumCapstone.ActionFilters;
 using ErbiumCapstone.Contracts;
 using ErbiumCapstone.Data;
 using ErbiumCapstone.Repositories;
+using ErbiumCapstone.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -49,6 +50,7 @@ namespace ErbiumCapstone
             services.AddRazorPages();
 
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
+            services.AddScoped<GeocodingService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,6 +1,7 @@
 ﻿
 using ErbiumCapstone.Contracts;
 using ErbiumCapstone.Models;
+using ErbiumCapstone.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -14,9 +15,11 @@ namespace ErbiumCapstone.Controllers
     public class CustomersController : Controller
     {
         private IRepositoryWrapper _repo;
-        public CustomersController(IRepositoryWrapper repo)
+        private GeocodingService _geocodingService;
+        public CustomersController(IRepositoryWrapper repo, GeocodingService geocodingService)
         {
             _repo = repo;
+            _geocodingService = geocodingService;
         }
         // pass in repository in our constructor
         // GET: CustomersController
@@ -44,8 +47,15 @@ namespace ErbiumCapstone.Controllers
         // POST: CustomersController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Customer customer)
+        public async Task<ActionResult> Create(Customer customer)
         {
+            string streetAddress =  customer.StreetAddress.Replace(' ', '+');
+            string city = customer.City.Replace(' ', '+');
+            string url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + streetAddress + ",+" + city + ",+" + customer.State + "&key=" + ApiKeys.GetGeocodingKey();
+            Geocoding response = await _geocodingService.GetGeocoded(url);
+            customer.Latitude = response.results[0].geometry.location.lat;
+            customer.Longitude = response.results[0].geometry.location.lng;
+
             try
             {
                 _repo.Customer.CreateCustomer(customer);

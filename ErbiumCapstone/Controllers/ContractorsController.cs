@@ -1,6 +1,7 @@
 ﻿using ErbiumCapstone.Contracts;
 using ErbiumCapstone.Data;
 using ErbiumCapstone.Models;
+using ErbiumCapstone.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,9 +14,11 @@ namespace ErbiumCapstone.Controllers
     public class ContractorsController : Controller
     {
         private IRepositoryWrapper _repo;
-        public ContractorsController(IRepositoryWrapper repo)
+        private GeocodingService _geocodingService;
+        public ContractorsController(IRepositoryWrapper repo, GeocodingService geocodingService)
         {
             _repo = repo;
+            _geocodingService = geocodingService;
         }
 
         // GET: ContractorController
@@ -32,7 +35,7 @@ namespace ErbiumCapstone.Controllers
         }
 
         // GET: ContractorController/Create
-        public ActionResult Create()
+        public ActionResult CreateContractor()
         {
             ViewData["states"] = new List<string> { "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS",
                 "KY", "LA", "ME", "MD", "MA", "MI","MN", "MS", "MO","MT", "NE", "NV","NH", "NJ", "NM","NY", "NC", "ND","OH", "OK", "OR","PA", "RI", "SC","SD",
@@ -40,10 +43,33 @@ namespace ErbiumCapstone.Controllers
             return View(new Contractor());
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> NewContractor(Contractor contractor)
+        {
+            string streetAddress = contractor.StreetAddress.Replace(' ', '+');
+            string city = contractor.City.Replace(' ', '+');
+            string url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + streetAddress + ",+" + city + ",+" + contractor.State + "&key=" + ApiKeys.GetGeocodingKey();
+            Geocoding response = await _geocodingService.GetGeocoded(url);
+            contractor.Latitude = response.results[0].geometry.location.lat;
+            contractor.Longitude = response.results[0].geometry.location.lng;
+
+            try
+            {
+                _repo.Contractor.Create(contractor);
+                _repo.Save();
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
         // POST: ContractorController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(JobTask jobTask)
+        public IActionResult NewJobTask(JobTask jobTask)
         {
             try
             {
