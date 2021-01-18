@@ -2,11 +2,13 @@
 using ErbiumCapstone.Data;
 using ErbiumCapstone.Models;
 using ErbiumCapstone.Services;
+using ErbiumCapstone.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ErbiumCapstone.Controllers
@@ -24,7 +26,15 @@ namespace ErbiumCapstone.Controllers
         // GET: ContractorController
         public ActionResult Index()
         {
-            return View();
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Contractor contractor = _repo.Contractor.GetContractor(Convert.ToInt32(userId));
+            var jobList = _repo.Job.GetAllJobs(contractor.ContractorId);
+            HomeViewModel homeViewModel = new HomeViewModel()
+            {
+                Contractor = contractor,
+                Jobs = jobList,
+            };
+            return View(homeViewModel);
         }
 
         // GET: ContractorController/Details/5
