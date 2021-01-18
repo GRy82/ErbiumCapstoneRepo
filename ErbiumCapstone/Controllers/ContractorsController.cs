@@ -28,14 +28,14 @@ namespace ErbiumCapstone.Controllers
         }
 
         // GET: ContractorController/Details/5
-        public ActionResult Details(int jobId)
+        public ActionResult JobDetails(int jobId)
         {
             var jobDetails = _repo.Job.GetJob(jobId);
             return View(jobDetails);
         }
 
         // GET: ContractorController/Create
-        public ActionResult CreateContractor()
+        public ActionResult Create()
         {
             ViewData["states"] = new List<string> { "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS",
                 "KY", "LA", "ME", "MD", "MA", "MI","MN", "MS", "MO","MT", "NE", "NV","NH", "NJ", "NM","NY", "NC", "ND","OH", "OK", "OR","PA", "RI", "SC","SD",
@@ -45,7 +45,7 @@ namespace ErbiumCapstone.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> NewContractor(Contractor contractor)
+        public async Task<IActionResult> Create(Contractor contractor)
         {
             string streetAddress = contractor.StreetAddress.Replace(' ', '+');
             string city = contractor.City.Replace(' ', '+');
@@ -56,7 +56,7 @@ namespace ErbiumCapstone.Controllers
 
             try
             {
-                _repo.Contractor.Create(contractor);
+                _repo.Contractor.CreateContractor(contractor);
                 _repo.Save();
                 return RedirectToAction(nameof(Index));
             }
@@ -73,7 +73,7 @@ namespace ErbiumCapstone.Controllers
         {
             try
             {
-                _repo.JobTask.Create(jobTask);
+                _repo.JobTask.CreateJobTask(jobTask);
                 _repo.Save();
                 return RedirectToAction(nameof(Index));
             }
@@ -84,7 +84,7 @@ namespace ErbiumCapstone.Controllers
         }
 
         // GET: ContractorController/Edit/5
-        public ActionResult Edit(int jobTaskId)
+        public ActionResult EditJobTask(int jobTaskId)
         {
             JobTask taskToEdit = _repo.JobTask.GetJobTask(jobTaskId);
             return View(taskToEdit);
@@ -93,7 +93,7 @@ namespace ErbiumCapstone.Controllers
         // POST: ContractorController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(JobTask jobTask)
+        public ActionResult EditJobTask(JobTask jobTask)
         {
             try
             {

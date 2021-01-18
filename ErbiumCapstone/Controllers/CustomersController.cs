@@ -29,7 +29,7 @@ namespace ErbiumCapstone.Controllers
         }
 
         // GET: CustomersController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult CustomerDetails(int id)
         {
             var customer = _repo.Customer.GetCustomer(id);
             return View(customer);
@@ -69,7 +69,7 @@ namespace ErbiumCapstone.Controllers
         }
 
         // GET: CustomersController/Edit/5
-        public ActionResult Edit(int jobId)
+        public ActionResult EditJob(int jobId)
         {
             var jobToEdit = _repo.Job.GetJob(jobId);
             return View(jobToEdit);
@@ -78,7 +78,7 @@ namespace ErbiumCapstone.Controllers
         // POST: CustomersController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Job job)
+        public ActionResult EditJob(Job job)
         {
             try
             {
@@ -93,7 +93,7 @@ namespace ErbiumCapstone.Controllers
         }
 
         // GET: CustomersController/Delete/5
-        public ActionResult Delete(int jobId)
+        public ActionResult DeleteJob(int jobId)
         {
             var jobToDelete = _repo.Job.GetJob(jobId);
             return View(jobToDelete);
@@ -102,11 +102,11 @@ namespace ErbiumCapstone.Controllers
         // POST: CustomersController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, Job job)
+        public ActionResult DeleteJob(int id, Job job)
         {
             try
             {
-                _repo.Job.Delete(job);
+                _repo.Job.DeleteJob(job);
                 _repo.Save();
                 return RedirectToAction(nameof(Index));
             }
