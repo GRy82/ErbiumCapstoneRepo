@@ -2,6 +2,7 @@
 using ErbiumCapstone.Contracts;
 using ErbiumCapstone.Models;
 using ErbiumCapstone.Services;
+using ErbiumCapstone.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -25,6 +26,16 @@ namespace ErbiumCapstone.Controllers
         // GET: CustomersController
         public ActionResult Index()
         {
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Customer customer = _repo.Customer.GetCustomer(Convert.ToInt32(userId));
+            var jobList = _repo.Job.GetAllJobs(Convert.ToInt32(userId));
+            var skills = _repo.Skill.GetAllSkills(Convert.ToInt32(userId));
+            CustomerHomeViewModel customerHomeViewModel = new CustomerHomeViewModel()
+            {
+                Customer = customer,
+                Jobs = jobList,
+                Skills = skills,
+            };
             return View();
         }
 

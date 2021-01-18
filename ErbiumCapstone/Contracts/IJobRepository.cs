@@ -12,5 +12,6 @@ namespace ErbiumCapstone.Contracts
         Job GetJob(int jobId);
         void EditJob(Job job);
         void DeleteJob(Job job);
+        List<Job> GetAllJobs(int jobId);
     }
 }
