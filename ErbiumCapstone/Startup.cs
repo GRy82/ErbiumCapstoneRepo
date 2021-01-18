@@ -2,6 +2,7 @@ using ErbiumCapstone.ActionFilters;
 using ErbiumCapstone.Contracts;
 using ErbiumCapstone.Data;
 using ErbiumCapstone.Repositories;
+using ErbiumCapstone.SignalR.Hubs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -80,6 +81,7 @@ namespace ErbiumCapstone
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
+                endpoints.MapHub<ChatHub>("/chat");
             });
         }
     }
