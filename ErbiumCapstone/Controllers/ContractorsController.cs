@@ -1,11 +1,14 @@
 ﻿using ErbiumCapstone.Contracts;
 using ErbiumCapstone.Data;
 using ErbiumCapstone.Models;
+using ErbiumCapstone.Services;
+using ErbiumCapstone.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ErbiumCapstone.Controllers
@@ -13,34 +16,54 @@ namespace ErbiumCapstone.Controllers
     public class ContractorsController : Controller
     {
         private IRepositoryWrapper _repo;
-        public ContractorsController(IRepositoryWrapper repo)
+        private GeocodingService _geocodingService;
+        public ContractorsController(IRepositoryWrapper repo, GeocodingService geocodingService)
         {
             _repo = repo;
+            _geocodingService = geocodingService;
         }
 
         // GET: ContractorController
         public ActionResult Index()
         {
-            return View();
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Contractor contractor = _repo.Contractor.GetContractor(Convert.ToInt32(userId));
+            var jobList = _repo.Job.GetAllJobs(contractor.ContractorId);
+            HomeViewModel homeViewModel = new HomeViewModel()
+            {
+                Contractor = contractor,
+                Jobs = jobList,
+            };
+            return View(homeViewModel);
         }
 
         // GET: ContractorController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult JobDetails(int jobId)
         {
-            return View();
+            var jobDetails = _repo.Job.GetJob(jobId);
+            return View(jobDetails);
         }
 
         // GET: ContractorController/Create
         public ActionResult Create()
         {
-            return View();
+            ViewData["states"] = new List<string> { "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS",
+                "KY", "LA", "ME", "MD", "MA", "MI","MN", "MS", "MO","MT", "NE", "NV","NH", "NJ", "NM","NY", "NC", "ND","OH", "OK", "OR","PA", "RI", "SC","SD",
+                "TN", "TX","UT", "VT", "VA","WA", "WV", "WI","WY" };
+            return View(new Contractor());
         }
 
-        // POST: ContractorController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Contractor contractor)
+        public async Task<IActionResult> Create(Contractor contractor)
         {
+            string streetAddress = contractor.StreetAddress.Replace(' ', '+');
+            string city = contractor.City.Replace(' ', '+');
+            string url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + streetAddress + ",+" + city + ",+" + contractor.State + "&key=" + ApiKeys.GetGeocodingKey();
+            Geocoding response = await _geocodingService.GetGeocoded(url);
+            contractor.Latitude = response.results[0].geometry.location.lat;
+            contractor.Longitude = response.results[0].geometry.location.lng;
+
             try
             {
                 _repo.Contractor.CreateContractor(contractor);
@@ -53,23 +76,40 @@ namespace ErbiumCapstone.Controllers
             }
         }
 
-        // GET: ContractorController/Edit/5
-        public ActionResult Edit(int id)
+        // POST: ContractorController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult NewJobTask(JobTask jobTask)
         {
-            Contractor contractor = _repo.Contractor.GetContractor(id);
-            return View(contractor);
+            try
+            {
+                _repo.JobTask.CreateJobTask(jobTask);
+                _repo.Save();
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        // GET: ContractorController/Edit/5
+        public ActionResult EditJobTask(int jobTaskId)
+        {
+            JobTask taskToEdit = _repo.JobTask.GetJobTask(jobTaskId);
+            return View(taskToEdit);
         }
 
         // POST: ContractorController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Contractor contractor)
+        public ActionResult EditJobTask(JobTask jobTask)
         {
             try
             {
-                _repo.Contractor.EditContractor(contractor);
+                _repo.JobTask.EditJobTask(jobTask);
                 _repo.Save();
-                return View(contractor);
+                return RedirectToAction(nameof(Index));
             }
             catch
             {
@@ -78,18 +118,22 @@ namespace ErbiumCapstone.Controllers
         }
 
         // GET: ContractorController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int taskId)
         {
-            return View();
+            JobTask jobToDelete = _repo.JobTask.GetJobTask(taskId);
+            return View(jobToDelete);
         }
 
         // POST: ContractorController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, JobTask jobToDelete)
         {
             try
             {
+                // JobTask jobToDelete = _repo.JobTask.GetJobTask(id);   --if id is provided from view.
+                _repo.JobTask.DeleteJobTask(jobToDelete); //if model object provided from view.
+                _repo.Save();
                 return RedirectToAction(nameof(Index));
             }
             catch

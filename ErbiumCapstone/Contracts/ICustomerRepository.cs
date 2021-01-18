@@ -11,7 +11,7 @@ namespace ErbiumCapstone.Contracts
         void CreateCustomer(Customer customer);
         Customer GetCustomer(int customerId);
         void EditCustomer(Customer customer); 
-        void DeleteCustomer(int customerId);
+        void DeleteCustomer(Customer customer);
 
     }
 }
