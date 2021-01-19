@@ -24,11 +24,15 @@ namespace ErbiumCapstone.Controllers
         }
 
         // GET: ContractorController
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            Contractor contractor = _repo.Contractor.GetContractor(Convert.ToInt32(userId));
-            var jobList = _repo.Job.GetAllJobs(contractor.ContractorId);
+            Contractor contractor = await _repo.Contractor.GetContractorAsync(userId);
+            if (contractor == null)
+            {
+                return RedirectToAction("Create");
+            }
+            var jobList = await _repo.Job.GetAllJobsAsync(contractor.ContractorId, contractor.GetType());
             HomeViewModel homeViewModel = new HomeViewModel()
             {
                 Contractor = contractor,
@@ -38,9 +42,9 @@ namespace ErbiumCapstone.Controllers
         }
 
         // GET: ContractorController/Details/5
-        public ActionResult JobDetails(int jobId)
+        public async Task<ActionResult> JobDetails(int jobId)
         {
-            var jobDetails = _repo.Job.GetJob(jobId);
+            var jobDetails = await _repo.Job.GetJobAsync(jobId);
             return View(jobDetails);
         }
 
@@ -67,7 +71,7 @@ namespace ErbiumCapstone.Controllers
             try
             {
                 _repo.Contractor.CreateContractor(contractor);
-                _repo.Save();
+                await _repo.SaveAsync();
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -79,12 +83,12 @@ namespace ErbiumCapstone.Controllers
         // POST: ContractorController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult NewJobTask(JobTask jobTask)
+        public async Task<ActionResult> NewJobTask(JobTask jobTask)
         {
             try
             {
                 _repo.JobTask.CreateJobTask(jobTask);
-                _repo.Save();
+                await _repo.SaveAsync();
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -94,21 +98,21 @@ namespace ErbiumCapstone.Controllers
         }
 
         // GET: ContractorController/Edit/5
-        public ActionResult EditJobTask(int jobTaskId)
+        public async Task<ActionResult> EditJobTask(int jobTaskId)
         {
-            JobTask taskToEdit = _repo.JobTask.GetJobTask(jobTaskId);
+            JobTask taskToEdit = await _repo.JobTask.GetJobTaskAsync(jobTaskId);
             return View(taskToEdit);
         }
 
         // POST: ContractorController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditJobTask(JobTask jobTask)
+        public async Task<ActionResult> EditJobTask(JobTask jobTask)
         {
             try
             {
                 _repo.JobTask.EditJobTask(jobTask);
-                _repo.Save();
+                await _repo.SaveAsync();
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -118,22 +122,22 @@ namespace ErbiumCapstone.Controllers
         }
 
         // GET: ContractorController/Delete/5
-        public ActionResult Delete(int taskId)
+        public async Task<ActionResult> Delete(int taskId)
         {
-            JobTask jobToDelete = _repo.JobTask.GetJobTask(taskId);
+            JobTask jobToDelete = await _repo.JobTask.GetJobTaskAsync(taskId);
             return View(jobToDelete);
         }
 
         // POST: ContractorController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, JobTask jobToDelete)
+        public async Task<ActionResult> Delete(int id, JobTask jobToDelete)
         {
             try
             {
                 // JobTask jobToDelete = _repo.JobTask.GetJobTask(id);   --if id is provided from view.
                 _repo.JobTask.DeleteJobTask(jobToDelete); //if model object provided from view.
-                _repo.Save();
+                await _repo.SaveAsync();
                 return RedirectToAction(nameof(Index));
             }
             catch

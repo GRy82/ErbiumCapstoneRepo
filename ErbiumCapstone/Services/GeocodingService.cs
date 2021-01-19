@@ -18,7 +18,7 @@ namespace ErbiumCapstone.Services
         {
 
             HttpClient client = new HttpClient();
-            url += ApiKeys.GetGeocodingKey();
+            //url += ApiKeys.GetGeocodingKey();
             HttpResponseMessage response = await client.GetAsync(url);
             if (response.IsSuccessStatusCode)
             {

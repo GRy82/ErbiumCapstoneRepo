@@ -9,24 +9,12 @@ namespace ErbiumCapstone.Repositories
 {
     public class RepositoryWrapper : IRepositoryWrapper
     {
-        private ApplicationDbContext _context;
+        private ApplicationDbContext _context; 
         private IContractorRepository _contractor;
         private ICustomerRepository _customer;
         private IJobRepository _job;
         private IJobTaskRepository _jobTask;
-        private ISkillRepository _skill;
 
-        public ISkillRepository Skill
-        {
-            get
-            {
-                if (_skill == null)
-                {
-                    _skill = new SkillRepository(_context);
-                }
-                return _skill;
-            }
-        }
         public IJobTaskRepository JobTask
         {
             get
@@ -71,13 +59,16 @@ namespace ErbiumCapstone.Repositories
                 return _customer;
             }
         }
+
+        public ISkillRepository Skill => throw new NotImplementedException();
+
         public RepositoryWrapper(ApplicationDbContext context)
         {
             _context = context;
         }
-        public void Save()
+        public async Task SaveAsync()
         {
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }
