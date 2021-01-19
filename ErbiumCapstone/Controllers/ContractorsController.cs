@@ -36,7 +36,6 @@ namespace ErbiumCapstone.Controllers
             HomeViewModel homeViewModel = new HomeViewModel()
             {
                 Contractor = contractor,
-                Jobs = jobList,
             };
             return View(homeViewModel);
         }
