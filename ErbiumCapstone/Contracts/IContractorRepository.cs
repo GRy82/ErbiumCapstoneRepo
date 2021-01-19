@@ -10,6 +10,8 @@ namespace ErbiumCapstone.Contracts
     {
         void CreateContractor(Contractor contractor);
         Contractor GetContractor(int contractorId);
+        Contractor GetContractor(string contractorId);
+
         void EditContractor(Contractor contractor);
         void DeleteContractor(Contractor contractor);
     }

@@ -27,7 +27,13 @@ namespace ErbiumCapstone.Controllers
         public ActionResult Index()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            Contractor contractor = _repo.Contractor.GetContractor(Convert.ToInt32(userId));
+            Contractor contractor = _repo.Contractor.GetContractor(userId);
+            if (contractor == null)
+            {
+                return RedirectToAction("Create");
+            }
+
+            Customer customer = _repo.Customer.GetCustomer(userId);
             var jobList = _repo.Job.GetAllJobs(contractor.ContractorId);
             HomeViewModel homeViewModel = new HomeViewModel()
             {
