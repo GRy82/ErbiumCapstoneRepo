@@ -65,11 +65,16 @@ namespace ErbiumCapstone.Controllers
             string city = contractor.City.Replace(' ', '+');
             string url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + streetAddress + ",+" + city + ",+" + contractor.State + "&key=" + ApiKeys.GetGeocodingKey();
             Geocoding response = await _geocodingService.GetGeocoded(url);
-            contractor.Latitude = response.results[0].geometry.location.lat;
-            contractor.Longitude = response.results[0].geometry.location.lng;
+            if (response.results.Length > 0)
+            {
+                contractor.Latitude = response.results[0].geometry.location.lat;
+                contractor.Longitude = response.results[0].geometry.location.lng;
+            }
 
             try
             {
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                contractor.IdentityUserId = userId;
                 _repo.Contractor.CreateContractor(contractor);
                 await _repo.SaveAsync();
                 return RedirectToAction(nameof(Index));
