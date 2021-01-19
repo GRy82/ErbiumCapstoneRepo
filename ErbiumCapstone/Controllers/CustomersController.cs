@@ -127,6 +127,7 @@ namespace ErbiumCapstone.Controllers
         {
             try
             {
+                job.JobState = "posted";
                 _repo.Job.CreateJob(job);
                 await _repo.SaveAsync();
                 return RedirectToAction(nameof(Index));
@@ -137,11 +138,16 @@ namespace ErbiumCapstone.Controllers
             }
         }
 
+        public async Task<ActionResult> PostedJobs()
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //Customer customer.IdentityUserId = userId;
+            //var customer = _repo.Customer.where(c => c.IdentityUserId == userId);
 
-        // GET: CustomersController/Edit/5  
+            return View();
+        }
 
-        //This can have it's name changed if needed! This will be used only in posted jobs. After a job is accepted by both parties, it is a current job, and many of
-        //job properties shouldn't be edited... if any of them.
+        // GET: CustomersController/Edit/5
         public async Task<ActionResult> EditJob(int jobId)
         {
             var jobToEdit = await _repo.Job.GetJobAsync(jobId);
@@ -164,22 +170,6 @@ namespace ErbiumCapstone.Controllers
                 return View();
             }
         }
-
-        //Get
-        public async Task<ActionResult> CurrentJobs()
-        {
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            Customer customer = await _repo.Customer.GetCustomerAsync(userId);
-            List<Job> currentJobs = await _repo.Job.GetAllJobsAsync(customer.CustomerId, customer.GetType());
-            HomeViewModel homeViewModel = new HomeViewModel()
-            {
-                Customer = customer,
-                Jobs = currentJobs,
-            };
-            return View(homeViewModel);
-        }
-
-
 
         // GET: CustomersController/Delete/5
         public async Task<ActionResult> DeleteJob(int jobId)
