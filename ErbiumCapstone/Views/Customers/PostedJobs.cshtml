@@ -6,9 +6,6 @@
 
 <h1>PostedJobs</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -17,12 +14,6 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.JobType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Customer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Contractor)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Description)
@@ -41,9 +32,6 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.JobCompletion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.JobDuration)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.isJobCompletionApproved)
@@ -79,12 +67,6 @@
                 @Html.DisplayFor(modelItem => item.JobType)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Customer.CustomerId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Contractor.ContractorId)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
@@ -101,9 +83,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.JobCompletion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.JobDuration)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.isJobCompletionApproved)
