@@ -24,7 +24,7 @@ namespace ErbiumCapstone.ActionFilters
                 {
                     context.Result = new RedirectToActionResult("Index", "Customers", null);
                 }
-                else if (_claimsPrincipal.IsInRole("Employee"))
+                else if (_claimsPrincipal.IsInRole("Contractor"))
                 {
                     context.Result = new RedirectToActionResult("Index", "Contractors", null);
                 }

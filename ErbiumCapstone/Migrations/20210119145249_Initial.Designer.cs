@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace ErbiumCapstone.Data.Migrations
+namespace ErbiumCapstone.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210118193124_intital")]
-    partial class intital
+    [Migration("20210119145249_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -131,12 +131,18 @@ namespace ErbiumCapstone.Data.Migrations
                         new
                         {
                             ContractorSkillId = 2,
-                            ContractorId = 2,
+                            ContractorId = 1,
                             SkillId = 2
                         },
                         new
                         {
                             ContractorSkillId = 3,
+                            ContractorId = 2,
+                            SkillId = 1
+                        },
+                        new
+                        {
+                            ContractorSkillId = 4,
                             ContractorId = 3,
                             SkillId = 2
                         });
@@ -234,13 +240,13 @@ namespace ErbiumCapstone.Data.Migrations
                     b.Property<bool>("ContractorAcceptedJob")
                         .HasColumnType("bit");
 
-                    b.Property<int>("ContractorId")
+                    b.Property<int?>("ContractorId")
                         .HasColumnType("int");
 
                     b.Property<bool>("CustomerAcceptedJob")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("CustomerId")
+                    b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("DeadLine")
@@ -338,7 +344,7 @@ namespace ErbiumCapstone.Data.Migrations
                         new
                         {
                             SkillId = 1,
-                            SkillType = "Plumber"
+                            SkillType = "Plumbing"
                         },
                         new
                         {
@@ -376,15 +382,15 @@ namespace ErbiumCapstone.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "ddff6c2a-0f12-48c0-9630-4e9ced260202",
-                            ConcurrencyStamp = "3d7275d5-56d4-4445-933a-8410c074f996",
+                            Id = "ad60a221-c9fb-44b6-89b6-b906813bfb90",
+                            ConcurrencyStamp = "5cf438f6-06cb-46ff-8b61-8c9c063efa94",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "26bb6763-6a05-4d99-9dd7-d5fd0923880e",
-                            ConcurrencyStamp = "12fccabd-25e4-40ac-8c03-d14e1b7fd261",
+                            Id = "70a57b2b-f4d3-494b-8b2f-a337077a0bcf",
+                            ConcurrencyStamp = "57cfcd02-fa77-46f3-ad5b-d0f8a0fe728f",
                             Name = "Contractor",
                             NormalizedName = "CONTRACTOR"
                         });
@@ -592,13 +598,13 @@ namespace ErbiumCapstone.Data.Migrations
                 {
                     b.HasOne("ErbiumCapstone.Models.Contractor", "Contractor")
                         .WithMany()
-                        .HasForeignKey("ContractorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ContractorId");
 
                     b.HasOne("ErbiumCapstone.Models.Customer", "Customer")
                         .WithMany()
-                        .HasForeignKey("CustomerId");
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ErbiumCapstone.Models.JobTask", b =>
