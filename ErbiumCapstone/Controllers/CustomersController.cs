@@ -44,7 +44,7 @@ namespace ErbiumCapstone.Controllers
                 Customer = customer,
                 Jobs = jobList,
             };
-            return View(homeViewModel);
+            return View(jobList);
         }
 
         public async Task<ActionResult> GetPastJobs()
@@ -126,6 +126,7 @@ namespace ErbiumCapstone.Controllers
         {
             try
             {
+                job.JobState = "posted";
                 _repo.Job.CreateJob(job);
                 await _repo.SaveAsync();
                 return RedirectToAction(nameof(Index));
@@ -136,6 +137,14 @@ namespace ErbiumCapstone.Controllers
             }
         }
 
+        public async Task<ActionResult> PostedJobs()
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //Customer customer.IdentityUserId = userId;
+            //var customer = _repo.Customer.where(c => c.IdentityUserId == userId);
+
+            return View();
+        }
 
         // GET: CustomersController/Edit/5
         public async Task<ActionResult> EditJob(int jobId)
@@ -159,6 +168,25 @@ namespace ErbiumCapstone.Controllers
             {
                 return View();
             }
+        }
+
+        //Get
+        public async Task<ActionResult> CurrentJobs()
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Customer customer = await _repo.Customer.GetCustomerAsync(userId);
+            List<Job> currentJobs = await _repo.Job.GetAllCurrentJobsAsync(customer.CustomerId, customer.GetType());
+
+            //Only keep jobs that have true values for CustomerAcceptedJob, ContractorAcceptedJob; and false values for JobCompleteion and isJobCompletionApproved.
+           
+
+            HomeViewModel homeViewModel = new HomeViewModel()
+            {
+                Customer = customer,
+                Jobs = currentJobs,
+
+            };
+            return View(homeViewModel);
         }
 
         // GET: CustomersController/Delete/5

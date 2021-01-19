@@ -15,6 +15,5 @@ namespace ErbiumCapstone.Contracts
         Task<Customer> GetCustomerAsync(int customerId);
         void EditCustomer(Customer customer); 
         void DeleteCustomer(Customer customer);
-
     }
 }

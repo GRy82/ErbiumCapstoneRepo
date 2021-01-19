@@ -1,32 +1,52 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿
+@model IEnumerable<ErbiumCapstone.Models.Job>
+
 @{
+    ViewData["Title"] = "Current Jobs";
 }
+
+<h1>Current Jobs</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        @foreach (var item in Model)
+        { 
+        <details>
+            <summary><h3>@Html.DisplayFor(modelItem => item.JobName)</h3></summary>
+            <h4>@Html.DisplayFor(modelItem => item.Contractor.ContractorId)</h4>
+            <h4>@Html.DisplayFor(modelItem => item.AgreedCost)</h4>
+            <h4>@Html.DisplayFor(modelItem => item.JobStart)</h4>
+            <h4>@Html.DisplayFor(modelItem => item.DeadLine)</h4>
+           
+            <h4>@Html.DisplayFor(modelItem => item.Contractor.ContractorId)</h4>
+        </details>
+        }
+    </div>
+</div>
 
 <div class="wrapper">
     <!-- Sidebar -->
     <nav id="sidebar">
         <div class="sidebar-header">
-            <h5>Contractor Portal</h5>
+            <h5>Customer Portal</h5>
         </div>
 
         <ul class="list-unstyled components">
             <li>
-                <a href="#">Search Jobs</a>
+                <a href="#">Create Job</a>
             </li>
 
             <li class="active">
-                <a href="#interestSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Jobs of Interest</a>
+                <a href="#interestSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Posted Jobs</a>
                 <ul class="collapse list-unstyled" id="interestSubmenu">
                     <li>
-                        <a href="#">Interest(1)</a>
+                        <a href="#">Posted Job 1</a>
                     </li>
                     <li>
-                        <a href="#">Interest(2)</a>
+                        <a href="#">Posted Job 2</a>
                     </li>
                     <li>
-                        <a href="#">Interest(3)</a>
+                        <a href="#">Posted Job 3</a>
                     </li>
                 </ul>
             </li>
@@ -65,4 +85,3 @@
 
     </nav>
 </div>
-
