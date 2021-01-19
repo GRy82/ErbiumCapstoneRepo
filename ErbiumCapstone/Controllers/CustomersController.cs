@@ -27,24 +27,18 @@ namespace ErbiumCapstone.Controllers
         // GET: CustomersController
         public async Task<ActionResult> Index()
         {
-            
-
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
             Customer customer = await _repo.Customer.GetCustomerAsync(userId);
             if (customer == null)
             {
                 return RedirectToAction("Create");
             }
-            Type customerType = customer.GetType();
-            List<Job> jobList = await _repo.Job.GetAllJobsAsync(customer.CustomerId, customerType);
 
-            HomeViewModel homeViewModel = new HomeViewModel()
-            {
-                Customer = customer,
-                Jobs = jobList,
-            };
-            return View(jobList);
+            Type customerType = customer.GetType();
+
+            HomeViewModel homeViewModel = await GetAllJobsByState();
+
+            return RedirectToAction("CurrentJobs");
         }
 
         public async Task<ActionResult> GetPastJobs()
@@ -103,7 +97,7 @@ namespace ErbiumCapstone.Controllers
                 customer.IdentityUserId = userId;
                 _repo.Customer.CreateCustomer(customer);
                 await _repo.SaveAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index");
             }
             catch(Exception e)
             {
@@ -129,7 +123,7 @@ namespace ErbiumCapstone.Controllers
                 job.JobState = "posted";
                 _repo.Job.CreateJob(job);
                 await _repo.SaveAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("PostedJobs");
             }
             catch
             {
@@ -137,13 +131,12 @@ namespace ErbiumCapstone.Controllers
             }
         }
 
+        //GET: CustomersController/PostedJobs
         public async Task<ActionResult> PostedJobs()
         {
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            //Customer customer.IdentityUserId = userId;
-            //var customer = _repo.Customer.where(c => c.IdentityUserId == userId);
+            HomeViewModel homeViewModel = await GetAllJobsByState();
 
-            return View();
+            return View(homeViewModel);
         }
 
         // GET: CustomersController/Edit/5
@@ -173,25 +166,15 @@ namespace ErbiumCapstone.Controllers
         //Get
         public async Task<ActionResult> CurrentJobs()
         {
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            Customer customer = await _repo.Customer.GetCustomerAsync(userId);
-            List<Job> currentJobs = await _repo.Job.GetAllCurrentJobsAsync(customer.CustomerId, customer.GetType());
-            List<JobTask> currentJobTasks = await _repo.JobTask.GetAllCurrentJobTasksAsync(currentJobs);
-            List<Image> currentJobImages = await _repo.Image.GetAllJobImagesAsync(currentJobs);
-            List<Image> currentJobTaskImages = await _repo.Image.GetAllJobTaskImagesAsync(currentJobTasks);
-            
+            //var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //Customer customer = await _repo.Customer.GetCustomerAsync(userId);
+            //List<Job> currentJobs = await _repo.Job.GetAllCurrentJobsAsync(customer.CustomerId, customer.GetType());
 
             //Only keep jobs that have true values for CustomerAcceptedJob, ContractorAcceptedJob; and false values for JobCompleteion and isJobCompletionApproved.
            
 
-            HomeViewModel homeViewModel = new HomeViewModel()
-            {
-                Customer = customer,
-                Jobs = currentJobs,
-                JobTasks = currentJobTasks,
-                JobImages = currentJobTaskImages,
-                JobTaskImages = currentJobTaskImages,
-            };
+            HomeViewModel homeViewModel = await GetAllJobsByState();
+
             return View(homeViewModel);
         }
 
@@ -218,6 +201,25 @@ namespace ErbiumCapstone.Controllers
             {
                 return View();
             }
+        }
+
+        //Gets the current customer and all of their jobs
+        public async Task<HomeViewModel> GetAllJobsByState()
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Customer customer = await _repo.Customer.GetCustomerAsync(userId);
+            List<Job> currentJobsList = await _repo.Job.GetAllCurrentJobsAsync(customer.CustomerId, customer.GetType());
+            List<Job> postedJobsList = await _repo.Job.GetAllPostedJobsAsync(customer.CustomerId, customer.GetType());
+            List<Job> PastJobsList = await _repo.Job.GetAllPastJobsAsync(customer.CustomerId, customer.GetType());
+
+            HomeViewModel homeViewModel = new HomeViewModel()
+            {
+                Customer = customer,
+                CurrentJobs = currentJobsList,
+                PostedJobs = postedJobsList,
+                PastJobs = PastJobsList
+            };
+            return homeViewModel;
         }
     }
 }
