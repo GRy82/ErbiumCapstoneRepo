@@ -42,7 +42,7 @@ namespace ErbiumCapstone.Controllers
             HomeViewModel homeViewModel = new HomeViewModel()
             {
                 Customer = customer,
-                Jobs = jobList,
+                PostedJobs = jobList,
             };
             return View(jobList);
         }
@@ -130,7 +130,7 @@ namespace ErbiumCapstone.Controllers
                 job.JobState = "posted";
                 _repo.Job.CreateJob(job);
                 await _repo.SaveAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("PostedJobs");
             }
             catch
             {
@@ -140,11 +140,9 @@ namespace ErbiumCapstone.Controllers
 
         public async Task<ActionResult> PostedJobs()
         {
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            //Customer customer.IdentityUserId = userId;
-            //var customer = _repo.Customer.where(c => c.IdentityUserId == userId);
+            HomeViewModel homeViewModel = await GetAllJobsByState();
 
-            return View();
+            return View(homeViewModel);
         }
 
         // GET: CustomersController/Edit/5
@@ -184,7 +182,6 @@ namespace ErbiumCapstone.Controllers
             HomeViewModel homeViewModel = new HomeViewModel()
             {
                 Customer = customer,
-                Jobs = currentJobs,
 
             };
             return View(homeViewModel);
@@ -213,6 +210,25 @@ namespace ErbiumCapstone.Controllers
             {
                 return View();
             }
+        }
+
+        public async Task<HomeViewModel> GetAllJobsByState()
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Customer customer = await _repo.Customer.GetCustomerAsync(userId);
+            List<Job> currentJobsList = await _repo.Job.GetAllCurrentJobsAsync(customer.CustomerId, customer.GetType());
+            List<Job> postedJobsList = await _repo.Job.GetAllPostedJobsAsync(customer.CustomerId, customer.GetType());
+            List<Job> PastJobsList = await _repo.Job.GetAllPastJobsAsync(customer.CustomerId, customer.GetType());
+
+
+            HomeViewModel homeViewModel = new HomeViewModel()
+            {
+                Customer = customer,
+                CurrentJobs = currentJobsList,
+                PostedJobs = postedJobsList,
+                PastJobs = PastJobsList
+            };
+            return homeViewModel;
         }
     }
 }
