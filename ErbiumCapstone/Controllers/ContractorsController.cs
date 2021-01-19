@@ -145,5 +145,14 @@ namespace ErbiumCapstone.Controllers
                 return View();
             }
         }
+        //public ActionResult SearchForJob()
+        //{
+        //    List<Job> jobs;
+        //    foreach(Job job in _repo.Job.FindAll())
+        //    {
+        //        jobs.Add(job);
+        //        return View(jobs);
+        //    }
+        //}
     }
 }
