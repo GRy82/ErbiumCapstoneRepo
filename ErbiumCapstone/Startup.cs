@@ -3,6 +3,7 @@ using ErbiumCapstone.ActionFilters;
 using ErbiumCapstone.Contracts;
 using ErbiumCapstone.Data;
 using ErbiumCapstone.Repositories;
+using ErbiumCapstone.Services;
 using ErbiumCapstone.SignalR.Hubs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -51,6 +52,7 @@ namespace ErbiumCapstone
             services.AddRazorPages();
 
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
+            services.AddScoped<GeocodingService>();
             services.AddSignalR();
         }
 
