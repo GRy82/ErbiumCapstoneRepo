@@ -27,24 +27,18 @@ namespace ErbiumCapstone.Controllers
         // GET: CustomersController
         public async Task<ActionResult> Index()
         {
-            
-
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
             Customer customer = await _repo.Customer.GetCustomerAsync(userId);
             if (customer == null)
             {
                 return RedirectToAction("Create");
             }
-            Type customerType = customer.GetType();
-            List<Job> jobList = await _repo.Job.GetAllJobsAsync(customer.CustomerId, customerType);
 
-            HomeViewModel homeViewModel = new HomeViewModel()
-            {
-                Customer = customer,
-                PostedJobs = jobList,
-            };
-            return View(jobList);
+            Type customerType = customer.GetType();
+
+            HomeViewModel homeViewModel = await GetAllJobsByState();
+
+            return RedirectToAction("CurrentJobs");
         }
 
         public async Task<ActionResult> GetPastJobs()
@@ -104,7 +98,7 @@ namespace ErbiumCapstone.Controllers
                 customer.IdentityUserId = userId;
                 _repo.Customer.CreateCustomer(customer);
                 await _repo.SaveAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index");
             }
             catch(Exception e)
             {
@@ -138,6 +132,7 @@ namespace ErbiumCapstone.Controllers
             }
         }
 
+        //GET: CustomersController/PostedJobs
         public async Task<ActionResult> PostedJobs()
         {
             HomeViewModel homeViewModel = await GetAllJobsByState();
@@ -209,6 +204,7 @@ namespace ErbiumCapstone.Controllers
             }
         }
 
+        //Gets the current customer and all of their jobs
         public async Task<HomeViewModel> GetAllJobsByState()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -216,7 +212,6 @@ namespace ErbiumCapstone.Controllers
             List<Job> currentJobsList = await _repo.Job.GetAllCurrentJobsAsync(customer.CustomerId, customer.GetType());
             List<Job> postedJobsList = await _repo.Job.GetAllPostedJobsAsync(customer.CustomerId, customer.GetType());
             List<Job> PastJobsList = await _repo.Job.GetAllPastJobsAsync(customer.CustomerId, customer.GetType());
-
 
             HomeViewModel homeViewModel = new HomeViewModel()
             {
