@@ -26,5 +26,7 @@ namespace ErbiumCapstone.Data
 
         public List<Job> GetAllJobs(int jobId) => 
             FindByCondition(c => c.JobId.Equals(jobId)).ToList();
+
+        
     }
 }
