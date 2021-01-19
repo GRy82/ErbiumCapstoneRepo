@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ErbiumCapstone.Models.Job>
+﻿@model ErbiumCapstone.ViewModels.HomeViewModel
 
 @{
     ViewData["Title"] = "PostedJobs";
@@ -9,108 +9,66 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.JobName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.JobType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProposedCost)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AgreedCost)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DeadLine)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.JobStart)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.JobCompletion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.isJobCompletionApproved)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.JobState)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProvideUpdates)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProvidePix)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NumberOfUpdates)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CustomerAcceptedJob)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ContractorAcceptedJob)
-            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var job in Model.PastJobs)
+        {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.JobName)
+                @Html.DisplayFor(modelItem => job.JobName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.JobType)
+                @Html.DisplayFor(modelItem => job.JobType)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
+                @Html.DisplayFor(modelItem => job.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ProposedCost)
+                @Html.DisplayFor(modelItem => job.ProposedCost)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AgreedCost)
+                @Html.DisplayFor(modelItem => job.AgreedCost)
+                <h4>@Html.DisplayFor(modelItem => job.AgreedCost)</h4>
+
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DeadLine)
+                @Html.DisplayFor(modelItem => job.DeadLine)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.JobStart)
+                @Html.DisplayFor(modelItem => job.JobStart)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.JobCompletion)
+                @Html.DisplayFor(modelItem => job.JobCompletion)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.isJobCompletionApproved)
+                @Html.DisplayFor(modelItem => job.isJobCompletionApproved)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.JobState)
+                @Html.DisplayFor(modelItem => job.JobState)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ProvideUpdates)
+                @Html.DisplayFor(modelItem => job.ProvideUpdates)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ProvidePix)
+                @Html.DisplayFor(modelItem => job.ProvidePix)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.NumberOfUpdates)
+                @Html.DisplayFor(modelItem => job.NumberOfUpdates)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CustomerAcceptedJob)
+                @Html.DisplayFor(modelItem => job.CustomerAcceptedJob)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ContractorAcceptedJob)
+                @Html.DisplayFor(modelItem => job.ContractorAcceptedJob)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.JobId">Edit</a> |
-                <a asp-action="Delete" asp-route-id="@item.JobId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@job.JobId">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@job.JobId">Delete</a>
             </td>
         </tr>
-}
+        }
     </tbody>
 </table>
 

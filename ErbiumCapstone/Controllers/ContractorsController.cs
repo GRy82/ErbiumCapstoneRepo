@@ -2,7 +2,6 @@
 using ErbiumCapstone.Data;
 using ErbiumCapstone.Models;
 using ErbiumCapstone.Services;
-using ErbiumCapstone.SignalR.Hubs;
 using ErbiumCapstone.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,15 +17,11 @@ namespace ErbiumCapstone.Controllers
     {
         private IRepositoryWrapper _repo;
         private GeocodingService _geocodingService;
-  
-
         public ContractorsController(IRepositoryWrapper repo, GeocodingService geocodingService)
         {
             _repo = repo;
             _geocodingService = geocodingService;
-       
         }
-
 
         // GET: ContractorController
         public async Task<ActionResult> Index()
@@ -42,7 +37,6 @@ namespace ErbiumCapstone.Controllers
             HomeViewModel homeViewModel = new HomeViewModel()
             {
                 Contractor = contractor,
-                Jobs = jobList,
             };
             return View(homeViewModel);
         }
