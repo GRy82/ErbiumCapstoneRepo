@@ -44,17 +44,17 @@
             </div>
             <div class="form-group">
                 <label asp-for="ProvideUpdates"></label>
-                <input id="radio-update" type="radio" asp-for="ProvideUpdates" class="form-control" />
+                <input id="radio-update" type="radio" asp-for="ProvideUpdates" value="true" class="form-control" />
                 <span asp-validation-for="ProvideUpdates" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ProvidePix"></label>
-                <input id="radio-pic" type="radio" asp-for="ProvidePix" class="form-control" />
+                <input id="radio-pic" type="radio" asp-for="ProvidePix" value="true" class="form-control" />
                 <span asp-validation-for="ProvidePix" class="text-danger"></span>
             </div>
             <script>
                 if (document.getElementById("radio-update").checked == true) {
-                    @provideUpdates = true;
+                    @(provideUpdates = true);
                 }
             </script>
             @if (provideUpdates == true)
