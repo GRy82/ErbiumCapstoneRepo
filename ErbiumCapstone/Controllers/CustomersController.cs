@@ -172,18 +172,15 @@ namespace ErbiumCapstone.Controllers
         //Get
         public async Task<ActionResult> CurrentJobs()
         {
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            Customer customer = await _repo.Customer.GetCustomerAsync(userId);
-            List<Job> currentJobs = await _repo.Job.GetAllCurrentJobsAsync(customer.CustomerId, customer.GetType());
+            //var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //Customer customer = await _repo.Customer.GetCustomerAsync(userId);
+            //List<Job> currentJobs = await _repo.Job.GetAllCurrentJobsAsync(customer.CustomerId, customer.GetType());
 
             //Only keep jobs that have true values for CustomerAcceptedJob, ContractorAcceptedJob; and false values for JobCompleteion and isJobCompletionApproved.
            
 
-            HomeViewModel homeViewModel = new HomeViewModel()
-            {
-                Customer = customer,
+            HomeViewModel homeViewModel = await GetAllJobsByState();
 
-            };
             return View(homeViewModel);
         }
 
