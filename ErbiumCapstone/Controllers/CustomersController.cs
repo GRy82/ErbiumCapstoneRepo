@@ -39,7 +39,7 @@ namespace ErbiumCapstone.Controllers
             return View(homeViewModel);
         }
 
-        public async Task<List<Job>> GetPastJobs()
+        public async Task<ActionResult> GetPastJobs()
         {
             List<Job> completedJobs = new List<Job>();
 
@@ -58,7 +58,7 @@ namespace ErbiumCapstone.Controllers
             }
 
 
-            return completedJobs;
+            return View(completedJobs);
         }
 
         // GET: CustomersController/Details/5
