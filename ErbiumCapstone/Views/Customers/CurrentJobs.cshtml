@@ -1,5 +1,5 @@
 ﻿
-@model IEnumerable<ErbiumCapstone.Models.Job>
+@model ErbiumCapstone.ViewModels.HomeViewModel
 
 @{
     ViewData["Title"] = "Current Jobs";
@@ -9,16 +9,31 @@
 
 <div class="row">
     <div class="col-md-4">
-        @foreach (var item in Model)
+        @foreach (var job in Model.Jobs)
         { 
         <details>
-            <summary><h3>@Html.DisplayFor(modelItem => item.JobName)</h3></summary>
-            <h4>@Html.DisplayFor(modelItem => item.Contractor.ContractorId)</h4>
-            <h4>@Html.DisplayFor(modelItem => item.AgreedCost)</h4>
-            <h4>@Html.DisplayFor(modelItem => item.JobStart)</h4>
-            <h4>@Html.DisplayFor(modelItem => item.DeadLine)</h4>
-           
-            <h4>@Html.DisplayFor(modelItem => item.Contractor.ContractorId)</h4>
+            <summary><h3>@job.JobName</h3></summary>
+            <h4>@job.Contractor.ContractorId</h4>
+            <h4>@job.AgreedCost</h4>
+            <h4>@job.JobStart</h4>
+            <h4>@job.DeadLine</h4>
+
+            <details>
+                <summary><h4>Tasks</h4></summary>
+                @foreach (var jobTask in Model.JobTasks)
+                {
+                    if (jobTask.JobId == job.JobId)
+                    {
+                        <details><summary>@jobTask.Name</summary>
+                            @if (jobTask.CompletionImage != null)
+                            {
+
+                            }
+                        </details>
+                    }
+                }
+            </details>
+            
         </details>
         }
     </div>
