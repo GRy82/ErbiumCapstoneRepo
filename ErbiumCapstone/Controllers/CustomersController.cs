@@ -27,7 +27,10 @@ namespace ErbiumCapstone.Controllers
         // GET: CustomersController
         public async Task<ActionResult> Index()
         {
+            
+
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             Customer customer = await _repo.Customer.GetCustomerAsync(userId);
             if (customer == null)
             {
@@ -35,6 +38,7 @@ namespace ErbiumCapstone.Controllers
             }
             Type customerType = customer.GetType();
             List<Job> jobList = await _repo.Job.GetAllJobsAsync(customer.CustomerId, customerType);
+
             HomeViewModel homeViewModel = new HomeViewModel()
             {
                 Customer = customer,
@@ -58,9 +62,7 @@ namespace ErbiumCapstone.Controllers
             if(result < 0)
             {
                 completedJobs.Add(foundJob);
-
             }
-
 
             return View(completedJobs);
         }
@@ -86,7 +88,7 @@ namespace ErbiumCapstone.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(Customer customer)
         {
-            string streetAddress =  customer.StreetAddress.Replace(' ', '+');
+            string streetAddress = customer.StreetAddress.Replace(' ', '+');
             string city = customer.City.Replace(' ', '+');
             string url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + streetAddress + ",+" + city + ",+" + customer.State + "&key=" + ApiKeys.GetGeocodingKey();
             Geocoding response = await _geocodingService.GetGeocoded(url);
@@ -107,7 +109,7 @@ namespace ErbiumCapstone.Controllers
             catch(Exception e)
             {
                 //_logger.LogError($"Error: {e.Message}");
-                return View();
+                return View(e);
             }
         }
 

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace ErbiumCapstone.Data.Migrations
+namespace ErbiumCapstone.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -129,12 +129,18 @@ namespace ErbiumCapstone.Data.Migrations
                         new
                         {
                             ContractorSkillId = 2,
-                            ContractorId = 2,
+                            ContractorId = 1,
                             SkillId = 2
                         },
                         new
                         {
                             ContractorSkillId = 3,
+                            ContractorId = 2,
+                            SkillId = 1
+                        },
+                        new
+                        {
+                            ContractorSkillId = 4,
                             ContractorId = 3,
                             SkillId = 2
                         });
@@ -232,7 +238,7 @@ namespace ErbiumCapstone.Data.Migrations
                     b.Property<bool>("ContractorAcceptedJob")
                         .HasColumnType("bit");
 
-                    b.Property<int>("ContractorId")
+                    b.Property<int?>("ContractorId")
                         .HasColumnType("int");
 
                     b.Property<bool>("CustomerAcceptedJob")
@@ -244,7 +250,7 @@ namespace ErbiumCapstone.Data.Migrations
                     b.Property<DateTime?>("DeadLine")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Discription")
+                    b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("JobCompletion")
@@ -253,10 +259,16 @@ namespace ErbiumCapstone.Data.Migrations
                     b.Property<TimeSpan?>("JobDuration")
                         .HasColumnType("time");
 
+                    b.Property<string>("JobName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("JobStart")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("JobState")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("JobType")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("NumberOfUpdates")
@@ -330,7 +342,7 @@ namespace ErbiumCapstone.Data.Migrations
                         new
                         {
                             SkillId = 1,
-                            SkillType = "Plumber"
+                            SkillType = "Plumbing"
                         },
                         new
                         {
@@ -368,15 +380,15 @@ namespace ErbiumCapstone.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "cc9279cb-94bf-4e82-b0f7-bd43fe1d5b8c",
-                            ConcurrencyStamp = "305fc421-0048-488c-81ae-c2629e9bfc54",
+                            Id = "ad60a221-c9fb-44b6-89b6-b906813bfb90",
+                            ConcurrencyStamp = "5cf438f6-06cb-46ff-8b61-8c9c063efa94",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "022fb840-f682-496c-adda-4d871996f22b",
-                            ConcurrencyStamp = "6e7ccc87-dc15-4799-99b9-af732d3bdddf",
+                            Id = "70a57b2b-f4d3-494b-8b2f-a337077a0bcf",
+                            ConcurrencyStamp = "57cfcd02-fa77-46f3-ad5b-d0f8a0fe728f",
                             Name = "Contractor",
                             NormalizedName = "CONTRACTOR"
                         });
@@ -584,9 +596,7 @@ namespace ErbiumCapstone.Data.Migrations
                 {
                     b.HasOne("ErbiumCapstone.Models.Contractor", "Contractor")
                         .WithMany()
-                        .HasForeignKey("ContractorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ContractorId");
 
                     b.HasOne("ErbiumCapstone.Models.Customer", "Customer")
                         .WithMany()

@@ -1,0 +1,134 @@
+﻿@model ErbiumCapstone.Models.Job
+
+@{
+    ViewData["Title"] = "SearchForJob";
+}
+
+<h1>SearchForJob</h1>
+
+<div>
+    <h4>Job</h4>
+    <hr />
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Dropdown</a>
+    <div class="dropdown-menu show" style="position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;" x-placement="bottom-start">
+        <a class="dropdown-item" href="#">Action</a>
+        <a class="dropdown-item" href="#">Another action</a>
+        <a class="dropdown-item" href="#">Something else here</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#">Separated link</a>
+    </div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.JobName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.JobName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.JobType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.JobType)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Customer)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Customer.CustomerId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Contractor)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Contractor.ContractorId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProposedCost)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProposedCost)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AgreedCost)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AgreedCost)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DeadLine)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DeadLine)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.JobStart)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.JobStart)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.JobCompletion)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.JobCompletion)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.JobDuration)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.JobDuration)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.isJobCompletionApproved)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.isJobCompletionApproved)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.JobState)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.JobState)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProvideUpdates)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProvideUpdates)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProvidePix)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProvidePix)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NumberOfUpdates)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NumberOfUpdates)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CustomerAcceptedJob)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CustomerAcceptedJob)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ContractorAcceptedJob)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ContractorAcceptedJob)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.JobId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
