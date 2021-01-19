@@ -17,7 +17,7 @@
             <h4>@job.AgreedCost</h4>
             <h4>@job.JobStart</h4>
             <h4>@job.DeadLine</h4>
-
+   
             <details>
                 <summary><h4>Tasks</h4></summary>
                 @foreach (var jobTask in Model.JobTasks)
@@ -25,9 +25,14 @@
                     if (jobTask.JobId == job.JobId)
                     {
                         <details><summary>@jobTask.Name</summary>
-                            @if (jobTask.CompletionImage != null)
+                            @jobTask.Description
+                            <hr />
+                            @foreach(var image in Model.JobTaskImages)
                             {
-
+                                if (image.JobTaskId == jobTask.TaskId)
+                                {
+                                    <div></div> //image goes here.
+                                }
                             }
                         </details>
                     }
@@ -48,7 +53,7 @@
 
         <ul class="list-unstyled components">
             <li>
-                <a href="#">Create Job</a>
+                <a href="/Customers/CreateJob">Create Job</a>
             </li>
 
             <li class="active">
