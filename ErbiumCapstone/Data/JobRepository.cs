@@ -27,7 +27,7 @@ namespace ErbiumCapstone.Data
 
         public async Task<List<Job>> GetAllJobsAsync(int userId, Type type)
         {
-            if (type == new Customer().GetType())
+            if (type.Equals(new Customer().GetType()))
             {
                 await FindByCondition(c => c.CustomerId.Equals(userId)).ToListAsync();
             }
