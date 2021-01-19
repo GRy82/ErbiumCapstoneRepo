@@ -37,6 +37,7 @@ namespace ErbiumCapstone.Data
             }
             return new List<Job> { };
         }
+        //public List<Job> ListOfAllJobs() => FindAll(Job).ToList();
 
            
     }

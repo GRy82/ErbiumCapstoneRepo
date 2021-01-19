@@ -150,5 +150,17 @@ namespace ErbiumCapstone.Controllers
                 return View();
             }
         }
+        public ActionResult SearchForJob()
+        {
+            if(_repo.Job == null)
+            {
+                return RedirectToAction(nameof(SearchForJobNull));
+            }
+            return View();
+        }
+        public ActionResult SearchForJobNull()
+        {
+            return View();
+        }
     }
 }

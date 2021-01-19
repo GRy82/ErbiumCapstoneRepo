@@ -1,4 +1,4 @@
-﻿@model ErbiumCapstone.Models.Job
+﻿@model IEnumerable<ErbiumCapstone.Models.Job>
 
 @{
     ViewData["Title"] = "SearchForJob";
@@ -18,13 +18,23 @@
         <a class="dropdown-item" href="#">Separated link</a>
     </div>
     <dl class="row">
-        <dt class="col-sm-2">
+
+        @foreach(Job job in Model)
+        {
+            <dt class="col-md-2">
+                @Html.DisplayNameFor(model => job.JobName)
+            </dt>
+            <dt class="col-md-10">
+                @Html.DisplayFor(model => job.JobName)
+            </dt>
+        }
+        @*<dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.JobName)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.JobName)
-        </dd>
-        <dt class="col-sm-2">
+        </dd>*@
+        @*<dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.JobType)
         </dt>
         <dd class="col-sm-10">
@@ -125,10 +135,10 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.ContractorAcceptedJob)
-        </dd>
+        </dd>*@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.JobId">Edit</a> |
+    @*<a asp-action="Edit" asp-route-id="@Model.JobId">Edit</a>*@ |
     <a asp-action="Index">Back to List</a>
 </div>

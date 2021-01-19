@@ -12,5 +12,6 @@ namespace ErbiumCapstone.ViewModels
         public Contractor Contractor { get; set; }
         public List<Job> Jobs { get; set; }
         public List<Skill> Skills { get; set; }
+        public Job job { get; set; }
     }
 }
