@@ -12,14 +12,96 @@
         @foreach (var item in Model.CurrentJobs)
         { 
         <details>
-            <summary><h3>@Html.DisplayFor(modelItem => item.JobName)</h3></summary>
-            <h4>@Html.DisplayFor(modelItem => item.Contractor.ContractorId)</h4>
-            <h4>@Html.DisplayFor(modelItem => item.AgreedCost)</h4>
-            <h4>@Html.DisplayFor(modelItem => item.JobStart)</h4>
-            <h4>@Html.DisplayFor(modelItem => item.DeadLine)</h4>
-           
-            <h4>@Html.DisplayFor(modelItem => item.Contractor.ContractorId)</h4>
+            <summary><h3>@job.JobName</h3></summary>
+            <h4>@job.Contractor.ContractorId</h4>
+            <h4>@job.AgreedCost</h4>
+            <h4>@job.JobStart</h4>
+            <h4>@job.DeadLine</h4>
+   
+            <details>
+                <summary><h4>Tasks</h4></summary>
+                @foreach (var jobTask in Model.JobTasks)
+                {
+                    if (jobTask.JobId == job.JobId)
+                    {
+                        <details><summary>@jobTask.Name</summary>
+                            @jobTask.Description
+                            <hr />
+                            @foreach(var image in Model.JobTaskImages)
+                            {
+                                if (image.JobTaskId == jobTask.TaskId)
+                                {
+                                    <div></div> //image goes here.
+                                }
+                            }
+                        </details>
+                    }
+                }
+            </details>
+            
         </details>
         }
     </div>
+</div>
+
+<div class="wrapper">
+    <!-- Sidebar -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <h5>Customer Portal</h5>
+        </div>
+
+        <ul class="list-unstyled components">
+            <li>
+                <a href="/Customers/CreateJob">Create Job</a>
+            </li>
+
+            <li class="active">
+                <a href="#interestSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Posted Jobs</a>
+                <ul class="collapse list-unstyled" id="interestSubmenu">
+                    <li>
+                        <a href="#">Posted Job 1</a>
+                    </li>
+                    <li>
+                        <a href="#">Posted Job 2</a>
+                    </li>
+                    <li>
+                        <a href="#">Posted Job 3</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="#currentSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Current Jobs</a>
+                <ul class="collapse list-unstyled" id="currentSubmenu">
+                    <li>
+                        <a href="#">Current Job 1</a>
+                    </li>
+                    <li>
+                        <a href="#">Current Job 2</a>
+                    </li>
+                    <li>
+                        <a href="#">Current Job 3</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="#pastSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Past Jobs</a>
+                <ul class="collapse list-unstyled" id="pastSubmenu">
+                    <li>
+                        <a href="#">Past Job 1</a>
+                    </li>
+                    <li>
+                        <a href="#">Past Job 2</a>
+                    </li>
+                    <li>
+                        <a href="#">Past Job 3</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+        </ul>
+
+    </nav>
 </div>
