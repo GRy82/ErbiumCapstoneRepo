@@ -33,8 +33,6 @@ namespace ErbiumCapstone.Controllers
                 return RedirectToAction("Create");
             }
             var jobList = await _repo.Job.GetAllJobsAsync(contractor.ContractorId, contractor.GetType());
-            Contractor contractor = await _repo.Contractor.GetContractorAsync(userId);
-            var jobList = await _repo.Job.GetAllJobsAsync(contractor.ContractorId, contractor.GetType());
             HomeViewModel homeViewModel = new HomeViewModel()
             {
                 Contractor = contractor,
