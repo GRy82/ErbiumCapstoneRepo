@@ -13,6 +13,10 @@ namespace ErbiumCapstone.Models
         [Key]
         public int CustomerId { get; set; }
 
+        [ForeignKey("IdentityUser")]
+        public string IdentityUserId { get; set; }
+        public IdentityUser IdentityUser { get; set; }
+
         [Display(Name ="First Name")]
         public string FirstName { get; set; }
 
@@ -33,9 +37,5 @@ namespace ErbiumCapstone.Models
         public double Latitude { get; set; }
         public double Longitude { get; set; }
 
-
-        [ForeignKey("IdentityUser")]
-        public string IdentityUserId { get; set; }
-        public IdentityUser IdentityUser { get; set; }
     }
 }

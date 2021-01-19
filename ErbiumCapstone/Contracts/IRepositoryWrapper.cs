@@ -12,6 +12,6 @@ namespace ErbiumCapstone.Contracts
         IContractorRepository Contractor { get; }
         IJobRepository Job { get; }
         IJobTaskRepository JobTask { get; }
-        void Save();
+        Task SaveAsync();
     }
 }

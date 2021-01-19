@@ -5,6 +5,7 @@ using ErbiumCapstone.Services;
 using ErbiumCapstone.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,17 +25,16 @@ namespace ErbiumCapstone.Controllers
         }
         // pass in repository in our constructor
         // GET: CustomersController
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            Customer customer = _repo.Customer.GetCustomer(userId);
-
+            Customer customer = await _repo.Customer.GetCustomerAsync(userId);
             if (customer == null)
             {
                 return RedirectToAction("Create");
             }
-
-            List<Job> jobList = _repo.Job.GetAllJobs(customer.CustomerId);
+            Type customerType = customer.GetType();
+            List<Job> jobList = await _repo.Job.GetAllJobsAsync(customer.CustomerId, customerType);
             HomeViewModel homeViewModel = new HomeViewModel()
             {
                 Customer = customer,
@@ -43,10 +43,32 @@ namespace ErbiumCapstone.Controllers
             return View(homeViewModel);
         }
 
-        // GET: CustomersController/Details/5
-        public ActionResult CustomerDetails(int id)
+        public async Task<ActionResult> GetPastJobs()
         {
-            var customer = _repo.Customer.GetCustomer(id);
+            List<Job> completedJobs = new List<Job>();
+
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Customer customer = await  _repo.Customer.GetCustomerAsync(userId);
+            var foundJob = await _repo.Job.GetJobAsync(customer.CustomerId);
+
+            DateTime Today = DateTime.Today;
+            var CompletedJob = foundJob.JobCompletion;
+            var result = DateTime.Compare((DateTime)CompletedJob, Today);
+
+            if(result < 0)
+            {
+                completedJobs.Add(foundJob);
+
+            }
+
+
+            return View(completedJobs);
+        }
+
+        // GET: CustomersController/Details/5
+        public async Task<ActionResult> CustomerDetails(int id)
+        {
+            var customer = await _repo.Customer.GetCustomerAsync(id);
             return View(customer);
         }
 
@@ -68,23 +90,29 @@ namespace ErbiumCapstone.Controllers
             string city = customer.City.Replace(' ', '+');
             string url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + streetAddress + ",+" + city + ",+" + customer.State + "&key=" + ApiKeys.GetGeocodingKey();
             Geocoding response = await _geocodingService.GetGeocoded(url);
-            customer.Latitude = response.results[0].geometry.location.lat;
-            customer.Longitude = response.results[0].geometry.location.lng;
+            if (response.results.Length > 0)
+            {
+                customer.Latitude = response.results[0].geometry.location.lat;
+                customer.Longitude = response.results[0].geometry.location.lng;
+            }
 
             try
             {
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                customer.IdentityUserId = userId;
                 _repo.Customer.CreateCustomer(customer);
-                _repo.Save();
+                await _repo.SaveAsync();
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(Exception e)
             {
+                //_logger.LogError($"Error: {e.Message}");
                 return View();
             }
         }
 
         //GET
-        public async Task<ActionResult> CreateJob()
+        public ActionResult CreateJob()
         {
             ViewData["jobTypes"] = new List<string> { "Electrical", "Plumbing" };
             return View(new Job());
@@ -93,12 +121,12 @@ namespace ErbiumCapstone.Controllers
         // POST: CustomersController/CreateJob/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateJob(Job job)
+        public async Task<ActionResult> CreateJob(Job job)
         {
             try
             {
                 _repo.Job.CreateJob(job);
-                _repo.Save();
+                await _repo.SaveAsync();
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -108,23 +136,22 @@ namespace ErbiumCapstone.Controllers
         }
 
 
-
         // GET: CustomersController/Edit/5
-        public ActionResult EditJob(int jobId)
+        public async Task<ActionResult> EditJob(int jobId)
         {
-            var jobToEdit = _repo.Job.GetJob(jobId);
+            var jobToEdit = await _repo.Job.GetJobAsync(jobId);
             return View(jobToEdit);
         }
 
         // POST: CustomersController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditJob(Job job)
+        public async Task<ActionResult> EditJob(Job job)
         {
             try
             {
                 _repo.Job.EditJob(job);
-                _repo.Save();
+                await  _repo.SaveAsync();
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -134,21 +161,22 @@ namespace ErbiumCapstone.Controllers
         }
 
         // GET: CustomersController/Delete/5
-        public ActionResult DeleteJob(int jobId)
+        public async Task<ActionResult> DeleteJob(int jobId)
         {
-            var jobToDelete = _repo.Job.GetJob(jobId);
+            var jobToDelete = _repo.Job.GetJobAsync(jobId);
+            await _repo.SaveAsync();
             return View(jobToDelete);
         }
 
         // POST: CustomersController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteJob(int id, Job job)
+        public async Task<ActionResult> DeleteJob(int id, Job job)
         {
             try
             {
                 _repo.Job.DeleteJob(job);
-                _repo.Save();
+                await _repo.SaveAsync();
                 return RedirectToAction(nameof(Index));
             }
             catch

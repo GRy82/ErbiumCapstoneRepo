@@ -1,6 +1,7 @@
 ﻿using ErbiumCapstone.Contracts;
 using ErbiumCapstone.Models;
 using ErbiumCapstone.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +19,11 @@ namespace ErbiumCapstone.Data
 
         public void CreateJobTask(JobTask jobTask) => Create(jobTask);
 
-        public JobTask GetJobTask(int jobTaskId) =>
-            FindByCondition(c => c.JobId.Equals(jobTaskId)).SingleOrDefault();
+        public async Task<JobTask> GetJobTaskAsync(int jobTaskId) =>
+            await FindByCondition(c => c.JobId.Equals(jobTaskId)).FirstOrDefaultAsync();
+
+        public async Task<List<JobTask>> GetAllJobTasksAsync() =>
+            await FindAll().ToListAsync();
 
         public void EditJobTask(JobTask jobTask) => Update(jobTask);
         public void DeleteJobTask(JobTask jobTask) => Delete(jobTask);
