@@ -63,7 +63,6 @@ namespace ErbiumCapstone.Controllers
             {
                 completedJobs.Add(foundJob);
             }
-
             return View(completedJobs);
         }
 
