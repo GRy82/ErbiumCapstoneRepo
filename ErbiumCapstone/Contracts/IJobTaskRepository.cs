@@ -9,7 +9,9 @@ namespace ErbiumCapstone.Contracts
     public interface IJobTaskRepository : IRepositoryBase<JobTask>
     {
         void CreateJobTask(JobTask jobTask);
-        JobTask GetJobTask(int jobTaskId);
+        Task<JobTask> GetJobTaskAsync(int jobTaskId);
+
+        Task<List<JobTask>> GetAllJobTasksAsync();
         void EditJobTask(JobTask jobTask);
         void DeleteJobTask(JobTask jobTask);
     }

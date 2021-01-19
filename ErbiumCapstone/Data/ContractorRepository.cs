@@ -1,6 +1,7 @@
 ﻿using ErbiumCapstone.Contracts;
 using ErbiumCapstone.Data;
 using ErbiumCapstone.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,8 +17,16 @@ namespace ErbiumCapstone.Repositories
         }
         public void CreateContractor(Contractor contractor) => Create(contractor);
 
-        public Contractor GetContractor(int contractorId) =>
-            FindByCondition(c => c.ContractorId.Equals(contractorId)).SingleOrDefault();
+        public async Task<Contractor> GetContractorAsync(int contractorId) =>
+            await FindByCondition(c => c.ContractorId.Equals(contractorId)).FirstOrDefaultAsync();
+
+        public async Task<Contractor> GetContractorAsync(string contractorId) =>
+            await FindByCondition(c => c.ContractorId.Equals(contractorId)).FirstOrDefaultAsync();
+
+        public async Task<List<Contractor>> GetAllContractorsAsync() =>
+            await FindAll().ToListAsync();
+
+
 
         public void EditContractor(Contractor contractor) => Update(contractor);
 

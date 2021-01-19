@@ -9,9 +9,9 @@ namespace ErbiumCapstone.Contracts
     public interface IJobRepository : IRepositoryBase<Job>
     {
         void CreateJob(Job job);
-        Job GetJob(int jobId);
+        Task<Job> GetJobAsync(int jobId);
         void EditJob(Job job);
         void DeleteJob(Job job);
-        List<Job> GetAllJobs(int jobId);
+        Task<List<Job>> GetAllJobsAsync(int id);
     }
 }
