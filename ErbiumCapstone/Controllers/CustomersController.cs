@@ -27,11 +27,14 @@ namespace ErbiumCapstone.Controllers
         // GET: CustomersController
         public async Task<ActionResult> Index()
         {
-            Customer customer = new Customer();
+            
 
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            customer = await _repo.Customer.GetCustomerAsync(userId);
-            List<Job> jobList = await _repo.Job.GetAllJobsAsync(customer.CustomerId);
+
+            Customer customer = await _repo.Customer.GetCustomerAsync(userId);
+            Type customerType = customer.GetType();
+            List<Job> jobList = await _repo.Job.GetAllJobsAsync(customer.CustomerId, customerType);
+
             HomeViewModel homeViewModel = new HomeViewModel()
             {
                 Customer = customer,
@@ -45,7 +48,7 @@ namespace ErbiumCapstone.Controllers
             List<Job> completedJobs = new List<Job>();
 
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            Customer customer = await _repo.Customer.GetCustomerAsync(userId);
+            Customer customer = await  _repo.Customer.GetCustomerAsync(userId);
             var foundJob = await _repo.Job.GetJobAsync(customer.CustomerId);
 
             DateTime Today = DateTime.Today;

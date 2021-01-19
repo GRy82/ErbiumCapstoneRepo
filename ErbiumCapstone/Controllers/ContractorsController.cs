@@ -28,7 +28,7 @@ namespace ErbiumCapstone.Controllers
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             Contractor contractor = await _repo.Contractor.GetContractorAsync(userId);
-            var jobList = await _repo.Job.GetAllJobsAsync(contractor.ContractorId);
+            var jobList = await _repo.Job.GetAllJobsAsync(contractor.ContractorId, contractor.GetType());
             HomeViewModel homeViewModel = new HomeViewModel()
             {
                 Contractor = contractor,

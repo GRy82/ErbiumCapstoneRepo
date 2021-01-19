@@ -12,6 +12,6 @@ namespace ErbiumCapstone.Contracts
         Task<Job> GetJobAsync(int jobId);
         void EditJob(Job job);
         void DeleteJob(Job job);
-        Task<List<Job>> GetAllJobsAsync(int id);
+        Task<List<Job>> GetAllJobsAsync(int id, Type type);
     }
 }
