@@ -12,6 +12,9 @@ namespace ErbiumCapstone.Contracts
         Task<JobTask> GetJobTaskAsync(int jobTaskId);
 
         Task<List<JobTask>> GetAllJobTasksAsync();
+
+        Task<List<JobTask>> GetAllCurrentJobTasksAsync(List<Job> currentJobs);
+
         void EditJobTask(JobTask jobTask);
         void DeleteJobTask(JobTask jobTask);
     }
