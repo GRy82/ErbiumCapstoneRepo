@@ -10,7 +10,7 @@ using System.Web;
 
 namespace ErbiumCapstone.SignalR.Hubs
 {
-    public class ChatHub : Hub<ITypedClient> //hub class manages connections, groups, and messaging
+    public class ChatHub : Hub //hub class manages connections, groups, and messaging
     {
 
         //public async Task SendMessage(string user, string message)
@@ -20,7 +20,7 @@ namespace ErbiumCapstone.SignalR.Hubs
 
         public async Task SendMessage(string user, string message)
         {   
-            await Clients.All.BroadcastMessage(user, message);
+            await Clients.All.SendAsync(user, message);
         }
 
 

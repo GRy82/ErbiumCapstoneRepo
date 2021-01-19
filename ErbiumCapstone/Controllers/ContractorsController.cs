@@ -18,22 +18,15 @@ namespace ErbiumCapstone.Controllers
     {
         private IRepositoryWrapper _repo;
         private GeocodingService _geocodingService;
-        private IHubContext<ITypedClient> hubContext;
+  
 
-        public ContractorsController(IRepositoryWrapper repo, GeocodingService geocodingService, IHubContext<ITypedClient> hubContext)
+        public ContractorsController(IRepositoryWrapper repo, GeocodingService geocodingService)
         {
             _repo = repo;
             _geocodingService = geocodingService;
-            this.hubContext = hubContext; //inject instance of hubContext 
+       
         }
 
-        //GET
-        [HttpGet]
-        public IEnumerable<string> GetMessage()
-        { 
-            hubContext.Clients.All.BroadcastMessage("test", "test");
-            return new string[] { "value1", "Value2" };
-        }
 
         // GET: ContractorController
         public async Task<ActionResult> Index()
