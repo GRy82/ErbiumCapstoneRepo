@@ -6,26 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Views\NewFolder1\**" />
-    <Compile Remove="Views\NewFolder2\**" />
-    <Compile Remove="Views\NewFolder\**" />
-    <Content Remove="Views\NewFolder1\**" />
-    <Content Remove="Views\NewFolder2\**" />
-    <Content Remove="Views\NewFolder\**" />
-    <EmbeddedResource Remove="Views\NewFolder1\**" />
-    <EmbeddedResource Remove="Views\NewFolder2\**" />
-    <EmbeddedResource Remove="Views\NewFolder\**" />
-    <None Remove="Views\NewFolder1\**" />
-    <None Remove="Views\NewFolder2\**" />
-    <None Remove="Views\NewFolder\**" />
+    <Compile Remove="Migrations\20210119143540_Initial.cs" />
+    <Compile Remove="Migrations\20210119143540_Initial.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="SignalR\Hubs\IChatClient.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNet.Providers.Core" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.10" />
@@ -36,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Data\Migrations\" />
     <Folder Include="Repositories\" />
   </ItemGroup>
 

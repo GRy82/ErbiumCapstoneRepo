@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using ErbiumCapstone.Models;
 using Microsoft.AspNetCore.SignalR;
 using System.Web;
-using System.Web.Providers.Entities;
+
 
 namespace ErbiumCapstone.SignalR.Hubs
 {
@@ -19,32 +19,32 @@ namespace ErbiumCapstone.SignalR.Hubs
         }
 
         //sends message back to caller
-        public Task SendMessageToCaller(string user, string message)
-        {
-            return Clients.Caller.SendAsync("ReceiveMessage", user, message);
-        }
+    //    public Task SendMessageToCaller(string user, string message)
+    //    {
+    //        return Clients.Caller.SendAsync("ReceiveMessage", user, message);
+    //    }
 
         
-        public override async Task OnConnectedAsync()
-        {
-            await Groups.AddToGroupAsync(Context.ConnectionId, "SignalR Users");
-            await base.OnConnectedAsync();
+    //    public override async Task OnConnectedAsync()
+    //    {
+    //        await Groups.AddToGroupAsync(Context.ConnectionId, "SignalR Users");
+    //        await base.OnConnectedAsync();
 
-            //string userName = Context.User.Identity.Name;
-            //string connectionId = Context.ConnectionId;
+    //        //string userName = Context.User.Identity.Name;
+    //        //string connectionId = Context.ConnectionId;
 
 
-        }
+    //    }
 
-        public override async Task OnDisconnectedAsync(Exception exception)
-        {
-            await Groups.RemoveFromGroupAsync(Context.ConnectionId, "SignalR Users");
-            await base.OnDisconnectedAsync(exception);
-        }
+    //    public override async Task OnDisconnectedAsync(Exception exception)
+    //    {
+    //        await Groups.RemoveFromGroupAsync(Context.ConnectionId, "SignalR Users");
+    //        await base.OnDisconnectedAsync(exception);
+    //    }
 
-        public Task SendPrivateMessage(string user, string message)
-        {
-            return Clients.User(user).SendAsync("ReceiveMessage", message);
-        }
-    }
+    //    public Task SendPrivateMessage(string user, string message)
+    //    {
+    //        return Clients.User(user).SendAsync("ReceiveMessage", message);
+    //    }
+    //}
 }

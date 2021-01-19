@@ -7,11 +7,11 @@ namespace ErbiumCapstone.Contracts
 {
     public interface IRepositoryWrapper
     {
-        ISkillRepository Skill { get; set; }
+        ISkillRepository Skill { get; }
         ICustomerRepository Customer { get; }
         IContractorRepository Contractor { get; }
         IJobRepository Job { get; }
         IJobTaskRepository JobTask { get; }
-        void Save();
+        Task SaveAsync();
     }
 }
