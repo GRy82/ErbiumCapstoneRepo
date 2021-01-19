@@ -12,6 +12,7 @@ namespace ErbiumCapstone.Contracts
         IContractorRepository Contractor { get; }
         IJobRepository Job { get; }
         IJobTaskRepository JobTask { get; }
+        IImageRepository Image { get; }
         Task SaveAsync();
     }
 }

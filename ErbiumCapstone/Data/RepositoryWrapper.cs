@@ -14,7 +14,20 @@ namespace ErbiumCapstone.Repositories
         private ICustomerRepository _customer;
         private IJobRepository _job;
         private IJobTaskRepository _jobTask;
+        private IImageRepository _image;
 
+
+        public IImageRepository Image
+        {
+            get
+            {
+                if (_image == null)
+                {
+                    _image = new ImageRepository(_context);
+                }
+                return _image;
+            }
+        }
         public IJobTaskRepository JobTask
         {
             get

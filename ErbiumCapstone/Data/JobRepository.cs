@@ -30,11 +30,11 @@ namespace ErbiumCapstone.Data
             List<Job> jobs = new List<Job> { };
             if (type.Equals(new Customer().GetType()))
             {
-                await FindByCondition(c => c.CustomerId.Equals(userId)).ToListAsync();
+                jobs = await FindByCondition(c => c.CustomerId.Equals(userId)).ToListAsync();
             }
             else
             {
-                await FindByCondition(c => c.ContractorId.Equals(userId)).ToListAsync();
+                jobs = await FindByCondition(c => c.ContractorId.Equals(userId)).ToListAsync();
             }
             return jobs;
         }
@@ -45,11 +45,11 @@ namespace ErbiumCapstone.Data
             List<Job> jobs = new List<Job> { };
             if (type.Equals(new Customer().GetType()))
             {
-                await FindByCondition(c => c.CustomerId.Equals(userId)).ToListAsync();
+                jobs = await FindByCondition(c => c.CustomerId.Equals(userId)).ToListAsync();
             }
             else
             {
-                await FindByCondition(c => c.ContractorId.Equals(userId)).ToListAsync();
+                jobs = await FindByCondition(c => c.ContractorId.Equals(userId)).ToListAsync();
             }
 
             foreach(Job job in jobs)
@@ -66,11 +66,11 @@ namespace ErbiumCapstone.Data
             List<Job> jobs = new List<Job> { };
             if (type.Equals(new Customer().GetType()))
             {
-                await FindByCondition(c => c.CustomerId.Equals(userId)).ToListAsync();
+                jobs = await FindByCondition(c => c.CustomerId.Equals(userId)).ToListAsync();
             }
             else
             {
-                await FindByCondition(c => c.ContractorId.Equals(userId)).ToListAsync();
+                jobs = await FindByCondition(c => c.ContractorId.Equals(userId)).ToListAsync();
             }
 
             foreach (Job job in jobs)
@@ -86,11 +86,11 @@ namespace ErbiumCapstone.Data
             List<Job> jobs = new List<Job> { };
             if (type.Equals(new Customer().GetType()))
             {
-                await FindByCondition(c => c.CustomerId.Equals(userId)).ToListAsync();
+                jobs = await FindByCondition(c => c.CustomerId.Equals(userId)).ToListAsync();
             }
             else
             {
-                await FindByCondition(c => c.ContractorId.Equals(userId)).ToListAsync();
+                jobs = await FindByCondition(c => c.ContractorId.Equals(userId)).ToListAsync();
             }
 
             foreach (Job job in jobs)
