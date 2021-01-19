@@ -20,9 +20,7 @@ namespace ErbiumCapstone.Models
 
 
         [ForeignKey("Customer")]
-
-        public int CustomerId { get; set; } //needs to remain nullible type so that it does no default to value of 0.
-
+        public int CustomerId { get; set; }
         public Customer Customer { get; set; }
 
         [ForeignKey("Contractor")]
