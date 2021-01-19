@@ -29,6 +29,10 @@ namespace ErbiumCapstone.Controllers
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             Customer customer = await _repo.Customer.GetCustomerAsync(userId);
+            if (customer == null)
+            {
+                return RedirectToAction("Create");
+            }
             Type customerType = customer.GetType();
             List<Job> jobList = await _repo.Job.GetAllJobsAsync(customer.CustomerId, customerType);
             HomeViewModel homeViewModel = new HomeViewModel()
