@@ -2,6 +2,7 @@
 using ErbiumCapstone.Data;
 using ErbiumCapstone.Models;
 using ErbiumCapstone.Services;
+using ErbiumCapstone.SignalR.Hubs;
 using ErbiumCapstone.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,10 +18,21 @@ namespace ErbiumCapstone.Controllers
     {
         private IRepositoryWrapper _repo;
         private GeocodingService _geocodingService;
-        public ContractorsController(IRepositoryWrapper repo, GeocodingService geocodingService)
+        private IHubContext<ITypedClient> hubContext;
+
+        public ContractorsController(IRepositoryWrapper repo, GeocodingService geocodingService, IHubContext<ITypedClient> hubContext)
         {
             _repo = repo;
             _geocodingService = geocodingService;
+            this.hubContext = hubContext; //inject instance of hubContext 
+        }
+
+        //GET
+        [HttpGet]
+        public IEnumerable<string> GetMessage()
+        { 
+            hubContext.Clients.All.BroadcastMessage("test", "test");
+            return new string[] { "value1", "Value2" };
         }
 
         // GET: ContractorController

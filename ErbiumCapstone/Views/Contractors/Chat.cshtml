@@ -1,10 +1,11 @@
-﻿@model ErbiumCapstone.Models.Contractor
-
+﻿
 @{
     ViewData["Title"] = "Chat";
 }
 
 <h1>Chat</h1>
+
+
 
 
 <div class="container">
@@ -43,13 +44,6 @@
     </div>
 </div>
 <div>
-<script src="~/js/signalr/dist/browser/signalr.js"></script>
-<script src="~/js/chat.js"></script>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script src="~/js/signalr/dist/browser/signalr.js"></script>
-    <script src="~/js/Chat.js"></script>
-
-}
+    <script src="~/js/chat.js"></script>
+</div>
