@@ -28,6 +28,12 @@ namespace ErbiumCapstone.Controllers
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             Contractor contractor = await _repo.Contractor.GetContractorAsync(userId);
+            if (contractor == null)
+            {
+                return RedirectToAction("Create");
+            }
+            var jobList = await _repo.Job.GetAllJobsAsync(contractor.ContractorId, contractor.GetType());
+            Contractor contractor = await _repo.Contractor.GetContractorAsync(userId);
             var jobList = await _repo.Job.GetAllJobsAsync(contractor.ContractorId, contractor.GetType());
             HomeViewModel homeViewModel = new HomeViewModel()
             {

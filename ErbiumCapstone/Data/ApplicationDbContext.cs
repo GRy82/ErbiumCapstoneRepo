@@ -118,7 +118,7 @@ namespace ErbiumCapstone.Data
                 new Skill
                 {
                     SkillId = 1,
-                    SkillType = "Plumber"
+                    SkillType = "Plumbing"
                 },
                 new Skill
                 {
@@ -138,11 +138,17 @@ namespace ErbiumCapstone.Data
                 {
                     ContractorSkillId = 2,
                     SkillId = 2,
-                    ContractorId = 2,
+                    ContractorId = 1,
                 },
                 new ContractorSkill
                 {
                     ContractorSkillId = 3,
+                    SkillId = 1,
+                    ContractorId = 2,
+                },
+                new ContractorSkill
+                {
+                    ContractorSkillId = 4,
                     SkillId = 2,
                     ContractorId = 3,
                 }

@@ -16,6 +16,8 @@ namespace ErbiumCapstone.Repositories
 
         }
         public void CreateContractor(Contractor contractor) => Create(contractor);
+        public Contractor GetContractor(int contractorId) =>
+    FindByCondition(c => c.ContractorId.Equals(contractorId)).SingleOrDefault();
 
         public async Task<Contractor> GetContractorAsync(int contractorId) =>
             await FindByCondition(c => c.ContractorId.Equals(contractorId)).FirstOrDefaultAsync();

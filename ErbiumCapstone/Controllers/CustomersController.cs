@@ -32,6 +32,10 @@ namespace ErbiumCapstone.Controllers
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             Customer customer = await _repo.Customer.GetCustomerAsync(userId);
+            if (customer == null)
+            {
+                return RedirectToAction("Create");
+            }
             Type customerType = customer.GetType();
             List<Job> jobList = await _repo.Job.GetAllJobsAsync(customer.CustomerId, customerType);
 
@@ -84,15 +88,20 @@ namespace ErbiumCapstone.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(Customer customer)
         {
-            string streetAddress =  customer.StreetAddress.Replace(' ', '+');
+            string streetAddress = customer.StreetAddress.Replace(' ', '+');
             string city = customer.City.Replace(' ', '+');
             string url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + streetAddress + ",+" + city + ",+" + customer.State + "&key=" + ApiKeys.GetGeocodingKey();
             Geocoding response = await _geocodingService.GetGeocoded(url);
-            customer.Latitude = response.results[0].geometry.location.lat;
-            customer.Longitude = response.results[0].geometry.location.lng;
+            if (response.results.Length > 0)
+            {
+                customer.Latitude = response.results[0].geometry.location.lat;
+                customer.Longitude = response.results[0].geometry.location.lng;
+            }
 
             try
             {
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                customer.IdentityUserId = userId;
                 _repo.Customer.CreateCustomer(customer);
                 await _repo.SaveAsync();
                 return RedirectToAction(nameof(Index));
