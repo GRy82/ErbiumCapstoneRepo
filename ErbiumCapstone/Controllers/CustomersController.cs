@@ -26,15 +26,39 @@ namespace ErbiumCapstone.Controllers
         // GET: CustomersController
         public ActionResult Index()
         {
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+           // ViewData["GetPastJobs"] = GetPastJobs();
+
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             Customer customer = _repo.Customer.GetCustomer(userId);
-            List<Job> jobList = _repo.Job.GetAllJobs(customer.CustomerId);
+            var jobList = _repo.Job.GetAllJobs(customer.CustomerId);
             HomeViewModel homeViewModel = new HomeViewModel()
             {
                 Customer = customer,
                 Jobs = jobList,
             };
             return View(homeViewModel);
+        }
+
+        public List<Job> GetPastJobs()
+        {
+            List<Job> completedJobs = new List<Job>();
+
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Customer customer = _repo.Customer.GetCustomer(userId);
+            var foundJob = _repo.Job.GetJob(customer.CustomerId);
+
+            DateTime Today = DateTime.Today;
+            var CompletedJob = foundJob.JobCompletion;
+            var result = DateTime.Compare((DateTime)CompletedJob, Today);
+
+            if(result < 0)
+            {
+                completedJobs.Add(foundJob);
+
+            }
+
+
+            return completedJobs;
         }
 
         // GET: CustomersController/Details/5
@@ -78,7 +102,7 @@ namespace ErbiumCapstone.Controllers
         }
 
         //GET
-        public async Task<ActionResult> CreateJob()
+        public ActionResult CreateJob()
         {
             ViewData["jobTypes"] = new List<string> { "Electrical", "Plumbing" };
             return View(new Job());
