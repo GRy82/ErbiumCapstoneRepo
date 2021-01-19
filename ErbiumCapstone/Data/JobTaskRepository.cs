@@ -25,6 +25,20 @@ namespace ErbiumCapstone.Data
         public async Task<List<JobTask>> GetAllJobTasksAsync() =>
             await FindAll().ToListAsync();
 
+        public async Task<List<JobTask>> GetAllCurrentJobTasksAsync(List<Job> currentJobs)
+        {
+            List<JobTask> currentJobTasks = new List<JobTask> { };
+            foreach (Job job in currentJobs)
+            {
+                List<JobTask> tasks = await FindByCondition(c => c.JobId.Equals(job.JobId)).ToListAsync();
+                foreach(JobTask task in tasks)
+                {
+                    currentJobTasks.Add(task);
+                }
+            }
+            return currentJobTasks;
+        }
+
         public void EditJobTask(JobTask jobTask) => Update(jobTask);
         public void DeleteJobTask(JobTask jobTask) => Delete(jobTask);
     }

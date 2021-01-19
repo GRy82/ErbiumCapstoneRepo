@@ -15,5 +15,7 @@ namespace ErbiumCapstone.ViewModels
         public List<Job> PastJobs { get; set; }
         public List<JobTask> JobTasks { get; set; }
         public List<Skill> Skills { get; set; }
+        public List<Image> JobImages { get; set; }
+        public List<Image> JobTaskImages { get; set; }
     }
 }
