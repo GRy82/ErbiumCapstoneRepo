@@ -38,6 +38,28 @@ namespace ErbiumCapstone.Controllers
             return View(homeViewModel);
         }
 
+        public List<Job> GetPastJobs()
+        {
+            List<Job> completedJobs = new List<Job>();
+
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Customer customer = _repo.Customer.GetCustomer(userId);
+            var foundJob = _repo.Job.GetJob(customer.CustomerId);
+
+            DateTime Today = DateTime.Today;
+            var CompletedJob = foundJob.JobCompletion;
+            var result = DateTime.Compare((DateTime)CompletedJob, Today);
+
+            if(result < 0)
+            {
+                completedJobs.Add(foundJob);
+
+            }
+
+
+            return completedJobs;
+        }
+
         // GET: CustomersController/Details/5
         public async Task<ActionResult> CustomerDetails(int id)
         {
