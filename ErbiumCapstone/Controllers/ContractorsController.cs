@@ -70,6 +70,8 @@ namespace ErbiumCapstone.Controllers
 
             try
             {
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                contractor.IdentityUserId = userId;
                 _repo.Contractor.CreateContractor(contractor);
                 await _repo.SaveAsync();
                 return RedirectToAction(nameof(Index));
