@@ -25,7 +25,19 @@ namespace ErbiumCapstone.Data
         public void EditJob(Job job) => Update(job);
         public void DeleteJob(Job job) => Delete(job);
 
-        public async Task<List<Job>> GetAllJobsAsync(int jobId) => 
-            await FindByCondition(c => c.JobId.Equals(jobId)).ToListAsync();
+        public async Task<List<Job>> GetAllJobsAsync(int userId, Type type)
+        {
+            if (type == new Customer().GetType())
+            {
+                await FindByCondition(c => c.CustomerId.Equals(userId)).ToListAsync();
+            }
+            else
+            {
+                await FindByCondition(c => c.ContractorId.Equals(userId)).ToListAsync();
+            }
+            return new List<Job> { };
+        }
+
+           
     }
 }

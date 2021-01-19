@@ -29,7 +29,8 @@ namespace ErbiumCapstone.Controllers
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             Customer customer = await _repo.Customer.GetCustomerAsync(userId);
-            List<Job> jobList = await _repo.Job.GetAllJobsAsync(customer.CustomerId);
+            Type customerType = customer.GetType();
+            List<Job> jobList = await _repo.Job.GetAllJobsAsync(customer.CustomerId, customerType);
             HomeViewModel homeViewModel = new HomeViewModel()
             {
                 Customer = customer,
@@ -38,13 +39,13 @@ namespace ErbiumCapstone.Controllers
             return View(homeViewModel);
         }
 
-        public List<Job> GetPastJobs()
+        public async Task<List<Job>> GetPastJobs()
         {
             List<Job> completedJobs = new List<Job>();
 
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            Customer customer = _repo.Customer.GetCustomer(userId);
-            var foundJob = _repo.Job.GetJob(customer.CustomerId);
+            Customer customer = await  _repo.Customer.GetCustomerAsync(userId);
+            var foundJob = await _repo.Job.GetJobAsync(customer.CustomerId);
 
             DateTime Today = DateTime.Today;
             var CompletedJob = foundJob.JobCompletion;
