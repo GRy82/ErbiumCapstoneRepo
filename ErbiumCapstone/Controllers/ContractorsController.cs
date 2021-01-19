@@ -150,14 +150,17 @@ namespace ErbiumCapstone.Controllers
                 return View();
             }
         }
-        //public ActionResult SearchForJob()
-        //{
-        //    List<Job> jobs;
-        //    foreach(Job job in _repo.Job.FindAll())
-        //    {
-        //        jobs.Add(job);
-        //        return View(jobs);
-        //    }
-        //}
+        public ActionResult SearchForJob()
+        {
+            if(_repo.Job == null)
+            {
+                return RedirectToAction(nameof(SearchForJobNull));
+            }
+            return View();
+        }
+        public ActionResult SearchForJobNull()
+        {
+            return View();
+        }
     }
 }
