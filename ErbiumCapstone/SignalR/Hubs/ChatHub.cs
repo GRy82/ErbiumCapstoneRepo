@@ -10,41 +10,49 @@ using System.Web;
 
 namespace ErbiumCapstone.SignalR.Hubs
 {
-    public class ChatHub : Hub //hub class manages connections, groups, and messaging
-    { 
+    public class ChatHub : Hub<ITypedClient> //hub class manages connections, groups, and messaging
+    {
+
+        //public async Task SendMessage(string user, string message)
+        //{   //can be called by a connected client to send a message to all clients
+        //    await Clients.All.SendAsync("ReceiveMessage", user, message);
+        //}
 
         public async Task SendMessage(string user, string message)
-        {   //can be called by a connected client to send a message to all clients
-            await Clients.All.SendAsync("ReceiveMessage", user, message);
+        {   
+            await Clients.All.BroadcastMessage(user, message);
         }
 
+
+
         //sends message back to caller
-    //    public Task SendMessageToCaller(string user, string message)
-    //    {
-    //        return Clients.Caller.SendAsync("ReceiveMessage", user, message);
-    //    }
-
-        
-    //    public override async Task OnConnectedAsync()
-    //    {
-    //        await Groups.AddToGroupAsync(Context.ConnectionId, "SignalR Users");
-    //        await base.OnConnectedAsync();
-
-    //        //string userName = Context.User.Identity.Name;
-    //        //string connectionId = Context.ConnectionId;
+        //    public Task SendMessageToCaller(string user, string message)
+        //    {
+        //        return Clients.Caller.SendAsync("ReceiveMessage", user, message);
+        //    }
 
 
-    //    }
+        //    public override async Task OnConnectedAsync()
+        //    {
+        //        await Groups.AddToGroupAsync(Context.ConnectionId, "SignalR Users");
+        //        await base.OnConnectedAsync();
 
-    //    public override async Task OnDisconnectedAsync(Exception exception)
-    //    {
-    //        await Groups.RemoveFromGroupAsync(Context.ConnectionId, "SignalR Users");
-    //        await base.OnDisconnectedAsync(exception);
-    //    }
+        //        //string userName = Context.User.Identity.Name;
+        //        //string connectionId = Context.ConnectionId;
 
-    //    public Task SendPrivateMessage(string user, string message)
-    //    {
-    //        return Clients.User(user).SendAsync("ReceiveMessage", message);
-    //    }
-    //}
+
+        //    }
+
+        //    public override async Task OnDisconnectedAsync(Exception exception)
+        //    {
+        //        await Groups.RemoveFromGroupAsync(Context.ConnectionId, "SignalR Users");
+        //        await base.OnDisconnectedAsync(exception);
+        //    }
+
+        //    public Task SendPrivateMessage(string user, string message)
+        //    {
+        //        return Clients.User(user).SendAsync("ReceiveMessage", message);
+        //    }
+        //}
+    }
 }
