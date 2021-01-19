@@ -80,9 +80,10 @@ namespace ErbiumCapstone.Controllers
                 await _repo.SaveAsync();
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception e)
             {
-                return View();
+                //_logger.LogError($"Error: {e.Message}");
+                return View(e);
             }
         }
 
