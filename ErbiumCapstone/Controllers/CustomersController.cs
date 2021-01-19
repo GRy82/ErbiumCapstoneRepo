@@ -27,8 +27,10 @@ namespace ErbiumCapstone.Controllers
         // GET: CustomersController
         public async Task<ActionResult> Index()
         {
+            Customer customer = new Customer();
+
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            Customer customer = await _repo.Customer.GetCustomerAsync(userId);
+            customer = await _repo.Customer.GetCustomerAsync(userId);
             List<Job> jobList = await _repo.Job.GetAllJobsAsync(customer.CustomerId);
             HomeViewModel homeViewModel = new HomeViewModel()
             {
@@ -53,9 +55,7 @@ namespace ErbiumCapstone.Controllers
             if(result < 0)
             {
                 completedJobs.Add(foundJob);
-
             }
-
 
             return View(completedJobs);
         }
@@ -97,7 +97,7 @@ namespace ErbiumCapstone.Controllers
             catch(Exception e)
             {
                 //_logger.LogError($"Error: {e.Message}");
-                return View();
+                return View(e);
             }
         }
 
