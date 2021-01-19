@@ -1,0 +1,136 @@
+﻿@model IEnumerable<ErbiumCapstone.Models.Job>
+
+@{
+    ViewData["Title"] = "PostedJobs";
+}
+
+<h1>PostedJobs</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.JobName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JobType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Customer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Contractor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProposedCost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AgreedCost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DeadLine)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JobStart)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JobCompletion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JobDuration)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.isJobCompletionApproved)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JobState)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProvideUpdates)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProvidePix)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberOfUpdates)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CustomerAcceptedJob)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContractorAcceptedJob)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.JobName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.JobType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Customer.CustomerId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Contractor.ContractorId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProposedCost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AgreedCost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DeadLine)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.JobStart)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.JobCompletion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.JobDuration)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.isJobCompletionApproved)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.JobState)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProvideUpdates)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProvidePix)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfUpdates)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerAcceptedJob)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContractorAcceptedJob)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.JobId">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@item.JobId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
