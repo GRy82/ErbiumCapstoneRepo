@@ -73,6 +73,11 @@ namespace ErbiumCapstone.Controllers
             return View(homeViewModel);
         }
 
+        public ActionResult SearchForJobNull()
+        {
+            return View();
+        }
+
         // GET: ContractorController/Details/5
         public async Task<ActionResult> JobDetails(int jobId)
         {
