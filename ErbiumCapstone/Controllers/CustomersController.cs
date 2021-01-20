@@ -126,6 +126,7 @@ namespace ErbiumCapstone.Controllers
             try
             {
                 job.CustomerId = customer.CustomerId;
+                job.ContractorId = null;
                 job.JobState = "posted";
                 _repo.Job.CreateJob(job);
                 await _repo.SaveAsync();
@@ -141,23 +142,22 @@ namespace ErbiumCapstone.Controllers
         //GET: CustomersController/PostedJobs
         public async Task<ActionResult> PostedJobs(int jobId)
         {
-            
+            ViewBag.jobSelected = false;
             HomeViewModel homeViewModel = await GetAllJobsByState();
             if (jobId != 0)
             {
                 homeViewModel.ClickedJob = await _repo.Job.GetJobAsync(jobId);
-                ViewData["JobSelected"] = true;
+                ViewBag.jobSelected = true;
             }
 
             return View(homeViewModel);
         }
 
-     
-
         // GET: CustomersController/Edit/5
         public async Task<ActionResult> EditJob(int jobId)
         {
-            var jobToEdit = await _repo.Job.GetJobAsync(jobId);
+            var num = 3;
+            var jobToEdit = await _repo.Job.GetJobAsync(num);
             return View(jobToEdit);
         }
 
@@ -186,13 +186,13 @@ namespace ErbiumCapstone.Controllers
             //List<Job> currentJobs = await _repo.Job.GetAllCurrentJobsAsync(customer.CustomerId, customer.GetType());
 
             //Only keep jobs that have true values for CustomerAcceptedJob, ContractorAcceptedJob; and false values for JobCompleteion and isJobCompletionApproved.
-           
 
+            ViewBag.jobSelected = false;
             HomeViewModel homeViewModel = await GetAllJobsByState();
             if (jobId != 0)
             {
                 homeViewModel.ClickedJob = await _repo.Job.GetJobAsync(jobId);
-                ViewData["JobSelected"] = true;
+                ViewBag.jobSelected = true;
             }
 
             return View(homeViewModel);

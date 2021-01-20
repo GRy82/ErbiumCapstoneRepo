@@ -2,7 +2,6 @@
 
 @{
     ViewData["Title"] = "PostedJobs";
-    bool jobSelected = (bool)ViewData["JobSelected"];
 }
 
 <h1>PostedJobs</h1>
@@ -14,7 +13,7 @@
         </tr>
     </thead>
     <tbody>
-        @if (jobSelected == true)
+        @if (ViewBag.jobSelected == true)
         {
             <tr>
                 <td>

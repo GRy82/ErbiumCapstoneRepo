@@ -3,14 +3,13 @@
 
 @{
     ViewData["Title"] = "Current Jobs";
-    bool jobSelected = (bool)ViewData["JobSelected"];
 }
 
 <h1>Current Jobs</h1>
 
 <div class="row">
     <div class="col-md-4">
-        @if (jobSelected == true)
+        @if (ViewBag.jobSelected == true)
         {
             <details>
                 <summary><h3>@Model.ClickedJob.JobName</h3></summary>
