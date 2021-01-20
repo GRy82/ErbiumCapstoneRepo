@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ErbiumCapstone.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210119152841_Initital")]
-    partial class Initital
+    [Migration("20210120010515_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -255,6 +255,9 @@ namespace ErbiumCapstone.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("JobCompleted")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("JobCompletion")
                         .HasColumnType("datetime2");
 
@@ -382,15 +385,15 @@ namespace ErbiumCapstone.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "604bdcfb-63e6-4de0-be6f-8bbe32ccc063",
-                            ConcurrencyStamp = "357a704f-f713-40fb-8d1f-805dec78393d",
+                            Id = "d8cdd5cd-6cc7-44c1-a63f-427c29c12db4",
+                            ConcurrencyStamp = "44af0fb8-c3fd-4262-b9f5-c1cce808bddf",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "db23e79f-044b-4fea-8e03-0b5827be18a9",
-                            ConcurrencyStamp = "406386d4-bb64-445a-b443-8d015c24a9ac",
+                            Id = "09d375b4-ac62-4e89-a912-00053c72f38a",
+                            ConcurrencyStamp = "b1be159b-c837-4b37-baab-6d0b9c724a6d",
                             Name = "Contractor",
                             NormalizedName = "CONTRACTOR"
                         });
