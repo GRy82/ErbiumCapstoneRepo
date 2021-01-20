@@ -11,13 +11,13 @@
     <hr />
     @foreach (var job in Model.PostedJobs)
     {
-<details>
-    <summary><h3>@job.JobName</h3></summary>
-    <p>Job Type: @job.JobType</p>
-    <p>Payment: $@job.ProposedCost.ToString("0.00")</p>
-    <p>Start Date: @Convert.ToDateTime(job.JobStart).ToString("MM/dd/yyyy")</p>
-    <p>Deadline: @Convert.ToDateTime(job.JobCompletion).ToString("MM/dd/yyyy")</p>
-</details>
+        <details>
+            <summary><h3>@job.JobName</h3></summary>
+            <p>Job Type: @job.JobType</p>
+            <p>Payment: $@job.ProposedCost.ToString("0.00")</p>
+            <p>Start Date: @Convert.ToDateTime(job.JobStart).ToString("MM/dd/yyyy")</p>
+            <p>Deadline: @Convert.ToDateTime(job.JobCompletion).ToString("MM/dd/yyyy")</p>
+        </details>
 
         @if (job.ContractorAcceptedJob == false)
         {
@@ -39,6 +39,7 @@
     }
 
 </div>
+
 
 <div class="wrapper">
     <!-- Sidebar -->
@@ -97,6 +98,43 @@
                             <a asp-action="PastJobs">All Past Jobs</a>
                         </li>
                     }
+                </ul>
+            </li>
+
+
+            <li>
+                <a href="#Chat" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>Chat</strong></a>
+                <ul class="collapse list-unstyled" id="Chat">
+                    <li>
+                        <div class="container">
+                            <div class="row">&nbsp;</div>
+                            <div class="row">
+                                <div class="col-4"><input style="display:none" type="text" id="userInput" value="@Model.Contractor.FirstName" /></div>
+                            </div>
+                            <div class="row">
+                                <div>Message</div>
+                                <div class="col-xs-2"><input type="text" id="messageInput" /></div>
+                            </div>
+                            <div class="row">&nbsp;</div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <input type="button" id="sendButton" value="Send Message" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <hr />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div>
+                                <ul id="messagesList"></ul>
+                            </div>
+                        </div>
+                        <script src="~/js/signalr/dist/browser/signalr.js"></script>
+                        <script src="~/js/chat.js"></script>
+                    </li>
                 </ul>
             </li>
             <li>

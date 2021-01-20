@@ -208,5 +208,10 @@ namespace ErbiumCapstone.Controllers
             };
             return homeViewModel;
         }
+
+        public ActionResult SearchForJobNull()
+        {
+            return View();
+        }
     }
 }
