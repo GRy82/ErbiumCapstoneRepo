@@ -17,7 +17,7 @@ namespace ErbiumCapstone.Data
         {
 
         }
-        public void CreateJob(Job job) => Create(job);
+        public void CreateJobber(Job job) => Create(job);
 
         public async Task<Job> GetJobAsync(int jobId) =>
             await FindByCondition(c => c.JobId.Equals(jobId)).FirstOrDefaultAsync();

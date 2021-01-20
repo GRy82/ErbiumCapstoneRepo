@@ -111,24 +111,30 @@ namespace ErbiumCapstone.Controllers
         public ActionResult CreateJob()
         {
             ViewData["jobTypes"] = new List<string> { "Electrical", "Plumbing" };
-            return View(new Job());
+            Job job = new Job();
+            return View();
         }
 
         // POST: CustomersController/CreateJob/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateJob(Job job)
+        public async Task<ActionResult> CreateJob(Job job, int customerId)
         {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Customer customer = await _repo.Customer.GetCustomerAsync(userId);
+
             try
             {
+                job.CustomerId = customer.CustomerId;
                 job.JobState = "posted";
-                _repo.Job.CreateJob(job);
+                _repo.Job.CreateJobber(job);
                 await _repo.SaveAsync();
                 return RedirectToAction("PostedJobs");
             }
-            catch
+            catch (Exception e)
             {
-                return View();
+                //_logger.LogError($"Error: {e.Message}");
+                return View(e);
             }
         }
 
