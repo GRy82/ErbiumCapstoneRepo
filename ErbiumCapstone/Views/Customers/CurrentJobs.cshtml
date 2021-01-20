@@ -18,28 +18,6 @@
                 <h4>@Model.ClickedJob.JobStart</h4>
                 <h4>@Model.ClickedJob.DeadLine</h4>
 
-                <details>
-                    <summary><h4>Tasks</h4></summary>
-                    @foreach (var jobTask in Model.JobTasks)
-                    {
-                        if (jobTask.JobId == Model.ClickedJob.JobId)
-                        {
-                            <details>
-                                <summary>@jobTask.Name</summary>
-                                @jobTask.Description
-                                <hr />
-                                @foreach (var image in Model.JobTaskImages)
-                                {
-                                    if (image.JobTaskId == jobTask.TaskId)
-                                    {
-                                        <div></div>//image goes here.
-                                    }
-                                }
-                            </details>
-                        }
-                    }
-                </details>
-
             </details>
         }
         else
@@ -52,36 +30,6 @@
                     <p>Cost: @job.AgreedCost</p>
                     <p>Sate Date: @job.JobStart</p>
                     <p>DeadLine: @job.DeadLine</p>
-
-                    <details>
-                        <summary><h4>Job Status</h4></summary>
-                        @*@if (job.)
-                        {
-
-                        }*@
-                    </details>
-
-                    <details>
-                        <summary><h4>Tasks</h4></summary>
-                        @*@foreach (var jobTask in Model.JobTasks)
-                        {
-                            if (jobTask.JobId == job.JobId)
-                            {
-                                <details>
-                                    <summary>@jobTask.Name</summary>
-                                    @jobTask.Description
-                                    <hr />
-                                    @foreach (var image in Model.JobTaskImages)
-                                    {
-                                        if (image.JobTaskId == jobTask.TaskId)
-                                        {
-                                            <div></div>//image goes here.
-                                        }
-                                    }
-                                </details>
-                            }
-                        }*@
-                    </details>
 
                 </details>
             }
