@@ -100,7 +100,7 @@
                @foreach (Job job in Model.PostedJobs)
                 {
                     <li>
-                        <a href="#" asp-action="PostedJobs" asp-route-id="@job.JobId">@job.JobName</a>
+                        <a href="#" action="PostedJobs" method="GET" route-id="@job.JobId">@job.JobName</a>
                     </li>
                 }
                 </ul>
@@ -112,7 +112,7 @@
                     @foreach (Job job in Model.CurrentJobs)
                     {
                         <li>
-                            <a href="#">@job.JobName</a>
+                            <a href="#" action="CurrentJobs" method="GET" route-id="@job.JobId">@job.JobName</a>
                         </li>
                     }
 
