@@ -127,7 +127,7 @@ namespace ErbiumCapstone.Controllers
             {
                 job.CustomerId = customer.CustomerId;
                 job.JobState = "posted";
-                _repo.Job.CreateJobber(job);
+                _repo.Job.CreateJob(job);
                 await _repo.SaveAsync();
                 return RedirectToAction("PostedJobs");
             }
