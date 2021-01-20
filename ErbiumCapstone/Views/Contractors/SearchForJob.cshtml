@@ -15,7 +15,7 @@
     <summary><h3>@job.JobName</h3></summary>
     <p>Job Type: @job.JobType</p>
     <p>Payment: $@job.ProposedCost.ToString("0.00")</p>
-    <p>Start Date: @Convert.ToDateTime(job.JobCompletion).ToString("MM/dd/yyyy")</p>
+    <p>Start Date: @Convert.ToDateTime(job.JobStart).ToString("MM/dd/yyyy")</p>
     <p>Deadline: @Convert.ToDateTime(job.JobCompletion).ToString("MM/dd/yyyy")</p>
 </details>
 
