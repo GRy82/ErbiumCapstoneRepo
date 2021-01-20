@@ -18,6 +18,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using ErbiumCapstone.SignalRChat.Hubs;
+
 
 namespace ErbiumCapstone
 {
@@ -48,6 +50,7 @@ namespace ErbiumCapstone
             });
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddSignalR();
 
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
             services.AddScoped<GeocodingService>();
@@ -81,6 +84,7 @@ namespace ErbiumCapstone
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
+                endpoints.MapHub<ChatHub>("/chathub");
             });
         }
     }
