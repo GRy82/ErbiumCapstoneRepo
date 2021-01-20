@@ -20,12 +20,12 @@ namespace ErbiumCapstone.SignalR.Hubs
 
         public async Task SendMessage(string user, string message)
         {   
-            await Clients.All.SendAsync(user, message);
+            await Clients.All.SendAsync("Received Message", user, message);
         }
 
-        public Task Echo(string name, string message) =>
-          Clients.Client(Context.ConnectionId)
-                 .SendAsync("echo", name, $"{message} (echo from server)");
+        //public Task Echo(string name, string message) =>
+        //  Clients.Client(Context.ConnectionId)
+        //         .SendAsync("echo", name, $"{message} (echo from server)");
 
         //sends message back to caller
         //    public Task SendMessageToCaller(string user, string message)

@@ -3,6 +3,7 @@ using ErbiumCapstone.Contracts;
 using ErbiumCapstone.Data;
 using ErbiumCapstone.Repositories;
 using ErbiumCapstone.Services;
+using ErbiumCapstone.SignalR.Hubs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -53,7 +54,8 @@ namespace ErbiumCapstone
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
             services.AddScoped<GeocodingService>();
 
-            services.AddSignalR().AddAzureSignalR();
+            services.AddSignalR();
+                    //.AddAzureSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -84,6 +86,7 @@ namespace ErbiumCapstone
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
+                endpoints.MapHub<ChatHub>("/ChatHub");
             });
         }
     }

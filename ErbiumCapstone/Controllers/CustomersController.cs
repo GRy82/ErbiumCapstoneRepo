@@ -27,7 +27,7 @@ namespace ErbiumCapstone.Controllers
         // GET: CustomersController
         public async Task<ActionResult> Index()
         {
-            
+
 
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -37,10 +37,10 @@ namespace ErbiumCapstone.Controllers
                 return RedirectToAction("Create");
             }
             Type customerType = customer.GetType();
-        
 
-            HomeViewModel homeViewModel = await GetAllJobsbyState();
-          
+
+            //HomeViewModel homeViewModel = await GetAllJobsbyState();
+
             return RedirectToAction("CurrentJobs");
         }
 
@@ -49,19 +49,21 @@ namespace ErbiumCapstone.Controllers
             List<Job> completedJobs = new List<Job>();
 
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            Customer customer = await  _repo.Customer.GetCustomerAsync(userId);
+            Customer customer = await _repo.Customer.GetCustomerAsync(userId);
             var foundJob = await _repo.Job.GetJobAsync(customer.CustomerId);
 
             DateTime Today = DateTime.Today;
             var CompletedJob = foundJob.JobCompletion;
             var result = DateTime.Compare((DateTime)CompletedJob, Today);
 
-            if(result < 0)
+            if (result < 0)
             {
                 completedJobs.Add(foundJob);
             }
             return View(completedJobs);
         }
+
+       
 
         // GET: CustomersController/Details/5
         public async Task<ActionResult> CustomerDetails(int id)
@@ -73,10 +75,10 @@ namespace ErbiumCapstone.Controllers
         // GET: CustomersController/Create
         public ActionResult Create()
         {
-            ViewData["states"] =  new List<string> { "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS",
+            ViewData["states"] = new List<string> { "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS",
                 "KY", "LA", "ME", "MD", "MA", "MI","MN", "MS", "MO","MT", "NE", "NV","NH", "NJ", "NM","NY", "NC", "ND","OH", "OK", "OR","PA", "RI", "SC","SD",
                 "TN", "TX","UT", "VT", "VA","WA", "WV", "WI","WY" };
-            return View(new Customer()); 
+            return View(new Customer());
         }
 
         // POST: CustomersController/Create
@@ -102,7 +104,7 @@ namespace ErbiumCapstone.Controllers
                 await _repo.SaveAsync();
                 return RedirectToAction(nameof(Index));
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 //_logger.LogError($"Error: {e.Message}");
                 return View(e);
@@ -149,12 +151,12 @@ namespace ErbiumCapstone.Controllers
             return View();
         }
 
-        public async Task<ActionResult> PostedJobs(int jobId)
-        {
-            HomeViewModel homeViewModel = await GetAllJobsByState();
+        //public async Task<ActionResult> PostedJobs(int jobId)
+        //{
+        //    HomeViewModel homeViewModel = await GetAllJobsByState();
 
-            return View(homeViewModel);
-        }
+        //    return View(homeViewModel);
+        //}
 
         // GET: CustomersController/Edit/5
         public async Task<ActionResult> EditJob(int jobId)
@@ -171,7 +173,7 @@ namespace ErbiumCapstone.Controllers
             try
             {
                 _repo.Job.EditJob(job);
-                await  _repo.SaveAsync();
+                await _repo.SaveAsync();
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -189,10 +191,10 @@ namespace ErbiumCapstone.Controllers
             List<JobTask> currentJobTasks = await _repo.JobTask.GetAllCurrentJobTasksAsync(currentJobs);
             List<Image> currentJobImages = await _repo.Image.GetAllJobImagesAsync(currentJobs);
             List<Image> currentJobTaskImages = await _repo.Image.GetAllJobTaskImagesAsync(currentJobTasks);
-            
+
 
             //Only keep jobs that have true values for CustomerAcceptedJob, ContractorAcceptedJob; and false values for JobCompleteion and isJobCompletionApproved.
-           
+
 
             HomeViewModel homeViewModel = new HomeViewModel()
             {

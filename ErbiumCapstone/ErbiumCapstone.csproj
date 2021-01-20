@@ -3,20 +3,20 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>aspnet-ErbiumCapstone-BE97C4DD-46DF-4332-8221-291E08B9DA74</UserSecretsId>
-	  <TargetFramework>netcoreapp3.1</TargetFramework>
-	  <UserSecretsId>SignalRChatRoomEx</UserSecretsId>
+	  <!--<TargetFramework>netcoreapp3.1</TargetFramework>
+	  <UserSecretsId>SignalRChatRoomEx</UserSecretsId>-->
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="Migrations\20210119143540_Initial.cs" />
     <Compile Remove="Migrations\20210119143540_Initial.Designer.cs" />
     <Compile Remove="SignalR\Hubs\IChatClient.cs" />
-	  <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4" />
-	  <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.2" />
+	  <!--<DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4" />
+	  <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.2" />-->
   </ItemGroup>
 
   <ItemGroup>
-	  <PackageReference Include="Microsoft.Azure.SignalR" Version="1.*" /> 
+	  <!--<PackageReference Include="Microsoft.Azure.SignalR" Version="1.*" />--> 
     <PackageReference Include="Microsoft.AspNet.SignalR.Core" Version="2.4.1" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.10" />
