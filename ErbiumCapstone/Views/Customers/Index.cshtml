@@ -1,100 +1,58 @@
-﻿@model ErbiumCapstone.Models.Job
+﻿
+@model ErbiumCapstone.ViewModels.HomeViewModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Current Jobs";
 }
 
-<h1>Index</h1>
-
-<div>
-    <h4>Completed Jobs</h4>
-    <hr />
-    <form asp-action="GetPastJobs">
-        <div>
-
-            <label> Completed Jobs </label>
-            <select name="" asp-items="ViewBag.GetPastJobs"></select>
-
+<h1>Home<h1>
+<div class="container">
+    <div class="row">
+        <div class="col-4">
+            <h4>Posted jobs: @Model.PostedJobs.Count</h4>
         </div>
-    </form>
-    <div>
-        <dl>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.JobName)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.JobName)
-            </dd>
-        </dl>
+        <div class="col-4">
+            <h4>Current jobs: @Model.CurrentJobs.Count</h4>
+        </div>
+        <div class="col-4">
+            <h4>Past jobs: @Model.PastJobs.Count</h4>
+        </div>
     </div>
-    <div style="float: left">
-        <dl>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Contractor)
-            </dt>
-        </dl>
-    </div>
-    <div style="float: right">
-        <dl>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.AgreedCost)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.AgreedCost)
-            </dd>
-        </dl>
-    </div>
-
-    <div>
-        <dl>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.ProvidePix)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.ProvidePix)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.JobCompletion)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.JobCompletion)
-            </dd>
-        </dl>
-    </div>
-
-    <dl class="row">
-
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.JobType)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.JobType)
-        </dd>
-
-
-
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-
-
-
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.JobStart)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.JobStart)
-        </dd>
-
-
-    </dl>
+    @*<div class="row">
+        <div class="col">
+            1 of 3
+        </div>
+        <div class="col-5">
+            2 of 3 (wider)
+        </div>
+        <div class="col">
+            3 of 3
+        </div>
+    </div>*@
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.JobId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<div class="row">
+    <div class="col-md-4">
+
+        <hr />  
+            @foreach (var job in Model.CurrentJobs)
+            {
+                <details>
+                    <summary><h3>@job.JobName</h3></summary>
+                    <h4>@job.ContractorId</h4>
+                    <h4>@job.AgreedCost</h4>
+                    <h4>@job.JobStart</h4>
+                    <h4>@job.DeadLine</h4>
+
+                    <details>
+                        <summary><h4>Tasks</h4></summary>
+
+                    </details>
+
+                </details>
+            }
+        
+
+    </div>
 </div>
 
 <div class="wrapper">
@@ -106,55 +64,82 @@
 
         <ul class="list-unstyled components">
             <li>
-                <a href="#">Create Job</a>
+                <a href="/Customers/CreateJob"><strong>Create Job</strong></a>
             </li>
 
             <li class="active">
-                <a href="#interestSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Posted Jobs</a>
+                <a href="#interestSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>Posted Jobs</strong></a>
                 <ul class="collapse list-unstyled" id="interestSubmenu">
-                    <li>
-                        <a href="#">Posted Job 1</a>
-                    </li>
-                    <li>
-                        <a href="#">Posted Job 2</a>
-                    </li>
-                    <li>
-                        <a href="#">Posted Job 3</a>
-                    </li>
+                    @foreach (Job job in Model.PostedJobs)
+                    {
+                        <li>
+                            <a href="#" action="PostedJobs" method="GET" route-id="@job.JobId">@job.JobName</a>
+                            @*<a asp-action="PostedJobs" asp-route-jobid="@job.JobId">No Posted Jobs</a>*@
+                        </li>
+                    }
+                    @if (Model.PostedJobs.Count == 0)
+                    {
+                        <li>
+                            <a asp-action="PostedJobs">No Posted Jobs</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <a asp-action="PostedJobs">All Posted Jobs</a>
+                        </li>
+                    }
                 </ul>
             </li>
 
             <li>
-                <a href="#currentSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Current Jobs</a>
+                <a href="#currentSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>Current Jobs</strong></a>
                 <ul class="collapse list-unstyled" id="currentSubmenu">
-                    <li>
-                        <a href="#">Current Job 1</a>
-                    </li>
-                    <li>
-                        <a href="#">Current Job 2</a>
-                    </li>
-                    <li>
-                        <a href="#">Current Job 3</a>
-                    </li>
+                    @foreach (Job job in Model.CurrentJobs)
+                    {
+                        <li>
+                            <a href="#" action="CurrentJobs" method="GET" route-id="@job.JobId">@job.JobName</a>
+                        </li>
+                    }
+                    @if (Model.CurrentJobs.Count == 0)
+                    {
+                        <li>
+                            <a asp-action="CurrentJobs">No Current Jobs</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <a asp-action="CurrentJobs">All Current Jobs</a>
+                        </li>
+                    }
                 </ul>
             </li>
 
             <li>
-                <a href="#pastSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Past Jobs</a>
+                <a href="#pastSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>Past Jobs</strong></a>
                 <ul class="collapse list-unstyled" id="pastSubmenu">
-                    <li>
-                        <a href="#">Past Job 1</a>
-                    </li>
-                    <li>
-                        <a href="#">Past Job 2</a>
-                    </li>
-                    <li>
-                        <a href="#">Past Job 3</a>
-                    </li>
+                    @foreach (Job job in Model.PastJobs)
+                    {
+                        <li>
+                            <a href="#">@job.JobName</a>
+                        </li>
+                    }
+                    @if (Model.PastJobs.Count == 0)
+                    {
+                        <li>
+                            <a asp-action="PastJobs">No Past Jobs</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <a asp-action="PastJobs">All Past Jobs</a>
+                        </li>
+                    }
                 </ul>
             </li>
             <li>
         </ul>
-
     </nav>
 </div>
