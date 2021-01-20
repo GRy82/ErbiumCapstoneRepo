@@ -60,6 +60,11 @@ namespace ErbiumCapstone.Controllers
             else if (job.ContractorAcceptedJob == false){
                 job.ContractorAcceptedJob = true;
             }
+
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Contractor contractor = await _repo.Contractor.GetContractorAsync(userId);
+
+            job.ContractorId = contractor.ContractorId;
             _repo.Job.Update(job);
             await _repo.SaveAsync();
 
@@ -207,11 +212,6 @@ namespace ErbiumCapstone.Controllers
                 PastJobs = PastJobsList
             };
             return homeViewModel;
-        }
-
-        public ActionResult SearchForJobNull()
-        {
-            return View();
         }
     }
 }
