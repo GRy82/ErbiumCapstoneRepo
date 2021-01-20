@@ -38,7 +38,7 @@ namespace ErbiumCapstone.Controllers
 
             HomeViewModel homeViewModel = await GetAllJobsByState();
 
-            return RedirectToAction("CurrentJobs");
+            return View(homeViewModel);
         }
 
         public async Task<ActionResult> GetPastJobs()
@@ -130,11 +130,10 @@ namespace ErbiumCapstone.Controllers
                 job.JobState = "posted";
                 _repo.Job.CreateJob(job);
                 await _repo.SaveAsync();
-                return RedirectToAction("PostedJobs");
+                return RedirectToAction("Index");
             }
             catch (Exception e)
             {
-                //_logger.LogError($"Error: {e.Message}");
                 return View(e);
             }
         }
@@ -156,7 +155,7 @@ namespace ErbiumCapstone.Controllers
             {
                 _repo.Job.EditJob(job);
                 await  _repo.SaveAsync();
-                return RedirectToAction("PostedJobs");
+                return RedirectToAction("Index");
             }
             catch
             {
