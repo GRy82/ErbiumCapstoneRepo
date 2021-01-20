@@ -5,42 +5,47 @@
     ViewData["Title"] = "Current Jobs";
 }
 
-<h1>Posted Jobs</h1>
+<h1>Current Jobs</h1>
 
 <div class="row">
     <div class="col-md-4">
         @if (ViewBag.jobSelected == true)
         {
+        <details>
+            <summary><h3>@Model.ClickedJob.JobName</h3></summary>
+            <h4>@Model.ClickedJob.JobType</h4>
+            <h4>@Model.ClickedJob.AgreedCost</h4>
+            <h4>@Model.ClickedJob.JobStart</h4>
+            <h4>@Model.ClickedJob.DeadLine</h4>
+            <h4>@Model.ClickedJob.Customer.CustomerId</h4>
+            <h4>@Model.ClickedJob.Customer.StreetAddress</h4>
+            <h4>@Model.ClickedJob.Customer.City</h4>
+            <h4>@Model.ClickedJob.Customer.State</h4>
+            <h4>@Model.ClickedJob.Customer.ZipCode</h4>
+
             <details>
-                <summary><h3>@Model.ClickedJob.JobName</h3></summary>
-                <h4>@Model.ClickedJob.Contractor.ContractorId</h4>
-                <h4>@Model.ClickedJob.AgreedCost</h4>
-                <h4>@Model.ClickedJob.JobStart</h4>
-                <h4>@Model.ClickedJob.DeadLine</h4>
-
-                <details>
-                    <summary><h4>Tasks</h4></summary>
-                    @foreach (var jobTask in Model.JobTasks)
+                <summary><h4>Tasks</h4></summary>
+                @foreach (var jobTask in Model.JobTasks)
+                {
+                    if (jobTask.JobId == Model.ClickedJob.JobId)
                     {
-                        if (jobTask.JobId == Model.ClickedJob.JobId)
-                        {
-                            <details>
-                                <summary>@jobTask.Name</summary>
-                                @jobTask.Description
-                                <hr />
-                                @foreach (var image in Model.JobTaskImages)
+                        <details>
+                            <summary>@jobTask.Name</summary>
+                            @jobTask.Description
+                            <hr />
+                            @foreach (var image in Model.JobTaskImages)
+                            {
+                                if (image.JobTaskId == jobTask.TaskId)
                                 {
-                                    if (image.JobTaskId == jobTask.TaskId)
-                                    {
-                                        <div></div>//image goes here.
-                                    }
+                                    <div></div>//image goes here.
                                 }
-                            </details>
-                        }
+                            }
+                        </details>
                     }
-                </details>
-
+                }
             </details>
+
+        </details>
         }
         else
         {
@@ -48,7 +53,6 @@
             {
                 <details>
                     <summary><h3>@job.JobName</h3></summary>
-                    <h4>@job.ContractorId</h4>
                     <h4>@job.AgreedCost</h4>
                     <h4>@job.JobStart</h4>
                     <h4>@job.DeadLine</h4>
@@ -82,22 +86,20 @@
     </div>
 </div>
 
-
-
 <div class="wrapper">
     <!-- Sidebar -->
     <nav id="sidebar">
         <div class="sidebar-header">
-            <h5>Customer Portal</h5>
+            <h5>Contractor Portal</h5>
         </div>
 
         <ul class="list-unstyled components">
             <li>
-                <a href="/Customers/CreateJob"><strong>Create Job</strong></a>
+                <a href="/Contractors/SearchForJob">Search Jobs</a>
             </li>
 
             <li class="active">
-                <a href="#interestSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>Posted Jobs</strong></a>
+                <a href="#interestSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Jobs of Interest</a>
                 <ul class="collapse list-unstyled" id="interestSubmenu">
                     @foreach (Job job in Model.PostedJobs)
                     {
@@ -105,23 +107,11 @@
                             <a href="#" action="PostedJobs" method="GET" route-id="@job.JobId">@job.JobName</a>
                         </li>
                     }
-                    @if (Model.PostedJobs.Count == 0)
-                    {
-                        <li>
-                            <a asp-action="PostedJobs">No Posted Jobs</a>
-                        </li>
-                    }
-                    else
-                    {
-                        <li>
-                            <a asp-action="PostedJobs">All Posted Jobs</a>
-                        </li>
-                    }
                 </ul>
             </li>
 
             <li>
-                <a href="#currentSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>Current Jobs</strong></a>
+                <a href="#currentSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Current Jobs</a>
                 <ul class="collapse list-unstyled" id="currentSubmenu">
                     @foreach (Job job in Model.CurrentJobs)
                     {
@@ -129,23 +119,12 @@
                             <a href="#" action="CurrentJobs" method="GET" route-id="@job.JobId">@job.JobName</a>
                         </li>
                     }
-                    @if (Model.CurrentJobs.Count == 0)
-                    {
-                        <li>
-                            <a asp-action="CurrentJobs">No Current Jobs</a>
-                        </li>
-                    }
-                    else
-                    {
-                        <li>
-                            <a asp-action="CurrentJobs">All Current Jobs</a>
-                        </li>
-                    }
+
                 </ul>
             </li>
 
             <li>
-                <a href="#pastSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>Past Jobs</strong></a>
+                <a href="#pastSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Past Jobs</a>
                 <ul class="collapse list-unstyled" id="pastSubmenu">
                     @foreach (Job job in Model.PastJobs)
                     {
@@ -153,21 +132,10 @@
                             <a href="#">@job.JobName</a>
                         </li>
                     }
-                    @if (Model.PastJobs.Count == 0)
-                    {
-                        <li>
-                            <a asp-action="PastJobs">No Past Jobs</a>
-                        </li>
-                    }
-                    else
-                    {
-                        <li>
-                            <a asp-action="PastJobs">All Past Jobs</a>
-                        </li>
-                    }
                 </ul>
             </li>
             <li>
         </ul>
+
     </nav>
 </div>
