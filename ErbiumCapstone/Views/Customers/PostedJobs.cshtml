@@ -13,62 +13,122 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var job in Model.PastJobs)
+        @if (ViewData["JobSelected"].Equals(true))
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => job.JobName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => job.JobType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => job.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => job.ProposedCost)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => job.AgreedCost)
-                <h4>@Html.DisplayFor(modelItem => job.AgreedCost)</h4>
+            <tr>
+                <td>
+                    @Model.ClickedJob.JobName)
+                </td>
+                <td>
+                    @Model.ClickedJob.JobType)
+                </td>
+                <td>
+                    @Model.ClickedJob.Description)
+                </td>
+                <td>
+                    @Model.ClickedJob.ProposedCost)
+                </td>
+                <td>
+                    @Model.ClickedJob.AgreedCost)
+                    <h4>@Model.ClickedJob.AgreedCost)</h4>
 
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => job.DeadLine)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => job.JobStart)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => job.JobCompletion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => job.isJobCompletionApproved)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => job.JobState)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => job.ProvideUpdates)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => job.ProvidePix)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => job.NumberOfUpdates)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => job.CustomerAcceptedJob)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => job.ContractorAcceptedJob)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@job.JobId">Edit</a> |
-                <a asp-action="Delete" asp-route-id="@job.JobId">Delete</a>
-            </td>
-        </tr>
+                </td>
+                <td>
+                    @Model.ClickedJob.DeadLine)
+                </td>
+                <td>
+                    @Model.ClickedJob.JobStart)
+                </td>
+                <td>
+                    @Model.ClickedJob.JobCompletion)
+                </td>
+                <td>
+                    @Model.ClickedJob.isJobCompletionApproved)
+                </td>
+                <td>
+                    @Model.ClickedJob.JobState)
+                </td>
+                <td>
+                    @Model.ClickedJob.ProvideUpdates)
+                </td>
+                <td>
+                    @Model.ClickedJob.ProvidePix)
+                </td>
+                <td>
+                    @Model.ClickedJob.NumberOfUpdates)
+                </td>
+                <td>
+                    @Model.ClickedJob.CustomerAcceptedJob)
+                </td>
+                <td>
+                    @Model.ClickedJob.ContractorAcceptedJob)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@Model.ClickedJob.JobId">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@Model.ClickedJob.JobId">Delete</a>
+                </td>
+            </tr>
         }
+        else
+        {
+            @foreach (var job in Model.PastJobs)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => job.JobName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => job.JobType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => job.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => job.ProposedCost)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => job.AgreedCost)
+                        <h4>@Html.DisplayFor(modelItem => job.AgreedCost)</h4>
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => job.DeadLine)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => job.JobStart)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => job.JobCompletion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => job.isJobCompletionApproved)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => job.JobState)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => job.ProvideUpdates)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => job.ProvidePix)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => job.NumberOfUpdates)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => job.CustomerAcceptedJob)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => job.ContractorAcceptedJob)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@job.JobId">Edit</a> |
+                        <a asp-action="Delete" asp-route-id="@job.JobId">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+
     </tbody>
 </table>
 
