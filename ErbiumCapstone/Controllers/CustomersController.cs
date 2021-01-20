@@ -141,8 +141,7 @@ namespace ErbiumCapstone.Controllers
         // GET: CustomersController/Edit/5
         public async Task<ActionResult> EditJob(int jobId)
         {
-            var num = 7;
-            var jobToEdit = await _repo.Job.GetJobAsync(num);
+            var jobToEdit = await _repo.Job.GetJobAsync(jobId);
             return View(jobToEdit);
         }
 
@@ -175,6 +174,20 @@ namespace ErbiumCapstone.Controllers
             }
 
             return View(homeViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> PostedJobs(Job job)
+        {
+            int id = job.JobId;
+            job = await _repo.Job.GetJobAsync(id);
+            job.CustomerAcceptedJob = true;
+            job.JobState = "current";
+            _repo.Job.Update(job);
+            await _repo.SaveAsync();
+
+            return RedirectToAction(nameof(CurrentJobs));
         }
 
         // GET: CustomersController/CurrentJobs/5
