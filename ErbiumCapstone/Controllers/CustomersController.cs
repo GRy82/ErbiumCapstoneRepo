@@ -170,7 +170,7 @@ namespace ErbiumCapstone.Controllers
             {
                 _repo.Job.EditJob(job);
                 await  _repo.SaveAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("PostedJobs");
             }
             catch
             {
