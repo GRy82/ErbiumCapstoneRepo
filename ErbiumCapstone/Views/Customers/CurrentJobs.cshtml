@@ -48,14 +48,14 @@
             {
                 <details>
                     <summary><h3>@job.JobName</h3></summary>
-                    <h4>@job.Contractor.ContractorId</h4>
+                    <h4>@job.ContractorId</h4>
                     <h4>@job.AgreedCost</h4>
                     <h4>@job.JobStart</h4>
                     <h4>@job.DeadLine</h4>
 
                     <details>
                         <summary><h4>Tasks</h4></summary>
-                        @foreach (var jobTask in Model.JobTasks)
+                        @*@foreach (var jobTask in Model.JobTasks)
                         {
                             if (jobTask.JobId == job.JobId)
                             {
@@ -72,7 +72,7 @@
                                     }
                                 </details>
                             }
-                        }
+                        }*@
                     </details>
 
                 </details>

@@ -140,15 +140,15 @@ namespace ErbiumCapstone.Controllers
         }
 
         //GET: CustomersController/PostedJobs
-        public async Task<ActionResult> PostedJobs(int jobId)
+        public async Task<ActionResult> PostedJobs()
         {
             ViewBag.jobSelected = false;
             HomeViewModel homeViewModel = await GetAllJobsByState();
-            if (jobId != 0)
-            {
-                homeViewModel.ClickedJob = await _repo.Job.GetJobAsync(jobId);
-                ViewBag.jobSelected = true;
-            }
+            //if (jobId != 0)
+            //{
+            //    homeViewModel.ClickedJob = await _repo.Job.GetJobAsync(jobId);
+            //    ViewBag.jobSelected = true;
+            //}
 
             return View(homeViewModel);
         }
@@ -156,7 +156,7 @@ namespace ErbiumCapstone.Controllers
         // GET: CustomersController/Edit/5
         public async Task<ActionResult> EditJob(int jobId)
         {
-            var num = 3;
+            var num = 7;
             var jobToEdit = await _repo.Job.GetJobAsync(num);
             return View(jobToEdit);
         }
