@@ -140,9 +140,15 @@ namespace ErbiumCapstone.Controllers
         }
 
         //GET: CustomersController/PostedJobs
-        public async Task<ActionResult> PostedJobs()
+        public async Task<ActionResult> PostedJobs(int jobId)
         {
+            
             HomeViewModel homeViewModel = await GetAllJobsByState();
+            if (jobId != 0)
+            {
+                homeViewModel.ClickedJob = await _repo.Job.GetJobAsync(jobId);
+                ViewData["JobSelected"] = true;
+            }
 
             return View(homeViewModel);
         }
@@ -173,7 +179,7 @@ namespace ErbiumCapstone.Controllers
         }
 
         //Get
-        public async Task<ActionResult> CurrentJobs()
+        public async Task<ActionResult> CurrentJobs(int jobId)
         {
             //var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             //Customer customer = await _repo.Customer.GetCustomerAsync(userId);
@@ -183,6 +189,11 @@ namespace ErbiumCapstone.Controllers
            
 
             HomeViewModel homeViewModel = await GetAllJobsByState();
+            if (jobId != 0)
+            {
+                homeViewModel.ClickedJob = await _repo.Job.GetJobAsync(jobId);
+                ViewData["JobSelected"] = true;
+            }
 
             return View(homeViewModel);
         }
