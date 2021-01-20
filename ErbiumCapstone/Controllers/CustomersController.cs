@@ -27,17 +27,20 @@ namespace ErbiumCapstone.Controllers
         // GET: CustomersController
         public async Task<ActionResult> Index()
         {
+            
+
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             Customer customer = await _repo.Customer.GetCustomerAsync(userId);
             if (customer == null)
             {
                 return RedirectToAction("Create");
             }
-
             Type customerType = customer.GetType();
+        
 
-            HomeViewModel homeViewModel = await GetAllJobsByState();
-
+            HomeViewModel homeViewModel = await GetAllJobsbyState();
+          
             return RedirectToAction("CurrentJobs");
         }
 
@@ -97,7 +100,7 @@ namespace ErbiumCapstone.Controllers
                 customer.IdentityUserId = userId;
                 _repo.Customer.CreateCustomer(customer);
                 await _repo.SaveAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
             catch(Exception e)
             {
@@ -110,29 +113,43 @@ namespace ErbiumCapstone.Controllers
         public ActionResult CreateJob()
         {
             ViewData["jobTypes"] = new List<string> { "Electrical", "Plumbing" };
-            return View(new Job());
+            Job job = new Job();
+            return View();
         }
 
         // POST: CustomersController/CreateJob/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateJob(Job job)
+        public async Task<ActionResult> CreateJob(Job job, int customerId)
         {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Customer customer = await _repo.Customer.GetCustomerAsync(userId);
+
             try
             {
+                job.CustomerId = customer.CustomerId;
                 job.JobState = "posted";
                 _repo.Job.CreateJob(job);
                 await _repo.SaveAsync();
-                return RedirectToAction("PostedJobs");
+                return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception e)
             {
-                return View();
+                //_logger.LogError($"Error: {e.Message}");
+                return View(e);
             }
         }
 
-        //GET: CustomersController/PostedJobs
         public async Task<ActionResult> PostedJobs()
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //Customer customer.IdentityUserId = userId;
+            //var customer = _repo.Customer.where(c => c.IdentityUserId == userId);
+
+            return View();
+        }
+
+        public async Task<ActionResult> PostedJobs(int jobId)
         {
             HomeViewModel homeViewModel = await GetAllJobsByState();
 
@@ -166,15 +183,25 @@ namespace ErbiumCapstone.Controllers
         //Get
         public async Task<ActionResult> CurrentJobs()
         {
-            //var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            //Customer customer = await _repo.Customer.GetCustomerAsync(userId);
-            //List<Job> currentJobs = await _repo.Job.GetAllCurrentJobsAsync(customer.CustomerId, customer.GetType());
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Customer customer = await _repo.Customer.GetCustomerAsync(userId);
+            List<Job> currentJobs = await _repo.Job.GetAllCurrentJobsAsync(customer.CustomerId, customer.GetType());
+            List<JobTask> currentJobTasks = await _repo.JobTask.GetAllCurrentJobTasksAsync(currentJobs);
+            List<Image> currentJobImages = await _repo.Image.GetAllJobImagesAsync(currentJobs);
+            List<Image> currentJobTaskImages = await _repo.Image.GetAllJobTaskImagesAsync(currentJobTasks);
+            
 
             //Only keep jobs that have true values for CustomerAcceptedJob, ContractorAcceptedJob; and false values for JobCompleteion and isJobCompletionApproved.
            
 
-            HomeViewModel homeViewModel = await GetAllJobsByState();
-
+            HomeViewModel homeViewModel = new HomeViewModel()
+            {
+                Customer = customer,
+                CurrentJobs = currentJobs,
+                JobTasks = currentJobTasks,
+                JobImages = currentJobTaskImages,
+                JobTaskImages = currentJobTaskImages,
+            };
             return View(homeViewModel);
         }
 
@@ -201,25 +228,6 @@ namespace ErbiumCapstone.Controllers
             {
                 return View();
             }
-        }
-
-        //Gets the current customer and all of their jobs
-        public async Task<HomeViewModel> GetAllJobsByState()
-        {
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            Customer customer = await _repo.Customer.GetCustomerAsync(userId);
-            List<Job> currentJobsList = await _repo.Job.GetAllCurrentJobsAsync(customer.CustomerId, customer.GetType());
-            List<Job> postedJobsList = await _repo.Job.GetAllPostedJobsAsync(customer.CustomerId, customer.GetType());
-            List<Job> PastJobsList = await _repo.Job.GetAllPastJobsAsync(customer.CustomerId, customer.GetType());
-
-            HomeViewModel homeViewModel = new HomeViewModel()
-            {
-                Customer = customer,
-                CurrentJobs = currentJobsList,
-                PostedJobs = postedJobsList,
-                PastJobs = PastJobsList
-            };
-            return homeViewModel;
         }
     }
 }
