@@ -262,6 +262,7 @@ namespace ErbiumCapstone.Migrations
                     JobStart = table.Column<DateTime>(nullable: true),
                     JobCompletion = table.Column<DateTime>(nullable: true),
                     JobDuration = table.Column<TimeSpan>(nullable: true),
+                    JobCompleted = table.Column<bool>(nullable: false),
                     isJobCompletionApproved = table.Column<bool>(nullable: false),
                     JobState = table.Column<string>(nullable: true),
                     ProvideUpdates = table.Column<bool>(nullable: false),
@@ -315,8 +316,8 @@ namespace ErbiumCapstone.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "ad60a221-c9fb-44b6-89b6-b906813bfb90", "5cf438f6-06cb-46ff-8b61-8c9c063efa94", "Customer", "CUSTOMER" },
-                    { "70a57b2b-f4d3-494b-8b2f-a337077a0bcf", "57cfcd02-fa77-46f3-ad5b-d0f8a0fe728f", "Contractor", "CONTRACTOR" }
+                    { "d8cdd5cd-6cc7-44c1-a63f-427c29c12db4", "44af0fb8-c3fd-4262-b9f5-c1cce808bddf", "Customer", "CUSTOMER" },
+                    { "09d375b4-ac62-4e89-a912-00053c72f38a", "b1be159b-c837-4b37-baab-6d0b9c724a6d", "Contractor", "CONTRACTOR" }
                 });
 
             migrationBuilder.InsertData(

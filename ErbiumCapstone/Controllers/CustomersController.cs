@@ -146,6 +146,13 @@ namespace ErbiumCapstone.Controllers
             return View(homeViewModel);
         }
 
+        public async Task<ActionResult> PostedJobs(int jobId)
+        {
+            HomeViewModel homeViewModel = await GetAllJobsByState();
+
+            return View(homeViewModel);
+        }
+
         // GET: CustomersController/Edit/5
         public async Task<ActionResult> EditJob(int jobId)
         {

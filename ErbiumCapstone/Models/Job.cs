@@ -40,7 +40,8 @@ namespace ErbiumCapstone.Models
         [Display(Name = "Completion Date")]
         public DateTime? JobCompletion { get; set; }
         public TimeSpan? JobDuration { get; set; }
-        public bool isJobCompletionApproved { get; set; }
+        public bool JobCompleted { get; set; } //When a contractor marks a current job as completed
+        public bool isJobCompletionApproved { get; set; } //When a customer approves of the completed job
         public string JobState { get; set; }
 
         [Display(Name = "Provide Updates")]

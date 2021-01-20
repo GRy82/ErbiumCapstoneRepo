@@ -10,6 +10,8 @@ namespace ErbiumCapstone.ViewModels
     {
         public Customer Customer { get; set; }
         public Contractor Contractor { get; set; }
+
+        public Job ClickedJob { get; set; }
         public List<Job> CurrentJobs { get; set; }
         public List<Job> PostedJobs { get; set; }
         public List<Job> PastJobs { get; set; }
