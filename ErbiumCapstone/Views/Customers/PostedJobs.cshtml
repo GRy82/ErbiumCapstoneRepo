@@ -64,7 +64,7 @@
                 @Html.DisplayFor(modelItem => job.ContractorAcceptedJob)
             </td>
             <td>
-                <a asp-action="EditJob" asp-route-id="@job.JobId">Edit</a> |
+                <a asp-action="EditJob" asp-controller="Customers" asp-route-id="@job.JobId">Edit</a> |
                 <a asp-action="Delete" asp-route-id="@job.JobId">Delete</a>
             </td>
         </tr>

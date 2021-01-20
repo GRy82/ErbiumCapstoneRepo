@@ -126,6 +126,7 @@ namespace ErbiumCapstone.Controllers
             try
             {
                 job.CustomerId = customer.CustomerId;
+                job.ContractorId = null;
                 job.JobState = "posted";
                 _repo.Job.CreateJob(job);
                 await _repo.SaveAsync();
@@ -146,17 +147,11 @@ namespace ErbiumCapstone.Controllers
             return View(homeViewModel);
         }
 
-        public async Task<ActionResult> PostedJobs(int jobId)
-        {
-            HomeViewModel homeViewModel = await GetAllJobsByState();
-
-            return View(homeViewModel);
-        }
-
         // GET: CustomersController/Edit/5
         public async Task<ActionResult> EditJob(int jobId)
         {
-            var jobToEdit = await _repo.Job.GetJobAsync(jobId);
+            var num = 3;
+            var jobToEdit = await _repo.Job.GetJobAsync(num);
             return View(jobToEdit);
         }
 

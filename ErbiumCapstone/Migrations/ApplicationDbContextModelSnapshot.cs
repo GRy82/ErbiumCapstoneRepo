@@ -383,15 +383,15 @@ namespace ErbiumCapstone.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "d8cdd5cd-6cc7-44c1-a63f-427c29c12db4",
-                            ConcurrencyStamp = "44af0fb8-c3fd-4262-b9f5-c1cce808bddf",
+                            Id = "f18eb24c-48af-44c4-982d-f79291185123",
+                            ConcurrencyStamp = "abc3558c-5a9f-4b06-80c7-98b1a069812d",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "09d375b4-ac62-4e89-a912-00053c72f38a",
-                            ConcurrencyStamp = "b1be159b-c837-4b37-baab-6d0b9c724a6d",
+                            Id = "83325a17-b053-4fa3-a700-cbfcd89dab25",
+                            ConcurrencyStamp = "024219e3-b4e9-49ec-92b9-6461e788fbc3",
                             Name = "Contractor",
                             NormalizedName = "CONTRACTOR"
                         });
