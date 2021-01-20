@@ -56,7 +56,9 @@ namespace ErbiumCapstone.Data
             for(int i = 0; i < limit; i++)
             {
                 if (jobs[i].JobState != "current") { 
-                    jobs.Remove(jobs[i]); 
+                    jobs.Remove(jobs[i]);
+                    limit--;
+                    i--;
                 }
             }
 
@@ -82,6 +84,8 @@ namespace ErbiumCapstone.Data
                 if (jobs[i].JobState != "posted")
                 {
                     jobs.Remove(jobs[i]);
+                    limit--;
+                    i--;
                 }
             }
 
@@ -106,6 +110,8 @@ namespace ErbiumCapstone.Data
                 if (jobs[i].JobState != "past")
                 {
                     jobs.Remove(jobs[i]);
+                    limit--;
+                    i--;
                 }
             }
 
