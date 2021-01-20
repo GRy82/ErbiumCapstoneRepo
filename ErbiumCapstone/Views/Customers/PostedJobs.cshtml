@@ -8,7 +8,7 @@
 <h1>Posted Jobs</h1>
 
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-12">
         @if (ViewBag.jobSelected == true)
         {
             <details>
@@ -29,10 +29,10 @@
             {
                 <details>
                     <summary><h3>@job.JobName</h3></summary>
-                    <h4><b>JobType: </b>@job.JobType</h4>
-                    <h4><b>Cost: </b>: $@job.ProposedCost.ToString("0.00")</h4>
-                    <h4><b>Start Date: </b>@Convert.ToDateTime(job.JobStart).ToString("mm/dd/yyyy")</h4>
-                    <h4><b>Deadline: </b>@Convert.ToDateTime(job.DeadLine).ToString("mm/dd/yyyy")</h4>
+                    <h3><b>JobType: </b>@job.JobType</h3>
+                    <h3><b>Cost: </b>: $@job.ProposedCost.ToString("0.00")</h3>
+                    <h3><b>Start Date: </b>@Convert.ToDateTime(job.JobStart).ToString("mm/dd/yyyy")</h3>
+                    <h3><b>Deadline: </b>@Convert.ToDateTime(job.DeadLine).ToString("mm/dd/yyyy")</h3>
                     <h3><b>Description: </b>@job.Description</h3>
                     <h3><b>Provide Updates: </b>@job.ProvideUpdates</h3>
                     <h3><b>Provide Pictures: </b>@job.ProvidePix</h3>
