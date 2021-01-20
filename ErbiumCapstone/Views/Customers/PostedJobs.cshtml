@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "PostedJobs";
+    bool jobSelected = (bool)ViewData["JobSelected"];
 }
 
 <h1>PostedJobs</h1>
@@ -13,7 +14,7 @@
         </tr>
     </thead>
     <tbody>
-        @if (ViewData["JobSelected"].Equals(true))
+        @if (jobSelected == true)
         {
             <tr>
                 <td>
