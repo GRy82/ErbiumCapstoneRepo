@@ -23,7 +23,7 @@ namespace ErbiumCapstone.Repositories
             await FindByCondition(c => c.ContractorId.Equals(contractorId)).FirstOrDefaultAsync();
 
         public async Task<Contractor> GetContractorAsync(string contractorId) =>
-            await FindByCondition(c => c.ContractorId.Equals(contractorId)).FirstOrDefaultAsync();
+            await FindByCondition(c => c.IdentityUserId.Equals(contractorId)).FirstOrDefaultAsync();
 
         public async Task<List<Contractor>> GetAllContractorsAsync() =>
             await FindAll().ToListAsync();

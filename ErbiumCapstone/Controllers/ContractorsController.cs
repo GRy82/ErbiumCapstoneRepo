@@ -32,12 +32,48 @@ namespace ErbiumCapstone.Controllers
             {
                 return RedirectToAction("Create");
             }
-            var jobList = await _repo.Job.GetAllJobsAsync(contractor.ContractorId, contractor.GetType());
-            HomeViewModel homeViewModel = new HomeViewModel()
+            
+            return RedirectToAction("SearchForJob");
+        }
+
+        public async Task<ActionResult> SearchForJob()
+        {
+            HomeViewModel homeViewModel = await GetAllJobsByState();
+
+            if (homeViewModel.PostedJobs == null)
             {
-                Contractor = contractor,
-            };
+                return RedirectToAction(nameof(SearchForJobNull));
+            }
+
             return View(homeViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> SearchForJob(Job job)
+        {
+            int id = job.JobId;
+            job = await _repo.Job.GetJobAsync(id);
+            job.ContractorAcceptedJob = true;
+            _repo.Job.Update(job);
+            await _repo.SaveAsync();
+
+            HomeViewModel homeViewModel = await GetAllJobsByState();
+
+            if (homeViewModel.PostedJobs == null)
+            {
+                return RedirectToAction(nameof(SearchForJobNull));
+            }
+
+            return View(homeViewModel);
+        }
+
+
+
+
+        public ActionResult SearchForJobNull()
+        {
+            return View();
         }
 
         // GET: ContractorController/Details/5
@@ -150,17 +186,25 @@ namespace ErbiumCapstone.Controllers
                 return View();
             }
         }
-        public ActionResult SearchForJob()
+        
+
+
+        public async Task<HomeViewModel> GetAllJobsByState()
         {
-            if(_repo.Job == null)
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Contractor contractor = await _repo.Contractor.GetContractorAsync(userId);
+            List<Job> currentJobsList = await _repo.Job.GetAllCurrentJobsAsync(contractor.ContractorId, contractor.GetType());
+            List<Job> postedJobsList = await _repo.Job.GetAllPostedJobsAsync(contractor.ContractorId, contractor.GetType());
+            List<Job> PastJobsList = await _repo.Job.GetAllPastJobsAsync(contractor.ContractorId, contractor.GetType());
+
+            HomeViewModel homeViewModel = new HomeViewModel()
             {
-                return RedirectToAction(nameof(SearchForJobNull));
-            }
-            return View();
-        }
-        public ActionResult SearchForJobNull()
-        {
-            return View();
+                Contractor = contractor,
+                CurrentJobs = currentJobsList,
+                PostedJobs = postedJobsList,
+                PastJobs = PastJobsList
+            };
+            return homeViewModel;
         }
     }
 }
