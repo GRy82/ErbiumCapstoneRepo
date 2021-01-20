@@ -11,71 +11,44 @@
     <div class="col-md-4">
         @if (ViewBag.jobSelected == true)
         {
-            <details>
-                <summary><h3>@Model.ClickedJob.JobName</h3></summary>
-                <h4>@Model.ClickedJob.Contractor.ContractorId</h4>
-                <h4>@Model.ClickedJob.AgreedCost</h4>
-                <h4>@Model.ClickedJob.JobStart</h4>
-                <h4>@Model.ClickedJob.DeadLine</h4>
-
-                <details>
-                    <summary><h4>Tasks</h4></summary>
-                    @foreach (var jobTask in Model.JobTasks)
-                    {
-                        if (jobTask.JobId == Model.ClickedJob.JobId)
-                        {
-                            <details>
-                                <summary>@jobTask.Name</summary>
-                                @jobTask.Description
-                                <hr />
-                                @foreach (var image in Model.JobTaskImages)
-                                {
-                                    if (image.JobTaskId == jobTask.TaskId)
-                                    {
-                                        <div></div>//image goes here.
-                                    }
-                                }
-                            </details>
-                        }
-                    }
-                </details>
-
-            </details>
+        <details>
+            <summary><h3>@Model.ClickedJob.JobName</h3></summary>
+            <h4><b>JobType: </b>@Model.ClickedJob.JobType</h4>
+            <h4><b>Cost: </b>$@Model.ClickedJob.ProposedCost.ToString("0.00")</h4>
+            <h4><b>Start Date: </b>@Model.ClickedJob.JobStart</h4>
+            <h4><b>Deadline: </b>@Model.ClickedJob.DeadLine</h4>
+            <h3><b>Description: </b>@Model.ClickedJob.Description</h3>
+            <h3><b>Provide Updates: </b>@Model.ClickedJob.ProvideUpdates</h3>
+            <h3><b>Provide Pictures: </b>@Model.ClickedJob.ProvidePix</h3>
+            <h3><b>Number Of Updates: </b>@Model.ClickedJob.NumberOfUpdates</h3>
+        </details>
         }
         else
         {
             @foreach (var job in Model.PostedJobs)
             {
-                <details>
-                    <summary><h3>@job.JobName</h3></summary>
-                    <h4>@job.ContractorId</h4>
-                    <h4>@job.AgreedCost</h4>
-                    <h4>@job.JobStart</h4>
-                    <h4>@job.DeadLine</h4>
-
-                    <details>
-                        <summary><h4>Tasks</h4></summary>
-                        @*@foreach (var jobTask in Model.JobTasks)
-                            {
-                                if (jobTask.JobId == job.JobId)
-                                {
-                                    <details>
-                                        <summary>@jobTask.Name</summary>
-                                        @jobTask.Description
-                                        <hr />
-                                        @foreach (var image in Model.JobTaskImages)
-                                        {
-                                            if (image.JobTaskId == jobTask.TaskId)
-                                            {
-                                                <div></div>//image goes here.
-                                            }
-                                        }
-                                    </details>
-                                }
-                            }*@
-                    </details>
-
-                </details>
+             <details>
+                <summary><h3>@job.JobName</h3></summary>
+                <h4><b>JobType: </b>@job.JobType</h4>
+                <h4><b>Cost: </b>: $@job.ProposedCost.ToString("0.00")</h4>
+                <h4><b>Start Date: </b>@Convert.ToDateTime(job.JobStart).ToString("mm/dd/yyyy")</h4>
+                <h4><b>Deadline: </b>@Convert.ToDateTime(job.DeadLine).ToString("mm/dd/yyyy")</h4>
+                <h3><b>Description: </b>@job.Description</h3>
+                <h3><b>Provide Updates: </b>@job.ProvideUpdates</h3>
+                <h3><b>Provide Pictures: </b>@job.ProvidePix</h3>
+                <h3><b>Number Of Updates: </b>@job.NumberOfUpdates</h3>
+             </details>
+             <form asp-action="EditJob" style="margin-bottom: 25px;">
+                 <input type="hidden" asp-for="@job.JobId" />
+                 <input value="Edit Job" type="submit" />
+             </form>
+                 @if (job.ContractorAcceptedJob)
+                 {
+                    <form asp-action="PostedJobs" style="margin-bottom: 35px;">
+                        <input type="hidden" asp-for="@job.JobId"/>
+                        <input type="submit" value="Accept Job"/>
+                    </form>
+                 }
             }
         }
 
