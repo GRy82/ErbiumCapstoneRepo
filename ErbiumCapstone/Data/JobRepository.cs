@@ -64,7 +64,7 @@ namespace ErbiumCapstone.Data
             }
             else
             {
-                jobs = await FindByCondition(c => c.ContractorId.Equals(userId) && c.JobState == "posted").ToListAsync();
+                jobs = await FindByCondition(c => c.JobState == "posted").ToListAsync();
             }
 
             return jobs;

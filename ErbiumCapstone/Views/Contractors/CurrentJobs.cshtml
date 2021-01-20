@@ -11,35 +11,41 @@
     <div class="col-md-4">
         @if (ViewBag.jobSelected == true)
         {
+        <details>
+            <summary><h3>@Model.ClickedJob.JobName</h3></summary>
+            <h4>@Model.ClickedJob.JobType</h4>
+            <h4>@Model.ClickedJob.AgreedCost</h4>
+            <h4>@Model.ClickedJob.JobStart</h4>
+            <h4>@Model.ClickedJob.DeadLine</h4>
+            <h4>@Model.ClickedJob.Customer.CustomerId</h4>
+            <h4>@Model.ClickedJob.Customer.StreetAddress</h4>
+            <h4>@Model.ClickedJob.Customer.City</h4>
+            <h4>@Model.ClickedJob.Customer.State</h4>
+            <h4>@Model.ClickedJob.Customer.ZipCode</h4>
+
             <details>
-                <summary><h3>@Model.ClickedJob.JobName</h3></summary>
-                <h4>@Model.ClickedJob.AgreedCost</h4>
-                <h4>@Model.ClickedJob.JobStart</h4>
-                <h4>@Model.ClickedJob.DeadLine</h4>
-
-                <details>
-                    <summary><h4>Tasks</h4></summary>
-                    @foreach (var jobTask in Model.JobTasks)
+                <summary><h4>Tasks</h4></summary>
+                @foreach (var jobTask in Model.JobTasks)
+                {
+                    if (jobTask.JobId == Model.ClickedJob.JobId)
                     {
-                        if (jobTask.JobId == Model.ClickedJob.JobId)
-                        {
-                            <details>
-                                <summary>@jobTask.Name</summary>
-                                @jobTask.Description
-                                <hr />
-                                @foreach (var image in Model.JobTaskImages)
+                        <details>
+                            <summary>@jobTask.Name</summary>
+                            @jobTask.Description
+                            <hr />
+                            @foreach (var image in Model.JobTaskImages)
+                            {
+                                if (image.JobTaskId == jobTask.TaskId)
                                 {
-                                    if (image.JobTaskId == jobTask.TaskId)
-                                    {
-                                        <div></div>//image goes here.
-                                    }
+                                    <div></div>//image goes here.
                                 }
-                            </details>
-                        }
+                            }
+                        </details>
                     }
-                </details>
-
+                }
             </details>
+
+        </details>
         }
         else
         {
