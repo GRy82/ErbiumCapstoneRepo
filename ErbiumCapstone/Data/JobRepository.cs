@@ -52,9 +52,12 @@ namespace ErbiumCapstone.Data
                 jobs = await FindByCondition(c => c.ContractorId.Equals(userId)).ToListAsync();
             }
 
-            foreach(Job job in jobs)
+            int limit = jobs.Count;
+            for(int i = 0; i < limit; i++)
             {
-                if (job.JobState != "current") { jobs.Remove(job); }
+                if (jobs[i].JobState != "current") { 
+                    jobs.Remove(jobs[i]); 
+                }
             }
 
 
@@ -73,9 +76,13 @@ namespace ErbiumCapstone.Data
                 jobs = await FindByCondition(c => c.ContractorId.Equals(userId)).ToListAsync();
             }
 
-            foreach (Job job in jobs)
+            int limit = jobs.Count;
+            for (int i = 0; i < limit; i++)
             {
-                if (job.JobState != "posted") { jobs.Remove(job); }
+                if (jobs[i].JobState != "posted")
+                {
+                    jobs.Remove(jobs[i]);
+                }
             }
 
             return jobs;
@@ -93,9 +100,13 @@ namespace ErbiumCapstone.Data
                 jobs = await FindByCondition(c => c.ContractorId.Equals(userId)).ToListAsync();
             }
 
-            foreach (Job job in jobs)
+            int limit = jobs.Count;
+            for (int i = 0; i < limit; i++)
             {
-                if (job.JobState != "past") { jobs.Remove(job); }
+                if (jobs[i].JobState != "past")
+                {
+                    jobs.Remove(jobs[i]);
+                }
             }
 
             return jobs;
