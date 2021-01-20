@@ -139,20 +139,6 @@ namespace ErbiumCapstone.Controllers
             }
         }
 
-        //GET: CustomersController/PostedJobs
-        public async Task<ActionResult> PostedJobs()
-        {
-            ViewBag.jobSelected = false;
-            HomeViewModel homeViewModel = await GetAllJobsByState();
-            //if (jobId != 0)
-            //{
-            //    homeViewModel.ClickedJob = await _repo.Job.GetJobAsync(jobId);
-            //    ViewBag.jobSelected = true;
-            //}
-
-            return View(homeViewModel);
-        }
-
         // GET: CustomersController/Edit/5
         public async Task<ActionResult> EditJob(int jobId)
         {
@@ -178,15 +164,37 @@ namespace ErbiumCapstone.Controllers
             }
         }
 
-        //Get
+        //GET: CustomersController/PostedJobs
+        public async Task<ActionResult> PostedJobs(int jobId)
+        {
+            ViewBag.jobSelected = false;
+            HomeViewModel homeViewModel = await GetAllJobsByState();
+            if (jobId != 0)
+            {
+                homeViewModel.ClickedJob = await _repo.Job.GetJobAsync(jobId);
+                ViewBag.jobSelected = true;
+            }
+
+            return View(homeViewModel);
+        }
+
+        // GET: CustomersController/CurrentJobs/5
         public async Task<ActionResult> CurrentJobs(int jobId)
         {
-            //var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            //Customer customer = await _repo.Customer.GetCustomerAsync(userId);
-            //List<Job> currentJobs = await _repo.Job.GetAllCurrentJobsAsync(customer.CustomerId, customer.GetType());
+            ViewBag.jobSelected = false;
+            HomeViewModel homeViewModel = await GetAllJobsByState();
+            if (jobId != 0)
+            {
+                homeViewModel.ClickedJob = await _repo.Job.GetJobAsync(jobId);
+                ViewBag.jobSelected = true;
+            }
 
-            //Only keep jobs that have true values for CustomerAcceptedJob, ContractorAcceptedJob; and false values for JobCompleteion and isJobCompletionApproved.
+            return View(homeViewModel);
+        }
 
+        // GET: CustomersController/PastJobs/5
+        public async Task<ActionResult> PastJobs(int jobId)
+        {
             ViewBag.jobSelected = false;
             HomeViewModel homeViewModel = await GetAllJobsByState();
             if (jobId != 0)

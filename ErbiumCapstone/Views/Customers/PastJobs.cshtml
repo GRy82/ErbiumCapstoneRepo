@@ -2,10 +2,10 @@
 @model ErbiumCapstone.ViewModels.HomeViewModel
 
 @{
-    ViewData["Title"] = "Current Jobs";
+    ViewData["Title"] = "Past Jobs";
 }
 
-<h1>Posted Jobs</h1>
+<h1>Past Jobs</h1>
 
 <div class="row">
     <div class="col-md-4">
@@ -44,7 +44,7 @@
         }
         else
         {
-            @foreach (var job in Model.CurrentJobs)
+            @foreach (var job in Model.PastJobs)
             {
                 <details>
                     <summary><h3>@job.JobName</h3></summary>
@@ -81,7 +81,6 @@
 
     </div>
 </div>
-
 
 
 <div class="wrapper">
