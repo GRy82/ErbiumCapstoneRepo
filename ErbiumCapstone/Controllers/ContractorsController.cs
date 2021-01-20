@@ -54,7 +54,12 @@ namespace ErbiumCapstone.Controllers
         {
             int id = job.JobId;
             job = await _repo.Job.GetJobAsync(id);
-            job.ContractorAcceptedJob = true;
+            if (job.ContractorAcceptedJob == true){
+                job.ContractorAcceptedJob = false;
+            }
+            else if (job.ContractorAcceptedJob == false){
+                job.ContractorAcceptedJob = true;
+            }
             _repo.Job.Update(job);
             await _repo.SaveAsync();
 
