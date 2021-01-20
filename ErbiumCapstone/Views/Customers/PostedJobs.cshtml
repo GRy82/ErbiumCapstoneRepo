@@ -13,7 +13,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var job in Model.PastJobs)
+        @foreach (var job in Model.PostedJobs)
         {
         <tr>
             <td>
@@ -64,7 +64,7 @@
                 @Html.DisplayFor(modelItem => job.ContractorAcceptedJob)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@job.JobId">Edit</a> |
+                <a asp-action="EditJob" asp-route-id="@job.JobId">Edit</a> |
                 <a asp-action="Delete" asp-route-id="@job.JobId">Delete</a>
             </td>
         </tr>

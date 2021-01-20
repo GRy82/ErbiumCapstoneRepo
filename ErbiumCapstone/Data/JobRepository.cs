@@ -45,21 +45,12 @@ namespace ErbiumCapstone.Data
             List<Job> jobs = new List<Job> { };
             if (type.Equals(new Customer().GetType()))
             {
-                jobs = await FindByCondition(c => c.CustomerId.Equals(userId)).ToListAsync();
+                jobs = await FindByCondition(c => c.CustomerId.Equals(userId) && c.JobState == "current").ToListAsync();
             }
             else
             {
-                jobs = await FindByCondition(c => c.ContractorId.Equals(userId)).ToListAsync();
+                jobs = await FindByCondition(c => c.ContractorId.Equals(userId) && c.JobState == "current").ToListAsync();
             }
-
-            int limit = jobs.Count;
-            for(int i = 0; i < limit; i++)
-            {
-                if (jobs[i].JobState != "current") { 
-                    jobs.Remove(jobs[i]); 
-                }
-            }
-
 
             return jobs;
         }
@@ -69,20 +60,11 @@ namespace ErbiumCapstone.Data
             List<Job> jobs = new List<Job> { };
             if (type.Equals(new Customer().GetType()))
             {
-                jobs = await FindByCondition(c => c.CustomerId.Equals(userId)).ToListAsync();
+                jobs = await FindByCondition(c => c.CustomerId.Equals(userId) && c.JobState == "posted").ToListAsync();
             }
             else
             {
-                jobs = await FindByCondition(c => c.ContractorId.Equals(userId)).ToListAsync();
-            }
-
-            int limit = jobs.Count;
-            for (int i = 0; i < limit; i++)
-            {
-                if (jobs[i].JobState != "posted")
-                {
-                    jobs.Remove(jobs[i]);
-                }
+                jobs = await FindByCondition(c => c.ContractorId.Equals(userId) && c.JobState == "posted").ToListAsync();
             }
 
             return jobs;
@@ -93,20 +75,11 @@ namespace ErbiumCapstone.Data
             List<Job> jobs = new List<Job> { };
             if (type.Equals(new Customer().GetType()))
             {
-                jobs = await FindByCondition(c => c.CustomerId.Equals(userId)).ToListAsync();
+                jobs = await FindByCondition(c => c.CustomerId.Equals(userId) && c.JobState == "past").ToListAsync();
             }
             else
             {
-                jobs = await FindByCondition(c => c.ContractorId.Equals(userId)).ToListAsync();
-            }
-
-            int limit = jobs.Count;
-            for (int i = 0; i < limit; i++)
-            {
-                if (jobs[i].JobState != "past")
-                {
-                    jobs.Remove(jobs[i]);
-                }
+                jobs = await FindByCondition(c => c.ContractorId.Equals(userId) && c.JobState == "past").ToListAsync();
             }
 
             return jobs;

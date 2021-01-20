@@ -57,17 +57,12 @@
             </li>
 
             <li class="active">
-                <a href="#interestSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Posted Jobs</a>
+                <a href="/Customers/PostedJobs" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Posted Jobs</a>
                 <ul class="collapse list-unstyled" id="interestSubmenu">
-                    <li>
-                        <a href="#">Posted Job 1</a>
-                    </li>
-                    <li>
-                        <a href="#">Posted Job 2</a>
-                    </li>
-                    <li>
-                        <a href="#">Posted Job 3</a>
-                    </li>
+                    @foreach (Job job in Model.PostedJobs)
+                    {
+                        <li><a asp-action="PostedJobs" method="POST" asp-route-id="@job.JobId">@job.JobName</a></li>
+                    }
                 </ul>
             </li>
 
