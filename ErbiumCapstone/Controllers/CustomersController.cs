@@ -126,6 +126,7 @@ namespace ErbiumCapstone.Controllers
             try
             {
                 job.CustomerId = customer.CustomerId;
+                job.ContractorId = null;
                 job.JobState = "posted";
                 _repo.Job.CreateJob(job);
                 await _repo.SaveAsync();
@@ -139,16 +140,15 @@ namespace ErbiumCapstone.Controllers
         }
 
         //GET: CustomersController/PostedJobs
-        public async Task<ActionResult> PostedJobs()
-        {
-            HomeViewModel homeViewModel = await GetAllJobsByState();
-
-            return View(homeViewModel);
-        }
-
         public async Task<ActionResult> PostedJobs(int jobId)
         {
+            ViewBag.jobSelected = false;
             HomeViewModel homeViewModel = await GetAllJobsByState();
+            if (jobId != 0)
+            {
+                homeViewModel.ClickedJob = await _repo.Job.GetJobAsync(jobId);
+                ViewBag.jobSelected = true;
+            }
 
             return View(homeViewModel);
         }
@@ -156,7 +156,8 @@ namespace ErbiumCapstone.Controllers
         // GET: CustomersController/Edit/5
         public async Task<ActionResult> EditJob(int jobId)
         {
-            var jobToEdit = await _repo.Job.GetJobAsync(jobId);
+            var num = 3;
+            var jobToEdit = await _repo.Job.GetJobAsync(num);
             return View(jobToEdit);
         }
 
@@ -178,16 +179,21 @@ namespace ErbiumCapstone.Controllers
         }
 
         //Get
-        public async Task<ActionResult> CurrentJobs()
+        public async Task<ActionResult> CurrentJobs(int jobId)
         {
             //var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             //Customer customer = await _repo.Customer.GetCustomerAsync(userId);
             //List<Job> currentJobs = await _repo.Job.GetAllCurrentJobsAsync(customer.CustomerId, customer.GetType());
 
             //Only keep jobs that have true values for CustomerAcceptedJob, ContractorAcceptedJob; and false values for JobCompleteion and isJobCompletionApproved.
-           
 
+            ViewBag.jobSelected = false;
             HomeViewModel homeViewModel = await GetAllJobsByState();
+            if (jobId != 0)
+            {
+                homeViewModel.ClickedJob = await _repo.Job.GetJobAsync(jobId);
+                ViewBag.jobSelected = true;
+            }
 
             return View(homeViewModel);
         }

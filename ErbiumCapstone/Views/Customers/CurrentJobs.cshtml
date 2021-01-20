@@ -9,38 +9,76 @@
 
 <div class="row">
     <div class="col-md-4">
-        @foreach (var job in Model.CurrentJobs)
-        { 
-        <details>
-            <summary><h3>@job.JobName</h3></summary>
-            <h4>@job.Contractor.ContractorId</h4>
-            <h4>@job.AgreedCost</h4>
-            <h4>@job.JobStart</h4>
-            <h4>@job.DeadLine</h4>
-   
+        @if (ViewBag.jobSelected == true)
+        {
             <details>
-                <summary><h4>Tasks</h4></summary>
-                @foreach (var jobTask in Model.JobTasks)
-                {
-                    if (jobTask.JobId == job.JobId)
+                <summary><h3>@Model.ClickedJob.JobName</h3></summary>
+                <h4>@Model.ClickedJob.Contractor.ContractorId</h4>
+                <h4>@Model.ClickedJob.AgreedCost</h4>
+                <h4>@Model.ClickedJob.JobStart</h4>
+                <h4>@Model.ClickedJob.DeadLine</h4>
+
+                <details>
+                    <summary><h4>Tasks</h4></summary>
+                    @foreach (var jobTask in Model.JobTasks)
                     {
-                        <details><summary>@jobTask.Name</summary>
-                            @jobTask.Description
-                            <hr />
-                            @foreach(var image in Model.JobTaskImages)
-                            {
-                                if (image.JobTaskId == jobTask.TaskId)
+                        if (jobTask.JobId == Model.ClickedJob.JobId)
+                        {
+                            <details>
+                                <summary>@jobTask.Name</summary>
+                                @jobTask.Description
+                                <hr />
+                                @foreach (var image in Model.JobTaskImages)
                                 {
-                                    <div></div> //image goes here.
+                                    if (image.JobTaskId == jobTask.TaskId)
+                                    {
+                                        <div></div>//image goes here.
+                                    }
                                 }
-                            }
-                        </details>
+                            </details>
+                        }
                     }
-                }
+                </details>
+
             </details>
-            
-        </details>
         }
+        else
+        {
+            @foreach (var job in Model.CurrentJobs)
+            {
+                <details>
+                    <summary><h3>@job.JobName</h3></summary>
+                    <h4>@job.Contractor.ContractorId</h4>
+                    <h4>@job.AgreedCost</h4>
+                    <h4>@job.JobStart</h4>
+                    <h4>@job.DeadLine</h4>
+
+                    <details>
+                        <summary><h4>Tasks</h4></summary>
+                        @foreach (var jobTask in Model.JobTasks)
+                        {
+                            if (jobTask.JobId == job.JobId)
+                            {
+                                <details>
+                                    <summary>@jobTask.Name</summary>
+                                    @jobTask.Description
+                                    <hr />
+                                    @foreach (var image in Model.JobTaskImages)
+                                    {
+                                        if (image.JobTaskId == jobTask.TaskId)
+                                        {
+                                            <div></div>//image goes here.
+                                        }
+                                    }
+                                </details>
+                            }
+                        }
+                    </details>
+
+                </details>
+            }
+        }
+
     </div>
 </div>
 
@@ -57,42 +95,39 @@
             </li>
 
             <li class="active">
-                <a href="/Customers/PostedJobs" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Posted Jobs</a>
+                <a href="#interestSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Posted Jobs</a>
                 <ul class="collapse list-unstyled" id="interestSubmenu">
-                    @foreach (Job job in Model.PostedJobs)
-                    {
-                        <li><a asp-action="PostedJobs" method="POST" asp-route-id="@job.JobId">@job.JobName</a></li>
-                    }
+               @foreach (Job job in Model.PostedJobs)
+                {
+                    <li>
+                        <a href="#" action="PostedJobs" method="GET" route-id="@job.JobId">@job.JobName</a>
+                    </li>
+                }
                 </ul>
             </li>
 
             <li>
                 <a href="#currentSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Current Jobs</a>
                 <ul class="collapse list-unstyled" id="currentSubmenu">
-                    <li>
-                        <a href="#">Current Job 1</a>
-                    </li>
-                    <li>
-                        <a href="#">Current Job 2</a>
-                    </li>
-                    <li>
-                        <a href="#">Current Job 3</a>
-                    </li>
+                    @foreach (Job job in Model.CurrentJobs)
+                    {
+                        <li>
+                            <a href="#" action="CurrentJobs" method="GET" route-id="@job.JobId">@job.JobName</a>
+                        </li>
+                    }
+
                 </ul>
             </li>
 
             <li>
                 <a href="#pastSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Past Jobs</a>
                 <ul class="collapse list-unstyled" id="pastSubmenu">
-                    <li>
-                        <a href="#">Past Job 1</a>
-                    </li>
-                    <li>
-                        <a href="#">Past Job 2</a>
-                    </li>
-                    <li>
-                        <a href="#">Past Job 3</a>
-                    </li>
+                    @foreach (Job job in Model.PastJobs)
+                    {
+                        <li>
+                            <a href="#">@job.JobName</a>
+                        </li>
+                    }
                 </ul>
             </li>
             <li>
